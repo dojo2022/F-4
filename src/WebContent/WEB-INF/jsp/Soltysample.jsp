@@ -14,7 +14,7 @@
     <header>
         <nav>
             <div id="header">
-                <div id="hamburger" class="nav_close">
+                <div id="hamburger" class="navClose">
                     <div id="menu">
                         <a href="#">LINK</a>
                         <a href="#">LINK</a>
@@ -23,18 +23,18 @@
                         <a href="#">LINK</a>
                     </div>
                     <div>
-                        <input id="hamburger-input" type="checkbox" onchange="hamChange(this);" style="display: none;">
-                        <label id="hamburger-menu" for="hamburger-input">
+                        <input id="hamburgerInput" type="checkbox" onchange="hamChange(this);" style="display: none;">
+                        <label id="hamburgerMenu" for="hamburger-input">
                             <div class="hamburger-button" class="hamburger_btn" id="js-hamburger">
-                                <span class="hamburger_line hamburger_line_1"></span>
-                                <span class="hamburger_line hamburger_line_2"></span>
-                                <span class="hamburger_line hamburger_line_3"></span>
+                                <span class="hamburgerLine hamburgerLine1"></span>
+                                <span class="hamburgerLine hamburgerLine2"></span>
+                                <span class="hamburgerLine hamburgerLine3"></span>
                             </div>
-                            <div class="black-bg"></div>
+                            <div class="blackBg"></div>
                         </label>
                     </div>
                 </div>
-                <div class="title">
+                <div id="title">
                     <h2>サンプルタイトル</h2>
                 </div>
                 <div>
@@ -44,7 +44,7 @@
         </nav>
     </header>
     <main>
-        <div class="wrapper_main">
+        <div class="wrapper">
         </div>
     </main>
     <footer>
