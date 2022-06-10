@@ -1,14 +1,15 @@
 package model;
 import java.io.Serializable;
 	public class Idpw implements Serializable{
-
+		private int userid; //ユーザーID
 		private String username; //ユーザーネーム
 		private String password; //パスワード
 		private String secquestion; //秘密の質問
 		private String secanswer; //秘密の質問の回答
 
 		//引数のあるコンストラクタ
-		public Idpw(String username, String password, String secquestion, String secanswer) {
+		public Idpw(int userid, String username, String password, String secquestion, String secanswer) {
+			this.userid = userid;
 			this.username = username;
 			this.password = password;
 			this.secquestion = secquestion;
@@ -17,6 +18,7 @@ import java.io.Serializable;
 
 		//引数のないコンストラクタ
 		public Idpw() {
+			this.userid = 0;
 			this.username = "";
 			this.password = "";
 			this.secquestion = "";
@@ -25,6 +27,15 @@ import java.io.Serializable;
 
 
 		//ゲッターとセッター
+
+		public int getUserid() {
+			return userid;
+		}
+
+		public void setUserid(int userid) {
+			this.userid = userid;
+		}
+
 		public String getUsername() {
 			return username;
 		}
