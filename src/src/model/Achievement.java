@@ -5,7 +5,7 @@ public class Achievement {
 	private String condition; //取得条件
 	private String achievecontent; //実績内容
 
-	public Achievement(int achieveid, String condition, int point, String achievecontent) {
+	public Achievement(int achieveid, String condition, String achievecontent) {
 		this.achieveid = achieveid;
 		this.condition = condition;
 		this.achievecontent = achievecontent;
