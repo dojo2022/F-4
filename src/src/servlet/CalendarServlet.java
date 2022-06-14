@@ -8,11 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ListServlet
+ * Servlet implementation class CalendarServlet
  */
-@WebServlet("/ListServlet")
-public class ListServlet extends HttpServlet {
+@WebServlet("/CalendarServlet")
+public class CalendarServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public CalendarServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
