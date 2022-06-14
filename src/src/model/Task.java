@@ -1,28 +1,33 @@
 package model;
 
 public class Task {
-	private int taskid; //タスク番号
-	private int userid; //ユーザー番号
-	private String day; //日付
-	private String status; //完了フラグ
-	private String time; //時間
-	private String taskcontent; //タスク内容
+	private int taskid;
+	private int userid;
+	private int registday;
+	private String compday;
+	private String taskflag;
+	private String deadline;
+	private String taskcontent;
 
-	public Task(int taskid, int userid, String day, String status, String time, String taskcontent) {
+
+	public Task(int taskid, int userid, int registday, String compday, String taskflag, String deadline, String taskcontent)
+	{
 		this.taskid = taskid;
 		this.userid = userid;
-		this.day = day;
-		this.status = status;
-		this.time = time;
+		this.registday = registday;
+		this.compday = compday;
+		this.taskflag = taskflag;
+		this.deadline = deadline;
 		this.taskcontent = taskcontent;
 	}
 
 	public Task() {
 		this.taskid = 0;
 		this.userid = 0;
-		this.day = "";
-		this.status = "";
-		this.time = "";
+		this.registday = 0;
+		this.compday = "";
+		this.taskflag = "";
+		this.deadline = "";
 		this.taskcontent = "";
 	}
 
@@ -43,28 +48,36 @@ public class Task {
 		this.userid = userid;
 	}
 
-	public String getDay() {
-		return day;
+	public int getRegistday() {
+		return registday;
 	}
 
-	public void setDay(String day) {
-		this.day = day;
+	public void setRegistday(int registday) {
+		this.registday = registday;
 	}
 
-	public String getStatus() {
-		return status;
+	public String getCompday() {
+		return compday;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+
+	public void setCompday(String compday) {
+		this.compday = compday;
+	}
+	public String getTaskflag() {
+		return taskflag;
 	}
 
-	public String getTime() {
-		return time;
+	public void setTaskflag(String taskflag) {
+		this.taskflag = taskflag;
 	}
 
-	public void setTime(String time) {
-		this.time = time;
+	public String getDeadline() {
+		return deadline;
+	}
+
+	public void setDeadline(String deadline) {
+		this.deadline = deadline;
 	}
 
 	public String getTaskcontent() {
