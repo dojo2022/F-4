@@ -71,6 +71,62 @@ public class IdpwDAO {
 			// 結果を返す
 			return user;
 		}
+		public LoginUser update(LoginUser user) {
+			Connection conn = null;
+
+			try {
+				// JDBCドライバを読み込む
+				Class.forName("org.h2.Driver");
+
+				// データベースに接続する
+				conn = DriverManager.getConnection("jdbc:h2:file:C:/dojo_db/Sol-ty", "sa", "");
+
+				// SELECT文を準備する
+				String sql = "select count(*), VOICESWITCH, COMPVOICE, INCOMPVOICE, ACVOICE, BGICONTENT FROM IDPW LEFT OUTER JOIN VOICE ON IDPW.VOICESELECT = VOICE.VOICESELECT LEFT OUTER JOIN BGI ON IDPW.BGISELECT = BGI.BGISELECT where USERID = ?";
+				PreparedStatement pStmt = conn.prepareStatement(sql);
+
+
+				pStmt.setInt(1,user.getUserid());
+
+
+				// SELECT文を実行し、結果表を取得する
+				ResultSet rs = pStmt.executeQuery();
+
+				// ユーザーIDとパスワードが一致するユーザーがいたかどうかをチェックする
+				rs.next();
+				if (rs.getInt("count(*)") == 1) {
+					user.setVoiceswitch(rs.getInt("VOICESWITCH"));
+					user.setCompvoice(rs.getString("COMPVOICE"));
+					user.setIncompvoice(rs.getString("INCOMPVOICE"));
+					user.setAcvoice(rs.getString("ACVOICE"));
+					user.setBgicontent(rs.getString("BGICONTENT"));
+
+
+				}
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+				user = null;
+			}
+			catch (ClassNotFoundException e) {
+				e.printStackTrace();
+				user = null;
+			}
+			finally {
+				// データベースを切断
+				if (conn != null) {
+					try {
+						conn.close();
+					}
+					catch (SQLException e) {
+						e.printStackTrace();
+						user = null;
+					}
+				}
+			}
+
+			return user;
+		}
 		public boolean insert(Idpw idpw) {
 			Connection conn = null;
 			boolean insertResult = false;
