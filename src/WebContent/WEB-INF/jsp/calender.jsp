@@ -35,12 +35,16 @@
 </header>
     <body>
             <div id='yearDate'>
-              <v-calendar :attributes='attrs' is-expanded >
+              <v-calendar :attributes='attrs' is-expanded>
                 <template #day-popover>
-                  <div>
-                    <input type="radio"  name="radio" value="incompCheck" id = "radioCheck" onclick>タスク登録<br>
-                    <input type="radio"  name="radio" value="newTaskRegist" id="radioRegist">タスク確認
-                  </div>
+                  <div class="mouseover__conts">
+                    <p class="btn-mouseover btn-pink">
+                      <a href="/Sol_ty/TaskRegistServlet">マウスオーバー</a>
+                      </p>
+                      <div class="mouseover__box">
+                       <p>マウスオーバーで表示されるポップアップウィンドウです。</p>
+                       </div>
+                      </div>
                 </template>
               </v-calendar>
             </div>
@@ -54,7 +58,7 @@
         data: {
           attrs: [
               {
-               key: 'day',
+               key: 'today',
                 highlight: {
                   backgroundColor: '#ff8080',
                 },
