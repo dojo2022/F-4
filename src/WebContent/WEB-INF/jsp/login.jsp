@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>ログイン | Sol-ty</title>
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="/Sol_ty/css/style.css">
 </head>
 <!--ヘッダーここから-->
 <body>
@@ -29,7 +29,7 @@
       <span id="errorMessage"></span>
     </form>
     <p>または</p>
-    <a href="signup.html" id = "signUp">新規登録</a>
+    <a href="/Sol_ty/UserRegistServlet" id = "signUp">新規登録</a>
     <!--メインここまで-->
 
     <script>
