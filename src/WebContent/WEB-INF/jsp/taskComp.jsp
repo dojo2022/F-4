@@ -21,7 +21,7 @@
   <a href="#" class="close-btn">&times;</a>
   <ul class="hamburgermenu">
     <li class="top">username</li>
-        <li><a href="/Sol_ty/ListServlet">タスク表示</a></li>
+        <li><a href="/Sol_ty/InCompTaskServlet">タスク表示</a></li>
         <li><a href="/Sol_ty/TaskRegistServlet">タスク登録</a></li>
         <li><a href="/Sol_ty/CalenderServlet">カレンダー</a></li>
         <li><a href="/Sol_ty/AchievementServlet">実績</a></li>
@@ -30,7 +30,7 @@
   </ul>
     </div>
   <div class="navtext"><h2>完了タスク</h2></div>
-    <a href = "login.html"><img src="image/logout.png" alt="ログアウト"></a>
+    <a href = "LogoutServlet"><img src="image/logout.png" alt="ログアウト"></a>
 </div>
 </header>
 

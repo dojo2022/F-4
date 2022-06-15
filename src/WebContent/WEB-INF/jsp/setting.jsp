@@ -20,7 +20,7 @@
   <a href="#" class="close-btn">&times;</a>
   <ul class="hamburgerMenu">
     <li class="top">username</li>
-    <li><a href="/Sol_ty/UpdateDeleteServlet">タスク表示</a></li>
+    <li><a href="/Sol_ty/InCompTaskServlet">タスク表示</a></li>
     <li><a href="/Sol_ty/TaskRegistServlet">タスク登録</a></li>
     <li><a href="/Sol_ty/CalendarServlet">カレンダー</a></li>
     <li><a href="/Sol_ty/AchievementServlet">実績</a></li>
