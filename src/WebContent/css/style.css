@@ -1,115 +1,199 @@
-* {
-    -webkit-tap-highlight-color:rgba(0,0,0,0);
-}
+  @charset "UTF-8";
 
-body {
-	margin: 0;
-}
+  /*?��S?��Ẵy?��[?��W?��ɓK?��p*/
+  html {
+      font-family: sans-serif;
+      background-color: gainsboro;
+  }
+  html* {
+    box-sizing: border-box;
+  }
 
-#header {
+  .header{
     display: flex;
-    align-items: center;
     justify-content: space-between;
-}
-
-.hamburger-button{
-    position: relative;
-    width: 55px;
-    height: 55px;
-    cursor: pointer;
-    z-index: 9999;
-}
-.hamburger_line {
-    position: absolute;
-    left: 15px;
-    width: 25px;
-    height: 1px;
-    background-color: #111;
-    -webkit-transition: transform .6s;
-    transition: transform .6s;
-}
-.hamburger_line_1 {
-    top: 20px;
-}
-.hamburger_line_2 {
-    top: 26px;
-}
-.hamburger_line_3 {
-    top: 32px;
-}
-
-.nav_open .hamburger_line_1 {
-    -webkit-transform: rotate(45deg);
-    transform: rotate(45deg);
-    top: 25px;
-}
-.nav_open .hamburger_line_2 {
-    transform: translateX(75%) scale(0);
-}
-.nav_open .hamburger_line_3 {
-    -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-    top: 25px;
-}
-
-#hamburger-menu .black-bg {
+    background-color: darkgray;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
     position: fixed;
-    z-index: 99;
+    width: 100%;
+    z-index: 1000;
+  }
+  /*ハンバ�?�ガー*/
+  .hamburger-menu div {
+    width: 70px;
+    height: 5px;
+    background-color: black;
+    margin: 18px;
+    transition: .3s;
+
+  }
+  .hamburger-menu:hover div {
+    opacity:0.6;
+    /* 透�?�度を指�? */
+  }
+  .hamburger-menu + .sidenavs:target {
+    overflow-x: visible;
+    width: 100%;
+    display:block;
+  }
+  .sidenavs:target {
+    overflow-x: hidden;
+    width: 0;
+  }
+  /* ハンバ�?�ガーメニュー表示�? */
+  .sidenavs {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: black;
-    transition: .15s ease-in-out;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-}
-.nav_open #hamburger-menu .black-bg {
-    display: block;
-    opacity: .5;
-    visibility: visible;
-    pointer-events: unset;
-}
-
-.nav_open #menu, .nav_close #menu {
-    display: flex;
-    flex-direction: column-reverse;
-    transform: translateX(0%);
-    opacity: 1;
-    visibility: unset;
-    position: fixed;
-    top: 0;
-    z-index: 999;
-    width: 40%;
-    height: auto;
-    background: #b1a391;
-    transition: .5s ease-in-out;
-    padding: 90px 1em 30px;
-    justify-content: flex-end;
-    align-items: center;
-}
-.nav_close #menu {
-    transform: translateX(-100%);
-}
-.nav_close #menu a {
-    pointer-events: none;
-}
-
-#menu a {
-    display: block;
-    margin-inline-start: 0px;
-    color: #fff;
-    /* border-bottom: 2px solid #9e8160; */
-    position: relative;
-    width: 85%;
-    padding: 10px;
-    margin: 10px 0;
-    transition: .3s ease-in-out;
-    text-align: center;
+    background-color: darkgray;
+    overflow-x: hidden;
+    /* 横スクロールを無効にする */
+    padding-top: 60px;
+    transition: 0.3s;
+  }
+  /* ハンバ�?�ガーメニュー表示時�?�リンク */
+  .sidenavs a {
+    padding: 8px 8px 8px 32px;
     text-decoration: none;
-    box-shadow: 0px 3px 2px rgba(0,0,0,0.33);
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+    font-weight:bold;
+  }
+  /* マウスオーバ�?�後�?�リンク */
+  .sidenavs a:hover {
+    color: black;
+  }
+  /* クローズボタン */
+  .sidenavs .close-btn {
+    position: absolute;
+    top: 0;
+    font-size: 50px;
+  }
+  body{
+    margin: 0px;
+  }
+
+  .hamburgermenu {
+      list-style: none;
+      text-align: center;
+      padding-left: 0;
+      font-size:70px;
+      ;
+  }
+  .hamburgermenu a{
+    font-size: 50px;
+  }
+  li.top{
+    margin-bottom: 30px;
+    font-size: 50px;
+  }
+  h2{
+    font-size: 25px;
+  }
+
+/*achievement*/
+.achievementList{
+  font-size: 40px;
+  border: solid black;
+  text-align: center;
+    width: 700px;
+
+    margin-left: auto;
+    margin-right: auto;
 }
-#menu a:active {
-    box-shadow: none;
+#achievementListAll{
+  padding-top:200px;
+}
+
+#achievementTop{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+/*カレンダー*/
+
+#yearDate {
+  border-radius: 4px;
+  transition: all 0.2s;
+  text-align: center;
+  padding-top: 200px;
+  margin-right: 40px;
+  margin-left: 40px;
+  height:200px
+}
+/*.vc-weeks[data-v-74ad501d] {
+  display: grid;
+  grid-template-columns: repeat(7,1fr);
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+  padding: 5px;
+  width: 900px;
+  min-height: 900px;
+
+}*/
+/*span.vc-day-content.vc-focusable {
+  font-size: 40px;
+}*/
+element.style {
+  margin: 0px;
+  position: absolute;
+  inset: 0px auto auto 0px;
+  transform: translate3d(300px, 38px, 0px);
+  width: 300px;
+  height: 300px;
+}
+div.vc-title{
+  font-size: 3em;
+}
+.vc-weekday[data-v-74ad501d] {
+  text-align: center;
+  color: var(--gray-500);
+  /* font-size: var(--text-sm); */
+  font-weight: var(--font-bold);
+  line-height: 14px;
+  padding-top: 4px;
+  padding-bottom: 8px;
+  cursor: default;
+  -webkit-user-select: none;
+  user-select: none;
+  font-size: 40px;
+}
+/*taskincomp*/
+div#currentDateIncomp {
+  padding-top: 100px;
+}
+/*taskcomp*/
+#taskCompList{
+  padding-top: 130px;
+  text-align: center;
+}
+.taskComp{
+  text-align: left;
+}
+.taskComp{
+  border: solid black;
+  width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+#backIncomp{
+  margin-top: 1em;
+}
+/*setting*/
+#registForm{
+  padding-top:100px;
+}
+
+/*login*/
+span#buttonEye {
+  z-index: 2;
+  position: absolute;
+  margin-top: 2px;
+  margin-left: -30px;
 }
