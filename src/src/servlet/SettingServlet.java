@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.SettingDAO;
+import model.Setting;
+
 /**
  * Servlet implementation class SettingServlet
  */
@@ -41,21 +44,37 @@ public class SettingServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		
+
 		// もしもログインしていなかったらログインサーブレットにリダイレクトする
 				HttpSession session = request.getSession();
-				if (session.getAttribute("username") == null) {
+				if (session.getAttribute("loginuser") == null) {
 					response.sendRedirect("/Sol_ty/LoginServlet");
 					return;
 				}
 
 				// リクエストパラメータを取得する
 				request.setCharacterEncoding("UTF-8");
-				int userid = request.getParameter("NUMBER");
-				String postalcode = request.getParameter("POSTALCODE");
-				String address = request.getParameter("ADDRESS");
-				String office = request.getParameter("OFFICE");
-		
+				int userid = Integer.parseInt(request.getParameter("USERID"));
+				int voiceswitch = Integer.parseInt(request.getParameter("VOICESWITCH"));
+				int voiceselect = Integer.parseInt(request.getParameter("VOICESELECT"));
+				int bgiselect = Integer.parseInt(request.getParameter("BGISELECT"));
+
+				//
+				SettingDAO sDao = new SettingDAO();
+				//getParameterの値は未定なので後で決定
+				if (sDao.update(new Setting(userid, voiceswitch, voiceselect, bgiselect))) {
+
+					request.setAttribute("result", true); //真偽値　true(設定反映成功)
+				}
+
+				else {
+
+					request.setAttribute("result", false); //真偽値　false(設定反映失敗)
+
+				}
+
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/setting.jsp");
+				dispatcher.forward(request, response);
 	}
 
 }
