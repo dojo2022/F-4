@@ -1,11 +1,20 @@
 package servlet;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import dao.TaskDAO;
+import model.LoginUser;
+import model.Task;
 
 /**
  * Servlet implementation class InCompTaskServlet
@@ -13,29 +22,55 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/InCompTaskServlet")
 public class InCompTaskServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public InCompTaskServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		HttpSession session = request.getSession();
+
+		if(session.getAttribute("user") == null) {
+			// ログインページにフォワードする
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
+			dispatcher.forward(request, response);
+		}
+
+		TaskDAO TDao = new TaskDAO();
+		LoginUser user = (LoginUser)session.getAttribute("user");
+		int todays = Integer.parseInt(LocalDate.now().toString().replaceAll("-", ""));
+		List<List<Task>> taskList = TDao.select(user , todays, todays);
+
+		request.setAttribute("taskList", taskList);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/taskIncomp.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		HttpSession session = request.getSession();
+
+		if(session.getAttribute("user") == null) {
+			// ログインページにフォワードする
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
+			dispatcher.forward(request, response);
+		}
+
+		request.setCharacterEncoding("UTF-8");
+		int registday = Integer.parseInt(request.getParameter("REGISTDAY"));
+
+
+		TaskDAO TDao = new TaskDAO();
+		LoginUser user = (LoginUser)session.getAttribute("user");
+		int todays = Integer.parseInt(LocalDate.now().toString().replaceAll("-", ""));
+		List<List<Task>> taskList = TDao.select(user , registday, todays);
+
+		request.setAttribute("taskList", taskList);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/taskIncomp.jsp");
+		dispatcher.forward(request, response);
 	}
 
 }

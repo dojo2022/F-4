@@ -25,15 +25,9 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		if(session.getAttribute("user") == null) {
-			// ログインページにフォワードする
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
-			dispatcher.forward(request, response);
-		}
-		else {
-			response.sendRedirect("/ListServlet");
-		}
+		// ログインページにフォワードする
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	/**
@@ -55,9 +49,10 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("user", user);
 
 			// リストサーブレットにリダイレクトする
-			response.sendRedirect("/Sol_ty/ListServlet");
+			response.sendRedirect("/Sol_ty/InCompTaskServlet");
 		}
 		else {// ログイン失敗
+			request.setAttribute("result", false);
 			// ログインページにフォワードする
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
 			dispatcher.forward(request, response);
