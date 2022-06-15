@@ -9,9 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Achievement;
+import model.LoginUser;
 
 public class AchievementDAO {
-	public List<Achievement> select() {
+	public List<Achievement> select(LoginUser user) {
 		Connection conn = null;
 		List<Achievement> achieveList = new ArrayList<Achievement>();
 
@@ -26,17 +27,22 @@ public class AchievementDAO {
 			String sql = "select * from Achievement";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
+
+
 			// SQL文を実行し、結果表を取得する
 			ResultSet rs = pStmt.executeQuery();
 
 			// 結果表をコレクションにコピーする<<ここを改造>>
+
 						while (rs.next()) {
-							Achievement achieve = new Achievement(
-							rs.getInt("ACHIEVEID"),
-							rs.getString("CONDITION"),
-							rs.getString("ACHIEVECONTENT")
-							);
-							achieveList.add(achieve);
+							if (user.getTaskcount() >= rs.getInt("ACHIEVEID")) {
+								Achievement achieve = new Achievement(
+								rs.getInt("ACHIEVEID"),
+								rs.getString("CONDITION"),
+								rs.getString("ACHIEVECONTENT")
+								);
+								achieveList.add(achieve);
+							}
 						}
 					}
 					catch (SQLException e) {
