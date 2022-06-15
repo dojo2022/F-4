@@ -25,10 +25,9 @@ public class SettingServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 		// もしもログインしていなかったらログインサーブレットにリダイレクトする
 				HttpSession session = request.getSession();
-				if (session.getAttribute("username") == null) {
+				if (session.getAttribute("user") == null) {
 					response.sendRedirect("/Sol_ty/LoginServlet");
 					return;
 				}
@@ -47,7 +46,7 @@ public class SettingServlet extends HttpServlet {
 
 		// もしもログインしていなかったらログインサーブレットにリダイレクトする
 				HttpSession session = request.getSession();
-				if (session.getAttribute("loginuser") == null) {
+				if (session.getAttribute("user") == null) {
 					response.sendRedirect("/Sol_ty/LoginServlet");
 					return;
 				}
