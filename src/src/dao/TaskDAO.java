@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Task;
 import model.LoginUser;
+import model.Task;
 
 public class TaskDAO {
 	public List<List<Task>> select(LoginUser loginuser, int registday, int today ) {
@@ -28,12 +28,12 @@ public class TaskDAO {
 			conn = DriverManager.getConnection("jdbc:h2:file:C:/dojo_db/Sol-ty", "sa", "");
 
 			// SQL文を準備する
-			String sql = "select * from Task WHERE USERID = ? and REGISTDAY like ?";
+			String sql = "select * from Task WHERE USERID = ? and REGISTDAY like ? and TASKFLAG = '未完了'";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, loginuser.getUserid());
 			pStmt.setInt(2, registday);
 
-			String sql2 = "select * from Task WHERE USERID = ? and REGISTDAY < ?";
+			String sql2 = "select * from Task WHERE USERID = ? and REGISTDAY < ? and TASKFLAG = '未完了'";
 			PreparedStatement pStmt2 = conn.prepareStatement(sql2);
 			pStmt2.setInt(1, loginuser.getUserid());
 			pStmt2.setInt(2, today);
@@ -91,6 +91,64 @@ public class TaskDAO {
 						}
 					}
 			return taskList;
+	}
+
+	public List<Task> compSelect(LoginUser user) {
+
+		Connection conn = null;
+
+		List<Task> compList = new ArrayList<Task>();
+
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("org.h2.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:h2:file:C:/dojo_db/Sol-ty", "sa", "");
+
+			// SQL文を準備する
+			String sql = "select * from Task WHERE USERID = ? and TASKFLAG = '完了' ORDER BY TASKID DESC LIMIT 50";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setInt(1, user.getUserid());
+
+			// SQL文を実行し、結果表を取得する
+			ResultSet rs = pStmt.executeQuery();
+			// 結果表をコレクションにコピーする
+						while (rs.next()) {
+							Task todo = new Task(
+							rs.getInt("TASKID"),
+							rs.getInt("USERID"),
+							rs.getInt("REGISTDAY"),
+							rs.getString("COMPDAY"),
+							rs.getString("TASKFLAG"),
+							rs.getString("DEADLINE"),
+							rs.getString("TASKCONTENT")
+							);
+							compList.add(todo);
+						}
+					}
+					catch (SQLException e) {
+						e.printStackTrace();
+						compList = null;
+					}
+					catch (ClassNotFoundException e) {
+						e.printStackTrace();
+						compList = null;
+					}
+					finally {
+						// データベースを切断
+						if (conn != null) {
+							try {
+								conn.close();
+							}
+							catch (SQLException e) {
+								e.printStackTrace();
+								compList = null;
+							}
+						}
+					}
+
+		return compList;
 	}
 
 //新規
