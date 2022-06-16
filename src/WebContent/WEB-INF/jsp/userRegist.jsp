@@ -23,7 +23,7 @@
 
         <div class="question">
             <label for="prefecture">*秘密の質問</label>
-            <select name="prefecture">
+            <select name="SECQUESTION">
             <option value="">選択してください</option>
             <option value="出身小学校の名前は？">出身小学校の名前は？</option>
             <option value="最初に飼ったペットの名前は？">最初に飼ったペットの名前は？</option>
@@ -32,7 +32,7 @@
             </select>
         </div>
 
-    <input type="text" value="" placeholder="秘密の質問入力" ></p>
+    <input type="text" value="" name="SECANSWER" placeholder="秘密の質問入力" ></p>
 
 
         <input type="submit" value="登録" id="regist" class="submitButton">
