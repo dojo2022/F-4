@@ -17,11 +17,10 @@
     <!--メインここから-->
     <form  id="loginForm" method="POST" action="/Sol_ty/LoginServlet">
       <div class="loginForm">
-      <input type="text" name="username" placeholder="UserName" class="textInput">
+      <input type="text" name="USERNAME" placeholder="UserName" class="textInput">
       </div>
       <div class="loginForm">
-        <span>
-      <input type="text" name="password" placeholder="Password" class="textInput" id="textPassword">
+      <input type="text" name="PASSWORD" placeholder="Password" class="textInput" id="textPassword">
       <span id="buttonEye" class="fa fa-eye" onclick="pushHideButton()"></span>
     </div>
       <input type="submit" name="login" class="submitButton" id="loginButton"value="ログイン">

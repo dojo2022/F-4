@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
 <html>
 <head>
@@ -33,19 +34,19 @@
 	<div class="navtext">
 		<h2>未完了タスク</h2>
 	</div>
+	<div>
 	<a href="/Sol_ty/LogoutServlet"><img src="image/logout.png" alt="ログアウト"></a>
 	</div>
 </header>
 <body>
-	<!--ヘッダーここまで-->
 	<h2>
 		<div id="currentDateIncomp"></div>
 	</h2>
 	<form>
-		<c:forEach var="e" items="${}">
+		<c:forEach var="e" items="${taskList[0]}">
 			<div id="incompToday">
-				<input type="checkbox" name="taskIncomp" class="taskIncomp">
-				<input type="textbox" value="task">
+				<input type="checkbox" name="taskflag" class="taskIncomp">
+				<input type="text" value="$e.taskcontent">
 				<button id="taskEdit">edit</button>
 				<br>
 			</div>
@@ -54,10 +55,10 @@
 
 
 		<h2>前日まで</h2>
-		<c:forEach var="e" items="${}">
+		<c:forEach var="e" items="${taskList[1]}">
 			<div class="incompYesterday">
-				<input type="checkbox" name="taskIncomp" class="taskIncomp">
-				<input type="textbox" value="task">
+				<input type="checkbox" name="taskflag" class="taskIncomp">
+				<input type="text" value="task">
 				<button id="taskEdit">edit</button>
 				<br>
 			</div>
@@ -75,7 +76,6 @@
 				id="switchModeDelete">
 		</div>
 	</form>
-	</header>
 	<!--メインここまで-->
 
 
@@ -105,6 +105,17 @@ document.getElementById("currentDateIncomp").innerHTML = getNow();
             var s =year + "年" + month + "月" + day + "日";
             return s;
           }
+          function deleteRow() {
+        	  const checkedList = document.querySelectorAll(".table [name='DeleteName[]']:checked");
+        	  if (checkedList.length === 0) {
+        	    alert("選択してください");
+        	    return;
+        	  }
+        	  if(!confirm("削除しますか？")) {
+        	    return;
+        	  }
+        	  checkedList.forEach(check => check.closest("tr").remove());
+        	}
   </script>
 </body>
 </html>

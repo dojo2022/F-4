@@ -36,6 +36,7 @@
 	<div class="navtext">
 		<h2>タスク登録</h2>
 	</div>
+	<div>
 	<a href="/Sol_ty/LogoutServlet"><img src="/image/logout.png"
 		alt="ログアウト"></a>
 	</div>
@@ -62,10 +63,8 @@
 			時間指定 <input type="checkbox" id="timeCheckOnOff" class="timeCheck"
 				onclick="timeOnOff();">
 		</div>
-		<input type="time" name="example" id="timeInput">
-		</p>
-		<input type="text" value="" placeholder="タスク入力">
-		</p>
+		<input type="time" name="deadline" id="timeInput">
+		<input type="text" name="taskcontent" placeholder="タスク入力">
 		<input type="submit" value="登録">
 	</form>
 
