@@ -43,9 +43,9 @@ public class UpdateDeleteServlet extends HttpServlet {
 
 		// 更新または削除を行う
 		TaskDAO TDao = new TaskDAO();
-		if (request.getParameter("SUBMIT").equals("更新")) {
+		if (request.getParameter("SUBMIT").equals("完了")) {
 			if (TDao.update(new Task(0,0,0,"",taskflag,"",taskcontent),taskid)) {	// 更新成功
-				request.setAttribute("result",
+				/*request.setAttribute("result",
 				 "更新成功");
 			}
 			else {												// 更新失敗
@@ -62,13 +62,16 @@ public class UpdateDeleteServlet extends HttpServlet {
 				request.setAttribute("result",
 						 "削除失敗");
 			}
+			*/
 		}
 
-		// 結果ページにフォワードする
+		 //結果ページにフォワードする
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/result.jsp");
 		dispatcher.forward(request, response);
+		}
 	}
 }
+
 
 
 
