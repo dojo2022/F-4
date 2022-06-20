@@ -71,24 +71,69 @@
 	</form>
 
 
-	<form action="test.html" method="post" class="bgiSend"
+	<form action="" method="post" class="bgiSend"
 		enctype="multipart/form-data">
 		<div class="bgiUpload">
 
 			<div>
-				画像アップロード <input type="file" name="BGIUPLOAD">
+				画像アップロード <input type="file" id="BGICONTENT" name="BGICONTENT">
 			</div>
 		</div>
+		<div id="file_area"></div>
 
-		<div>
+		<!-- <div>
 			<input type="submit" id="bgiSubmit" value="送信">
-		</div>
-
-
-
+		</div>-->
 		<input type="submit" id="bgiSubmit" value="反映">
 
 	</form>
 </body>
+<script>
+	function pop() {
+	    document.getElementById("popup").style = "display: none;";
+	    document.getElementById("blackBg").style = "display: none";
+	  }
 
+
+window.addEventListener('DOMContentLoaded', function(){
+
+	  document.getElementById("BGICONTENT").addEventListener('change', function(e){
+
+	    // (1)選択したファイルを読み込み
+	    let file_reader = new FileReader();
+	    file_reader.readAsDataURL(e.target.files[0]);
+
+
+	    // (2)ファイルの読み込みが完了したら実行
+	    file_reader.addEventListener('load', function(e) {
+
+	      // (3)JSONにするデータを作成（この時点ではObject形式） 変更
+	      let data = {
+	        "BGICONTENT": e.target.result,
+	      };
+
+	      // (4)Fetch APIによるデータ送信
+	      fetch('/Sol_ty/BgiUploadServlet', { // 送信先　変更
+	        method: 'post', // メソッド
+	        header: { // ヘッダー指定
+	          'Content-Type': 'application/json'
+	        },
+	        body: JSON.stringify(data) // 送信データをセット（ここでJSON形式に変換）
+	      })
+	      .then(response => response.json())
+	      .then(data => {
+
+
+	        // (5)レスポンスデータ（JSON形式）からページに挿入
+	        const file_area = document.getElementById('file_area');
+	        const img_element = document.createElement('img');
+	        img_element.src = data.image;
+	        file_area.append(img_element);
+	      });
+
+	    });
+
+	  });
+	});
+</script>
 </html>

@@ -70,9 +70,9 @@ public class CalendarServlet extends HttpServlet {
 			TaskDAO TDao = new TaskDAO();
 
 			if(TDao.updateDate(1, taskid, registday))
-				request.setAttribute("result", "日付更新成功");
+				request.setAttribute("result", true);
 			else
-				request.setAttribute("result", "日付更新失敗");
+				request.setAttribute("result", false);
 		}
 		else {
 			int year = Integer.parseInt(request.getParameter("YEAR"));

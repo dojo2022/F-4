@@ -86,12 +86,12 @@ public class VoiceBgiDAO {
 			String sql = "insert into idpw (USERID, BGIUPLOAD, BGITITLE) values (?, ?, ?)";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			int userid = upload.getUserid();
-			String bgiupload = upload.getBgiupload();
+			String bgicontent = upload.getBgicontent();
 		    String bgititle  = upload.getBgititle();
 
 			if (userid != -1) pStmt.setInt(1, userid);
 			else return false;
-			if (bgiupload != null && !bgiupload.equals("")) pStmt.setString(2, bgiupload);
+			if (bgicontent != null && !bgicontent.equals("")) pStmt.setString(2, bgicontent);
 			else return false;
 			if (bgititle != null && !bgititle.equals("")) pStmt.setString(3, bgititle);
 			else return false;

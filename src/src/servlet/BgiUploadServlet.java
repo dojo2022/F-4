@@ -3,7 +3,6 @@ package servlet;
 import java.io.File;
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -47,31 +46,34 @@ public class BgiUploadServlet extends HttpServlet {
 
 		request.setCharacterEncoding("utf-8");
 		//name属性がpictのファイルをPartオブジェクトとして取得
-		Part part=request.getPart("BGIUPLOAD");
+		Part part=request.getPart("BGICONTENT");
 		//ファイル名を取得
 		String filename=part.getSubmittedFileName();//ie対応が不要な場合
 		//String filename=Paths.get(part.getSubmittedFileName()).getFileName().toString();
 		//アップロードするフォルダ
-		String path=getServletContext().getRealPath("/フォルダ名");
-		//実際にファイルが保存されるパス確認　ここを変える？
-
+		String path=getServletContext().getRealPath("/Sol_ty");
+		//実際にファイルが保存されるパス確認
+		part.write(path+File.separator+filename);
 		//System.out.println(path);
 		//書き込み
+		/*
 		part.write(path+File.separator+filename);
-		request.setAttribute("BGIUPLOAD", filename);
-
-
+		request.setAttribute("BGICONTENT", path+File.separator+filename);
+		request.setAttribute("BGITITLE", filename);
+		*/
 		// リクエストパラメータを取得する
+		/*
 		request.setCharacterEncoding("UTF-8");
-		int userid = user.getUserid();
-		String bgiupload = request.getParameter("BGIUPLOAD");
+		String bgicontent = request.getParameter("BGICONTENT");
 		String bgititle = request.getParameter("BGITITLE");
-
-
+		*/
+		int userid = user.getUserid();
+		String bgicontent = path+File.separator+filename;
 		// 更新または削除を行う
+
 		VoiceBgiDAO VDao = new VoiceBgiDAO();
 
-		if (VDao.upload(new Upload(userid,bgiupload,bgititle))) {	// アップロード成功
+		if (VDao.upload(new Upload(userid, bgicontent,filename))) {	// アップロード成功
 			request.setAttribute("result",
 					"アップロード成功");
 		}
@@ -79,13 +81,6 @@ public class BgiUploadServlet extends HttpServlet {
 			request.setAttribute("result",
 					"アップロード失敗");
 		}
-
-
-
-
-		// 結果ページにフォワードする
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/result.jsp");
-		dispatcher.forward(request, response);
 	}
 
 }
