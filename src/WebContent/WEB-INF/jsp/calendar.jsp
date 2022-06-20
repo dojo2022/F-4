@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>カレンダー画面 | Sol-ty</title>
 <link rel="stylesheet" href="css/style.css">
 <link rel='stylesheet' href='css/main.min.css' />
@@ -134,7 +135,6 @@
         initialDate: new Date(),
         navLinks: true, // can click day/week names to navigate views
         //selectable: true,
-        aspectRatio: 0.835,
         selectMirror: true,
         selectLongPressDelay: 0,
         eventLongPressDelay: 0,
@@ -201,12 +201,12 @@ body { //
 
 #popup {
 	width: 80%;
-	z-index: 9999;
+	z-index: 999;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
 	position: absolute;
-	top: 330px;
+	top: 55%;
 	left: 10%;
 	height: 150px;
 	text-align: center;
@@ -217,11 +217,11 @@ body { //
 
 #popupButton {
 	display: flex;
-	justify-content: center;
+	justify-content: space-around;
 }
 
 #popupButton div {
-	width: 35%;
+	width: auto;
 	margin: 4px 0;
 }
 
@@ -233,13 +233,13 @@ body { //
 	border-radius: 10px;
 	color: white;
 	font-weight: bold;
-	border-bottom: 2px solid rgba(0, 0, 0, 0.33);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.33);
 }
 
 #popupButton div input:active {
 	position: relative;
 	top: 2px;
-	border: 0;
+	box-shadow: none;
 }
 
 #popLabel {
@@ -256,6 +256,33 @@ body { //
 	left: 0;
 	background-color: #000;
 	opacity: .7;
+}
+
+    /*-- iPhone Vertical View--*/
+    @media screen and (max-width: 900px) {
+    #popup {
+    top: 40%;
+    }
+
+    #wrapper {
+    height: 90%;
+    }
+    html, body, .fc-view-harness.fc-view-harness-active, .fc-daygrid-body.fc-daygrid-body-balanced, table.fc-scrollgrid-sync-table {
+      height: 100%;
+    }
+    #calendar {
+        height: 98%;
+        margin: 0 auto;
+    }
+        .fc-event {
+            font-size:18px;
+            margin-bottom: 4px;
+        }
+    .fc-header-toolbar.fc-toolbar.fc-toolbar-ltr {
+    	padding-top:10px;
+        margin-bottom: 10px;
+	}
+    }
 }
 </style>
 </body>
