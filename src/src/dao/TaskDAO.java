@@ -6,7 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.json.JSONObject;
 
 import model.LoginUser;
 import model.Task;
@@ -340,5 +344,124 @@ public boolean insert(Task todo) {
 
 		// 結果を返す
 		return result;
+	}
+	public boolean updateDate(int userid, int taskid, int registday) {
+		Connection conn = null;
+		boolean flag = false;
+
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("org.h2.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:h2:file:C:/dojo_db/Sol-ty", "sa", "");
+
+			// SQL文を準備する
+			String sql =  "update Task set REGISTDAY = ? where userid = ? and taskid = ?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			//　SQL文"?"の箇所に値を埋める
+			pStmt.setInt(1, registday);
+			pStmt.setInt(2, userid);
+			pStmt.setInt(3, taskid);
+
+
+			//SQLの実行結果の処理
+			if(pStmt.executeUpdate() ==1 ) {
+				flag =  true;
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			flag = false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			flag = false;
+		}
+		finally {
+			// データベースを切断する
+			if (conn != null) {
+				try {
+					conn.close();
+				}
+				catch (SQLException e) {
+					e.printStackTrace();
+					flag = false;
+				}
+			}
+		}
+
+		return flag;
+	}
+
+	private String monthFormat(int year, int month) {
+
+		if(month == 0) {
+			year--;
+			month = 12;
+		}
+		else if(month == 13) {
+			year++;
+			month = 1;
+		}
+
+		String ymDate =  year + String.format("%02d", month);
+
+		return ymDate;
+	}
+
+	public JSONObject monthTask(int userid, int year, int month) {
+		Connection conn = null;
+		JSONObject json = new JSONObject();
+
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("org.h2.Driver");
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:h2:file:C:/dojo_db/Sol-ty", "sa", "");
+
+			String prevMonth =  monthFormat(year, month-1) + "25";
+			String nextMonth = monthFormat(year, month+1) + "14";
+
+			// SQL文を準備する
+			String sql =  "select TASKID, TASKCONTENT, REGISTDAY from Task where USERID = ? and REGISTDAY > ? and REGISTDAY < ? ";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			//　SQL文"?"の箇所に値を埋める
+			pStmt.setInt(1, userid);
+			pStmt.setInt(2, Integer.parseInt(prevMonth));
+			pStmt.setInt(3, Integer.parseInt(nextMonth));
+
+			//DBに対しQuery実行。rsに実行結果を蓄積。
+			ResultSet rs = pStmt.executeQuery();
+
+			//SQLの実行結果の処理
+			List< Map<String, String>> tasks = new ArrayList<Map<String, String>>();
+
+			while (rs.next()) {
+				Map<String, String> task = new HashMap<String, String>();
+				task.put("id" ,rs.getString("TASKID"));
+				task.put("title", rs.getString("TASKCONTENT"));
+				task.put("start", rs.getString("REGISTDAY"));
+
+				tasks.add(task);
+			}
+			json.put("data", tasks);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			// データベースを切断する
+			if (conn != null) {
+				try {
+					conn.close();
+				}
+				catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return json;
 	}
 }
