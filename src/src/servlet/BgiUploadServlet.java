@@ -74,12 +74,10 @@ public class BgiUploadServlet extends HttpServlet {
 		VoiceBgiDAO VDao = new VoiceBgiDAO();
 
 		if (VDao.upload(new Upload(userid, bgicontent,filename))) {	// アップロード成功
-			request.setAttribute("result",
-					"アップロード成功");
+			request.setAttribute("result", true);
 		}
 		else {												// アップロード失敗
-			request.setAttribute("result",
-					"アップロード失敗");
+			request.setAttribute("result", false);
 		}
 	}
 
