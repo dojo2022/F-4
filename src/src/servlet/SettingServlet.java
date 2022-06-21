@@ -63,12 +63,12 @@ public class SettingServlet extends HttpServlet {
 				//getParameterの値は未定なので後で決定
 				if (sDao.update(new Setting(userid, voiceswitch, voiceselect, bgiselect))) {
 
-					request.setAttribute("result", true); //真偽値　true(設定反映成功)
+					request.setAttribute("result", "設定が反映されました"); //設定反映成功
 				}
 
 				else {
 
-					request.setAttribute("result", false); //真偽値　false(設定反映失敗)
+					request.setAttribute("result", "反映に失敗しました"); //設定反映失敗
 
 				}
 

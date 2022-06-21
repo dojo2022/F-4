@@ -2,24 +2,21 @@ package model;
 import java.io.Serializable;
 
 public class Result implements Serializable{
-	private boolean result;
+	private String result;
 
-	public Result(boolean result) {
+	public Result(String result) {
 		this.result = result;
 	}
 
 	public Result() {
-		this.result = false;
+		this.result = "";
 	}
 
-	public boolean isResult() {
+	public String getResult() {
 		return result;
 	}
 
-	public void setResult(boolean result) {
+	public void setResult(String result) {
 		this.result = result;
 	}
-
-
-
 }

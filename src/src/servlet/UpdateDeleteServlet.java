@@ -45,10 +45,10 @@ public class UpdateDeleteServlet extends HttpServlet {
 		TaskDAO TDao = new TaskDAO();
 		if (request.getParameter("SUBMIT").equals("完了")) {
 			if (TDao.update(new Task(0,0,0,"",taskflag,"",taskcontent),taskid)) {	// 更新成功
-				request.setAttribute("result", true);
+				request.setAttribute("result", "更新しました");
 			}
 			else {												// 更新失敗
-				request.setAttribute("result", false);
+				request.setAttribute("result", "更新に失敗しました");
 			}
 
 

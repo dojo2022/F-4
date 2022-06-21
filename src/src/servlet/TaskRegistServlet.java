@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -63,10 +64,10 @@ public class TaskRegistServlet extends HttpServlet {
 
 				//登録成功
 				if (tDao.insert(new Task(taskid, userid, registday, compday, taskflag, deadline, taskcontent))) {
-				request.setAttribute("result", true );
+				request.setAttribute("result", "タスクが登録されました" );
 				// 登録失敗
 				}else {
-				request.setAttribute("result", false);
+				request.setAttribute("result", "登録に失敗しました");
 				}
 
 				// 結果ページにフォワードする

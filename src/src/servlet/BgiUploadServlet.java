@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,11 +15,11 @@ import javax.servlet.http.Part;
 import dao.VoiceBgiDAO;
 import model.LoginUser;
 import model.Upload;
-
 /**
  * Servlet implementation class BgiUploadServlet
  */
 @WebServlet("/BgiUploadServlet")
+@MultipartConfig
 public class BgiUploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -74,10 +75,10 @@ public class BgiUploadServlet extends HttpServlet {
 		VoiceBgiDAO VDao = new VoiceBgiDAO();
 
 		if (VDao.upload(new Upload(userid, bgicontent,filename))) {	// アップロード成功
-			request.setAttribute("result", true);
+			request.setAttribute("result", "アップロードに成功しました");
 		}
 		else {												// アップロード失敗
-			request.setAttribute("result", false);
+			request.setAttribute("result", "アップロードに失敗しました");
 		}
 	}
 

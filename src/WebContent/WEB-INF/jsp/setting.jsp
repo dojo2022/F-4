@@ -4,6 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="sweetalert2.all.min.js"></script>
+<script src="/Sol_ty/js/popup.js">
 <title>設定画面</title>
 <link rel="stylesheet" type="text/css" href="/Sol_ty/css/style.css">
 </head>
@@ -93,8 +95,12 @@
 	    document.getElementById("popup").style = "display: none;";
 	    document.getElementById("blackBg").style = "display: none";
 	  }
-
-
+let result = request.getAttribute("result");
+window.addEventListener('load', function() {
+	if(result != null ) {
+		submitButton();
+	}
+})
 window.addEventListener('DOMContentLoaded', function(){
 
 	  document.getElementById("BGICONTENT").addEventListener('change', function(e){
