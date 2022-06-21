@@ -37,7 +37,6 @@
 	<a href="LogoutServlet"><img src="image/logout.png" alt="ログアウト"></a>
 
 </header>
-
 <body>
 	<form id="taskCompList" method="POST"
 		action="/Sol_ty/UpdateDeleteServlet">
