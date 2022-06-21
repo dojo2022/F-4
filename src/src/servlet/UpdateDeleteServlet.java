@@ -2,7 +2,6 @@ package servlet;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dao.TaskDAO;
-import model.Task;
+import model.LoginUser;
 
 
 /**
@@ -29,33 +28,54 @@ public class UpdateDeleteServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		if (session.getAttribute("user") == null) {
+		LoginUser user = (LoginUser)session.getAttribute("user");
+
+		if (user == null) {
 			response.sendRedirect("/Sol_ty/LoginServlet");
 			return;
 		}
 		//3つ使う
 		// リクエストパラメータを取得する
 		request.setCharacterEncoding("UTF-8");
-		String[] taskid = request.getParameterValues("TASKID");
+		String[] taskid = request.getParameter("TASKID").split(",");
 		String taskflag = request.getParameter("TASKFLAG");
-		String taskcontent = request.getParameter("TASKCONTENT");
+
+		String taskcontent = "";
+		if(request.getParameter("TASKCONTENT") != null) {
+			taskcontent = request.getParameter("TASKCONTENT");
+		}
+
+		String sub = request.getParameter("COMP");
 
 
 		// 更新または削除を行う
 		TaskDAO TDao = new TaskDAO();
-		if (request.getParameter("SUBMIT").equals("完了")) {
-			if (TDao.update(new Task(0,0,0,"",taskflag,"",taskcontent),taskid)) {	// 更新成功
+		if (sub.equals("完了")) {
+			if (TDao.flagUpdate(user.getUserid(),taskflag,taskid)) {	// 更新成功
 				request.setAttribute("result", "更新しました");
 			}
 			else {												// 更新失敗
 				request.setAttribute("result", "更新に失敗しました");
 			}
-
-
-		 //結果ページにフォワードする
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/result.jsp");
-		dispatcher.forward(request, response);
 		}
+		else if(sub.equals("削除")) {
+			if (TDao.delete(user.getUserid(),taskid)) {	// 更新成功
+				request.setAttribute("result", "更新しました");
+			}
+			else {												// 更新失敗
+				request.setAttribute("result", "更新に失敗しました");
+			}
+		}
+		else {	if (TDao.textUpdate(user.getUserid(), taskcontent,taskid[0])) {	// 更新成功
+				request.setAttribute("result", "更新しました");
+			}
+			else {												// 更新失敗
+				request.setAttribute("result", "更新に失敗しました");
+			}
+		}
+		 //結果ページにフォワードする
+		response.sendRedirect("/Sol_ty/InCompTaskServlet");
+
 	}
 }
 

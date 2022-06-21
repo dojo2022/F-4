@@ -228,7 +228,7 @@ public boolean insert(Task todo) {
 }
 
 //更新
-	public boolean update(Task todo, String[]taskArray) {
+	public boolean flagUpdate(int userid, String taskflag, String[] taskArray) {
 		Connection conn = null;
 		boolean result = false;
 
@@ -240,29 +240,75 @@ public boolean insert(Task todo) {
 			for(int i=0; i<taskArray.length-1; i++) {
 				taskid += "TASKID =" + taskArray[i] + "or" ;
 			}
-			taskid += "TASKID =" + taskArray[taskArray.length-1];
+			taskid += "TASKID =" + taskArray[taskArray.length-1] + ")";
 
 			// データベースに接続する
 			conn = DriverManager.getConnection("jdbc:h2:file:C:/dojo_db/Sol-ty", "sa", "");
 
 			// SQL文を準備する
-			String sql =  "update Task set TASKFLAG=?, TASKCONTENT=? where" + taskid ;
+			String sql =  "update Task set TASKFLAG=? where userid = ? and (" + taskid ;
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setInt(1, userid);
+
+			// SQL文を完成させる
+			if (taskflag.equals("完了") && !taskflag.equals("")) {
+				pStmt.setString(1, "未完了");
+			}
+			else {
+				pStmt.setString(1, "完了");
+			}
+			pStmt.setInt(2, userid);
+
+			// SQL文を実行する
+			if (pStmt.executeUpdate() == 1) {
+				result = true;
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			result= false;
+		}
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			result= false;
+		}
+		finally {
+			// データベースを切断する
+			if (conn != null) {
+				try {
+					conn.close();
+				}
+				catch (SQLException e) {
+					e.printStackTrace();
+					result= false;
+				}
+			}
+		}
+
+		// 結果を返す
+		return result;
+	}
+	public boolean textUpdate(int userid, String taskcontent, String taskid) {
+		Connection conn = null;
+		boolean result = false;
+
+		try {
+			// JDBCドライバを読み込む
+			Class.forName("org.h2.Driver");
+
+
+			// データベースに接続する
+			conn = DriverManager.getConnection("jdbc:h2:file:C:/dojo_db/Sol-ty", "sa", "");
+
+			// SQL文を準備する
+			String sql =  "update Task set TASKCONTENT=? where userid = ? taskid = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
-			if (todo.getTaskflag().equals("完了") && !todo.getTaskflag().equals("")) {
-				pStmt.setString(1, todo.getTaskflag());
-			}
-			else {
-				pStmt.setString(1, "未完了");
-			}
+			pStmt.setString(1, taskcontent);
 
-			if (todo.getTaskcontent() != null && !todo.getTaskcontent().equals("")) {
-				pStmt.setString(2, todo.getTaskcontent());
-			}
-			else {
-				pStmt.setString(2, "task");
-			}
+			pStmt.setInt(2, userid);
+			pStmt.setString(3, taskid);
 
 			// SQL文を実行する
 			if (pStmt.executeUpdate() == 1) {
@@ -294,7 +340,7 @@ public boolean insert(Task todo) {
 		return result;
 	}
 //削除
-	public boolean delete(String[]taskArray) {
+	public boolean delete(int userid, String[]taskArray) {
 		Connection conn = null;
 		boolean result = false;
 
@@ -307,15 +353,16 @@ public boolean insert(Task todo) {
 			for(int i=0; i<taskArray.length-1; i++) {
 				taskid += "TASKID =" + taskArray[i] + "or" ;
 			}
-			taskid += "TASKID =" + taskArray[taskArray.length-1];
+			taskid += "TASKID =" + taskArray[taskArray.length-1] + ")";
 
 
 			// データベースに接続する
 			conn = DriverManager.getConnection("jdbc:h2:file:C:/dojo_db/Sol-ty", "sa", "");
 
 			// SQL文を準備する
-			String sql = "delete from TASK where" + taskid;
+			String sql = "delete from TASK where userid = ? and (" + taskid;
 			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setInt(1, userid);
 
 			// SQL文を実行する
 			if (pStmt.executeUpdate() == 1) {

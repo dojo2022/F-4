@@ -2,15 +2,13 @@
 	pageEncoding="UTF-8"%>
 
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!doctype html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>未完了タスク | Sol-ty</title>
 <link rel="stylesheet" href="/Sol_ty/css/style.css">
-<link rel='stylesheet'
-	href='https://unpkg.com/v-calendar/lib/v-calendar.min.css'>
-<script src='https://unpkg.com/v-calendar'></script>
 </head>
 <!--ヘッダーここから-->
 <header class="header">
@@ -43,11 +41,13 @@
 	<h2>
 		<div id="currentDateIncomp"></div>
 	</h2>
-	<form method="POST" action="/Sol_ty/UpdateDeleteServlet">
+	<form method="POST" id="taskForm" name="f1">
+	<input type="hidden" id="taskid" name="TASKID">
+	<input type="hidden" name="TASKFLAG" value="未完了">
 		<c:forEach var="e" items="${taskList[0]}">
 			<div id="incompToday">
-				<input type="checkbox" name="taskflag" value="$e.taskid" class="taskIncomp">
-				<input type="text" value="$e.taskcontent" class="taskIncomp">
+				<input type="checkbox" name="taskflag" value="${e.taskid}" class="taskIncomp">
+				<input type="text" value="${e.taskcontent}" class="taskIncomp">
 				<button id="taskEdit">edit</button>
 				<br>
 			</div>
@@ -58,8 +58,8 @@
 		<h2>前日まで</h2>
 		<c:forEach var="e" items="${taskList[1]}">
 			<div class="incompYesterday">
-				<input type="checkbox" name="taskflag" class="PreTaskIncomp">
-				<input type="text" value="task" class="PreTaskIncomp">
+				<input type="checkbox" name="taskflag" value="${e.taskid}" class="taskIncomp">
+				<input type="text" value="${e.taskcontent}" class="PreTaskIncomp">
 				<button id="taskEdit">edit</button>
 				<br>
 			</div>
@@ -71,13 +71,9 @@
 				<input type="radio" name="radio" value="delete" id="radioDelete"
 					onclick="changeButton();">削除
 			</div>
-			<input type="submit" name="SwitchModeDone" value="完了"
-				class="doneDelete" id="switchModeDone" onClick="sound()">
-			<audio id="sound" preload="auto">
-				<source src="/.wav" type="audio/wav">
-			</audio>
-			<input type="submit" name="SwitchModeDelete" value="削除"
-				class="doneDelete" id="switchModeDelete">
+			<input type="hidden" value="完了" name="COMP" id="send">
+			<input type="submit" value="完了" class="doneDelete" id="switchModeDone"> <!--  onClick="sound()" -->
+			<input type="submit" value="削除" name="DELETE" class="doneDelete"  id="switchModeDelete">
 		</div>
 	</form>
 	<!--メインここまで-->
@@ -123,32 +119,61 @@ document.getElementById("currentDateIncomp").innerHTML = getNow();
         	*/
         	//疑似クラスchecked
         	// 興味・関心のある分野
-
         	const switchModeDone = document.getElementById("switchModeDone");
         	const switchModeDelete = document.getElementById("switchModeDelete");
-        	var inputFlag = document.querySelectorAll("input[name=taskflag]:checked");
+        	var inputFlag = document.querySelectorAll("input[name=taskflag]");
         	var taskstatus = document.getElementById("taskflag");
+        	let taskid = "";
 
-        	switchModeDone.addEventListener('submit', event => {
-        		event.preventDefault();
-	        	if( 0 < inputFlag.length ) {
+function getTaskid() {
+	if( 0 < inputFlag.length ) {
+		let com = "";
+		for(var checked_data of inputFlag) {
+			if(checked_data.checked){
+		//処理
+		taskid += com + checked_data.value;
+		com = ",";
+			}
+		}
+		document.getElementById("taskid").value = taskid;
+	}
+}
+ window.onload = () => {
+	 /*
+	 const deleteDone = document.document.querySelectorAll(".deleteDone");
 
-	        		for(var checked_data of inputFlag) {
-	        		//処理
-
-	        		taskstatus.setAttribute("未完了", "完了");
-
-
-	        		}
-	        	}
-	        	switchModeDone.submit();
+	 for(const done of deleteDone) {
+		 switchModeDone.addEventListener('click', function(event){
+			 event.preventDefault();
+			 console.log(taskid);
+     		getTaskid();
+     		console.log(taskid);
+	        	document.getElementById("send").value = switchModeDone.value;
+	        	document.forms.f1.action = "/Sol_ty/UpdateDeleteServlet";
+	        	document.forms.f1.submit();
+     		});
+		 }
+	 }
+ */
+	 switchModeDone.addEventListener('click', function(event){
+        		getTaskid();
+	        	document.getElementById("send").value = switchModeDone.value;
+	        	document.forms.f1.action = "/Sol_ty/UpdateDeleteServlet";
+	        	document.forms.f1.submit();
         		});
-        	}
-        	switchModeDelete.addEventListener('submit', event => {
+ switchModeDelete.addEventListener('click', function(event){
+		getTaskid();
+ 	document.getElementById("send").value = switchModeDelete.value;
+ 	document.forms.f1.action = "/Sol_ty/UpdateDeleteServlet";
+ 	document.forms.f1.submit();
+		});
+
+ }
+        	/*switchModeDelete.addEventListener('submit', event => {
         		event.preventDefault();
 
         	})
-
+        	/*
 
         	(function (window, $) {
   'use strict';
@@ -165,6 +190,7 @@ document.getElementById("currentDateIncomp").innerHTML = getNow();
 })(this, this.jQuery);
 
 $('.btn a').useSound('mousedown touchstart', '#sound');
+*/
   </script>
 </body>
 </html>

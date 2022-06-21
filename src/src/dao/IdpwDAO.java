@@ -24,7 +24,7 @@ public class IdpwDAO {
 				conn = DriverManager.getConnection("jdbc:h2:file:C:/dojo_db/Sol-ty", "sa", "");
 
 				// SELECT文を準備する
-				String sql = "select count(*), USERID, USERNAME, TASKCOUNT, VOICESWITCH, COMPVOICE, INCOMPVOICE, ACVOICE, BGICONTENT FROM IDPW LEFT OUTER JOIN VOICE ON IDPW.VOICESELECT = VOICE.VOICESELECT LEFT OUTER JOIN BGI ON IDPW.BGISELECT = BGI.BGISELECT where USERNAME = ? and PASSWORD = ? GROUP BY USERID";
+				String sql = "select count(*), idpw.USERID, USERNAME, TASKCOUNT, VOICESWITCH, COMPVOICE, INCOMPVOICE, ACVOICE, BGICONTENT FROM IDPW LEFT OUTER JOIN VOICE ON IDPW.VOICESELECT = VOICE.VOICESELECT LEFT OUTER JOIN BGI ON IDPW.BGISELECT = BGI.BGISELECT where idpw.USERNAME = ? and idpw.PASSWORD = ? GROUP BY idpw.USERID";
 				PreparedStatement pStmt = conn.prepareStatement(sql);
 
 				String result = getHash(idpw.getPassword(),"MD5");//MD5でハッシュ化
@@ -139,7 +139,7 @@ public class IdpwDAO {
 				conn = DriverManager.getConnection("jdbc:h2:file:C:/dojo_db/Sol-ty", "sa", "");
 
 				// SELECT文を準備する
-				String sql = "insert into idpw (USERNAME, PASSWORD, SECQUESTION, SECANSWER, VOICESWITCH, VOICESELECT, BGISELECT) values (?, ?, ?, ?, ?, ?, ?, ?)";
+				String sql = "insert into idpw (USERNAME, PASSWORD, SECQUESTION, SECANSWER, VOICESWITCH, VOICESELECT, BGISELECT) values (?, ?, ?, ?, ?, ?, ?)";
 				PreparedStatement pStmt = conn.prepareStatement(sql);
 				String username = idpw.getUsername();
 				String password = idpw.getPassword();

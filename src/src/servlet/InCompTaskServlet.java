@@ -30,19 +30,20 @@ public class InCompTaskServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		LoginUser user = (LoginUser)session.getAttribute("user");
-		/*
 		if(user == null) {
 			// ログインページにフォワードする
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
-			dispatcher.forward(request, response);
+			response.sendRedirect("/Sol_ty/LoginServlet");
 		}
-		*/
+
 		TaskDAO TDao = new TaskDAO();
 
 		int todays = Integer.parseInt(LocalDate.now().toString().replaceAll("-", ""));
-		int registday = (int)session.getAttribute("registday");
+		int registday = todays;
 
-		if(session.getAttribute("registday") != null) session.removeAttribute("registday");
+		if(session.getAttribute("registday") != null) {
+			registday = (int)session.getAttribute("registday");
+			session.removeAttribute("registday");
+		}
 		else registday = todays;
 
 		List<List<Task>> taskList = TDao.select(user , registday, todays);

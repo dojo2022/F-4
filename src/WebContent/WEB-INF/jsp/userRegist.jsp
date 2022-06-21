@@ -13,12 +13,12 @@
     <div id="signupTitle">
     <h2>新規登録</h2>
     </div>
-    <form method="post" id="signUp" action="/Sol_ty/LoginServlet">
+    <form method="post" id="signUp" action="/Sol_ty/UserRegistServlet">
     <div class="newRegistForm">
-    <input type="text" value="" name="USERNAME" placeholder="ユーザーネーム入力" ></p>
+    <input type="text" value="" name="USERNAME" placeholder="ユーザーネーム入力" >
     </div>
     <div class="newRegistForm">
-    <input type="text" value="" name="PASSWORD" placeholder="パスワード入力" ></p>
+    <input type="text" value="" name="PASSWORD" placeholder="パスワード入力" >
     </div>
 
         <div class="question">
@@ -28,11 +28,10 @@
             <option value="出身小学校の名前は？">出身小学校の名前は？</option>
             <option value="最初に飼ったペットの名前は？">最初に飼ったペットの名前は？</option>
             <option value="生まれた町の名前は？">生まれた町の名前は？</option>
-
             </select>
         </div>
 
-    <input type="text" value="" name="SECANSWER" placeholder="秘密の質問入力" ></p>
+    <input type="text" value="" name="SECANSWER" placeholder="秘密の質問入力" >
 
 
         <input type="submit" value="登録" id="regist" class="submitButton">
