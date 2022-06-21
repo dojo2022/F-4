@@ -9,6 +9,7 @@ import java.sql.SQLException;
 
 import model.Idpw;
 import model.LoginUser;
+import model.Setting;
 
 public class IdpwDAO {
 	// ログインできるならtrueを返す
@@ -24,7 +25,7 @@ public class IdpwDAO {
 				conn = DriverManager.getConnection("jdbc:h2:file:C:/dojo_db/Sol-ty", "sa", "");
 
 				// SELECT文を準備する
-				String sql = "select count(*), idpw.USERID, USERNAME, TASKCOUNT, VOICESWITCH, COMPVOICE, INCOMPVOICE, ACVOICE, BGICONTENT FROM IDPW LEFT OUTER JOIN VOICE ON IDPW.VOICESELECT = VOICE.VOICESELECT LEFT OUTER JOIN BGI ON IDPW.BGISELECT = BGI.BGISELECT where idpw.USERNAME = ? and idpw.PASSWORD = ? GROUP BY idpw.USERID";
+				String sql = "select count(*), idpw.USERID, USERNAME, TASKCOUNT, VOICESWITCH, idpw.VOICESELECT, idpw.BGISELECT, BGICONTENT FROM IDPW LEFT OUTER JOIN VOICE ON IDPW.VOICESELECT = VOICE.VOICESELECT LEFT OUTER JOIN BGI ON IDPW.BGISELECT = BGI.BGISELECT where idpw.USERNAME = ? and idpw.PASSWORD = ? GROUP BY idpw.USERID";
 				PreparedStatement pStmt = conn.prepareStatement(sql);
 
 				String result = getHash(idpw.getPassword(),"MD5");//MD5でハッシュ化
@@ -41,9 +42,8 @@ public class IdpwDAO {
 							rs.getString("USERNAME"),
 							rs.getInt("TASKCOUNT"),
 							rs.getInt("VOICESWITCH"),
-							rs.getString("COMPVOICE"),
-							rs.getString("INCOMPVOICE"),
-							rs.getString("ACVOICE"),
+							rs.getInt("VOICESELECT"),
+							rs.getInt("BGISELECT"),
 							rs.getString("BGICONTENT"));
 				}
 			}
@@ -71,7 +71,7 @@ public class IdpwDAO {
 			// 結果を返す
 			return user;
 		}
-		public LoginUser update(LoginUser user) {
+		public LoginUser update(LoginUser user, Setting setting) {
 			Connection conn = null;
 
 			try {
@@ -82,11 +82,11 @@ public class IdpwDAO {
 				conn = DriverManager.getConnection("jdbc:h2:file:C:/dojo_db/Sol-ty", "sa", "");
 
 				// SELECT文を準備する
-				String sql = "select count(*), VOICESWITCH, COMPVOICE, INCOMPVOICE, ACVOICE, BGICONTENT FROM IDPW LEFT OUTER JOIN VOICE ON IDPW.VOICESELECT = VOICE.VOICESELECT LEFT OUTER JOIN BGI ON IDPW.BGISELECT = BGI.BGISELECT where USERID = ?";
+				String sql = "select count(*), idpw.VOICESWITCH, idpw.VOICESELECT, idpw.BGISELECT, BGICONTENT FROM IDPW LEFT OUTER JOIN VOICE ON IDPW.VOICESELECT = VOICE.VOICESELECT LEFT OUTER JOIN BGI ON IDPW.BGISELECT = BGI.BGISELECT where USERID = ?";
 				PreparedStatement pStmt = conn.prepareStatement(sql);
 
 
-				pStmt.setInt(1,user.getUserid());
+				pStmt.setInt(1,setting.getUserid());
 
 
 				// SELECT文を実行し、結果表を取得する
@@ -96,21 +96,16 @@ public class IdpwDAO {
 				rs.next();
 				if (rs.getInt("count(*)") == 1) {
 					user.setVoiceswitch(rs.getInt("VOICESWITCH"));
-					user.setCompvoice(rs.getString("COMPVOICE"));
-					user.setIncompvoice(rs.getString("INCOMPVOICE"));
-					user.setAcvoice(rs.getString("ACVOICE"));
+					user.setVoiceselect(rs.getInt("VOICESELECT"));
+					user.setBgiselect(rs.getInt("BGISELECT"));
 					user.setBgicontent(rs.getString("BGICONTENT"));
-
-
 				}
 			}
 			catch (SQLException e) {
 				e.printStackTrace();
-				user = null;
 			}
 			catch (ClassNotFoundException e) {
 				e.printStackTrace();
-				user = null;
 			}
 			finally {
 				// データベースを切断
@@ -120,7 +115,6 @@ public class IdpwDAO {
 					}
 					catch (SQLException e) {
 						e.printStackTrace();
-						user = null;
 					}
 				}
 			}

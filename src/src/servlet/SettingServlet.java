@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,7 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.IdpwDAO;
 import dao.SettingDAO;
+import dao.VoiceBgiDAO;
+import model.Bgi;
+import model.LoginUser;
 import model.Setting;
 
 /**
@@ -27,12 +32,18 @@ public class SettingServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		// もしもログインしていなかったらログインサーブレットにリダイレクトする
 				HttpSession session = request.getSession();
-				if (session.getAttribute("user") == null) {
+				LoginUser user = (LoginUser)session.getAttribute("user");
+
+				if (user == null) {
 					response.sendRedirect("/Sol_ty/LoginServlet");
 					return;
 				}
 
 				// 設定ページにフォワードする
+				VoiceBgiDAO vbDAO = new VoiceBgiDAO();
+				List<Bgi> bgiList = vbDAO.BgiSelect(user.getUserid());
+
+				request.setAttribute("bgiList", bgiList);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/setting.jsp");
 			dispatcher.forward(request, response);
 	}
@@ -41,12 +52,11 @@ public class SettingServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 
 		// もしもログインしていなかったらログインサーブレットにリダイレクトする
 				HttpSession session = request.getSession();
-				if (session.getAttribute("user") == null) {
+				LoginUser user = (LoginUser)session.getAttribute("user");
+				if (user == null) {
 					response.sendRedirect("/Sol_ty/LoginServlet");
 					return;
 				}
@@ -60,10 +70,15 @@ public class SettingServlet extends HttpServlet {
 
 				//
 				SettingDAO sDao = new SettingDAO();
-				//getParameterの値は未定なので後で決定
-				if (sDao.update(new Setting(userid, voiceswitch, voiceselect, bgiselect))) {
+				IdpwDAO iDao = new IdpwDAO();
 
-					request.setAttribute("result", "設定が反映されました"); //設定反映成功
+				//getParameterの値は未定なので後で決定
+				Setting setting = new Setting(userid, voiceswitch, voiceselect, bgiselect);
+				if (sDao.update(setting)) {
+					//設定反映成功
+					user = iDao.update(user, setting);
+					session.setAttribute("user", user);
+					request.setAttribute("result", "設定が反映されました");
 				}
 
 				else {

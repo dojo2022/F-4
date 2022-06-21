@@ -5,16 +5,16 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-import model.LoginUser;
+import model.Bgi;
 import model.Upload;
 
 public class VoiceBgiDAO {
-	public Map<Integer, String> voiceBgiSelect(LoginUser user) {
+	public List<Bgi> BgiSelect(int userid) {
 
-		Map<Integer, String> bgiList = new HashMap<Integer, String>();
+		List<Bgi> bgiList = new ArrayList<Bgi>();
 
 		Connection conn = null;
 
@@ -26,16 +26,16 @@ public class VoiceBgiDAO {
 			conn = DriverManager.getConnection("jdbc:h2:file:C:/dojo_db/Sol-ty", "sa", "");
 
 			// SELECT文を準備する
-			String sql = "select bgiselect, bgititle from bgi where userid = -1 or username = ?";
+			String sql = "select bgiselect, bgititle from bgi where userid = -1 or userid = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-		    pStmt.setInt(1, user.getUserid());
+		    pStmt.setInt(1, userid);
 
 			// SELECT文を実行し、結果表を取得する
 			ResultSet rs = pStmt.executeQuery();
 
 			// ユーザーIDとパスワードが一致するユーザーがいたかどうかをチェックする
 			while(rs.next()) {
-				bgiList.put(rs.getInt("BGISELECT"), rs.getString("BGITITLE"));
+				bgiList.add(new Bgi(rs.getInt("BGISELECT"), rs.getString("BGITITLE")));
 			}
 		}
 		catch (SQLException e) {
