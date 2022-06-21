@@ -45,8 +45,8 @@
 			<form id="popup" style="display: none;" method="post"
 				action="/Sol_ty/CalendarServlet">
 				<div id="popupDay">
-					<input type="hidden" id="registday" name="REGISTDAY" /> <span
-						id="popupText"></span>
+					<input type="hidden" id="registday" name="REGISTDAY" />
+					<span id="popupText"></span>
 				</div>
 				<div id="popupButton">
 					<div>
@@ -142,7 +142,6 @@
         //fixedWeekCount: false,
         dateClick: function (arg) {
             document.getElementById("registday").value = arg.dateStr.replaceAll("-", "");
-            //console.log(document.getElementById("registday").value);
             document.getElementById("popupText").textContent = arg.dateStr;
             document.getElementById("popup").style = "display: flex;";
             document.getElementById("blackBg").style = "display: block";
@@ -267,6 +266,7 @@ body { //
     #wrapper {
     height: 90%;
     }
+
     html, body, .fc-view-harness.fc-view-harness-active, .fc-daygrid-body.fc-daygrid-body-balanced, table.fc-scrollgrid-sync-table {
       height: 100%;
     }

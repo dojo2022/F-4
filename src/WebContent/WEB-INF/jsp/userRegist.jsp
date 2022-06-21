@@ -15,10 +15,10 @@
     </div>
     <form method="post" id="signUp" action="/Sol_ty/LoginServlet">
     <div class="newRegistForm">
-    <input type="text" value="" placeholder="ユーザーネーム入力" ></p>
+    <input type="text" value="" name="USERNAME" placeholder="ユーザーネーム入力" ></p>
     </div>
     <div class="newRegistForm">
-    <input type="text" value="" placeholder="パスワード入力" ></p>
+    <input type="text" value="" name="PASSWORD" placeholder="パスワード入力" ></p>
     </div>
 
         <div class="question">

@@ -58,11 +58,11 @@ public class CalendarServlet extends HttpServlet {
 
 		if (submit.equals("タスク確認")) {
 
-			request.setAttribute("registday", registday);
+			session.setAttribute("registday", registday);
 			response.sendRedirect("/Sol_ty/InCompTaskServlet");
 		}
 		else if(submit.equals("タスク登録")) {
-			request.setAttribute("registday", registday);
+			session.setAttribute("registday", registday);
 			response.sendRedirect("/Sol_ty/TaskRegistServlet");
 		}
 		else if(submit.equals("日付変更")) {

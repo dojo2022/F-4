@@ -29,16 +29,23 @@ public class InCompTaskServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 
-		if(session.getAttribute("user") == null) {
+		LoginUser user = (LoginUser)session.getAttribute("user");
+		/*
+		if(user == null) {
 			// ログインページにフォワードする
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
 			dispatcher.forward(request, response);
 		}
-
+		*/
 		TaskDAO TDao = new TaskDAO();
-		LoginUser user = (LoginUser)session.getAttribute("user");
+
 		int todays = Integer.parseInt(LocalDate.now().toString().replaceAll("-", ""));
-		List<List<Task>> taskList = TDao.select(user , todays, todays);
+		int registday = (int)session.getAttribute("registday");
+
+		if(session.getAttribute("registday") != null) session.removeAttribute("registday");
+		else registday = todays;
+
+		List<List<Task>> taskList = TDao.select(user , registday, todays);
 
 		request.setAttribute("taskList", taskList);
 

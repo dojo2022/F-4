@@ -50,7 +50,7 @@ public class UserRegistServlet extends HttpServlet {
 		else {// 登録失敗
 			request.setAttribute("regist", false);
 			// ログインページにフォワードする
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userRegist.jsp");
 			dispatcher.forward(request, response);
 		}
 	}

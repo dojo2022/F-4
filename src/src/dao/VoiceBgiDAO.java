@@ -5,17 +5,15 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import model.LoginUser;
 import model.Upload;
 
 public class VoiceBgiDAO {
-	public List<Map<Integer, String>> voiceBgiSelect() {
-		List<Map<Integer, String>> vbList = new ArrayList<Map<Integer, String>>();
-		Map<Integer, String> voiceList = new HashMap<Integer, String>();
+	public Map<Integer, String> voiceBgiSelect(LoginUser user) {
+
 		Map<Integer, String> bgiList = new HashMap<Integer, String>();
 
 		Connection conn = null;
@@ -28,33 +26,25 @@ public class VoiceBgiDAO {
 			conn = DriverManager.getConnection("jdbc:h2:file:C:/dojo_db/Sol-ty", "sa", "");
 
 			// SELECT文を準備する
-			String sql = "select voiceselect, voicetitle from voice";
+			String sql = "select bgiselect, bgititle from bgi where userid = -1 or username = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-
-			String sql2 = "select bgiselect, bgititle from bgi";
-			PreparedStatement pStmt2 = conn.prepareStatement(sql2);
+		    pStmt.setInt(1, user.getUserid());
 
 			// SELECT文を実行し、結果表を取得する
 			ResultSet rs = pStmt.executeQuery();
-			ResultSet rs2 = pStmt2.executeQuery();
 
 			// ユーザーIDとパスワードが一致するユーザーがいたかどうかをチェックする
 			while(rs.next()) {
-				voiceList.put(rs.getInt("VOICESELECT"), rs.getString("VOICETITLE"));
-			}
-			while(rs2.next()) {
 				bgiList.put(rs.getInt("BGISELECT"), rs.getString("BGITITLE"));
 			}
-			vbList.add(voiceList);
-			vbList.add(bgiList);
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
-			vbList = null;
+			bgiList = null;
 		}
 		catch (ClassNotFoundException e) {
 			e.printStackTrace();
-			vbList = null;
+			bgiList = null;
 		}
 		finally {
 			// データベースを切断
@@ -64,11 +54,11 @@ public class VoiceBgiDAO {
 				}
 				catch (SQLException e) {
 					e.printStackTrace();
-					vbList = null;
+					bgiList = null;
 				}
 			}
 		}
-		return vbList;
+		return bgiList;
 	}
 
 	public boolean upload(Upload upload) {
