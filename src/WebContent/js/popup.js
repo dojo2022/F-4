@@ -1,5 +1,5 @@
  //<script src="sweetalert2.all.min.js"></script>
- //let result = request.getAttribute("result");
+ //let result = session.getAttribute("result");
  //let achieve = session.getAttribute("taskcount")
  //JSPに記述
 
@@ -9,7 +9,7 @@
 
 
  function submitButton() {
-	 if (result.indexOf('失敗しました') !== -1) {
+	 if (result.indexOf('失敗しました') == -1) {
 	 	//成功時のメッセージ
 	 	Swal.fire(
 		  '成功しました。',
