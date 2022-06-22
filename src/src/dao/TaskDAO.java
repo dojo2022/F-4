@@ -32,15 +32,16 @@ public class TaskDAO {
 			conn = DriverManager.getConnection("jdbc:h2:file:C:/dojo_db/Sol-ty", "sa", "");
 
 			// SQL文を準備する
-			String sql = "select * from Task WHERE USERID = ? and REGISTDAY like ? and TASKFLAG = '未完了'";
+			String sql = "select * from Task WHERE USERID = ? and REGISTDAY = ? and TASKFLAG = '未完了'";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, loginuser.getUserid());
 			pStmt.setInt(2, registday);
 
-			String sql2 = "select * from Task WHERE USERID = ? and REGISTDAY < ? and TASKFLAG = '未完了'";
+			String sql2 = "select * from Task WHERE USERID = ? and REGISTDAY < ? and NOT REGISTDAY = ? and TASKFLAG = '未完了'";
 			PreparedStatement pStmt2 = conn.prepareStatement(sql2);
 			pStmt2.setInt(1, loginuser.getUserid());
 			pStmt2.setInt(2, today);
+			pStmt2.setInt(3, registday);
 
 
 			// SQL文を実行し、結果表を取得する
@@ -228,7 +229,7 @@ public boolean insert(Task todo) {
 }
 
 //更新
-	public boolean flagUpdate(int userid, String taskflag, String[] taskArray) {
+	public boolean flagUpdate(LoginUser user,String compday, String taskflag, String[] taskArray) {
 		Connection conn = null;
 		boolean result = false;
 
@@ -238,7 +239,7 @@ public boolean insert(Task todo) {
 
 			String taskid= "";
 			for(int i=0; i<taskArray.length-1; i++) {
-				taskid += "TASKID =" + taskArray[i] + "or" ;
+				taskid += "TASKID =" + taskArray[i] + " or " ;
 			}
 			taskid += "TASKID =" + taskArray[taskArray.length-1] + ")";
 
@@ -246,9 +247,12 @@ public boolean insert(Task todo) {
 			conn = DriverManager.getConnection("jdbc:h2:file:C:/dojo_db/Sol-ty", "sa", "");
 
 			// SQL文を準備する
-			String sql =  "update Task set TASKFLAG=? where userid = ? and (" + taskid ;
+			String sql =  "update Task set TASKFLAG=?, COMPDAY=? where userid = ? and (" + taskid ;
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			pStmt.setInt(1, userid);
+
+			String sql2 =  "update IDPW set TASKCOUNT=? where userid = ?";
+			PreparedStatement pStmt2 = conn.prepareStatement(sql2);
+
 
 			// SQL文を完成させる
 			if (taskflag.equals("完了") && !taskflag.equals("")) {
@@ -257,10 +261,18 @@ public boolean insert(Task todo) {
 			else {
 				pStmt.setString(1, "完了");
 			}
-			pStmt.setInt(2, userid);
+			pStmt.setString(2, compday);
+			if(taskflag.equals("未完了") && taskArray.length > 0) {
+				pStmt2.setInt(1, user.getTaskcount() + taskArray.length);
+			}
+			else {
+				pStmt.setInt(1, user.getTaskcount());
+			}
+			pStmt.setInt(3, user.getUserid());
+			pStmt2.setInt(2, user.getUserid());
 
 			// SQL文を実行する
-			if (pStmt.executeUpdate() == 1) {
+			if (pStmt.executeUpdate() > 0 && pStmt2.executeUpdate() == 1) {
 				result = true;
 			}
 		}
@@ -311,7 +323,7 @@ public boolean insert(Task todo) {
 			pStmt.setString(3, taskid);
 
 			// SQL文を実行する
-			if (pStmt.executeUpdate() == 1) {
+			if (pStmt.executeUpdate() > 0) {
 				result = true;
 			}
 		}
@@ -340,7 +352,7 @@ public boolean insert(Task todo) {
 		return result;
 	}
 //削除
-	public boolean delete(int userid, String[]taskArray) {
+	public boolean delete(int userid, String[] taskArray) {
 		Connection conn = null;
 		boolean result = false;
 
@@ -351,7 +363,7 @@ public boolean insert(Task todo) {
 			String taskid= "";
 
 			for(int i=0; i<taskArray.length-1; i++) {
-				taskid += "TASKID =" + taskArray[i] + "or" ;
+				taskid += "TASKID =" + taskArray[i] + " or " ;
 			}
 			taskid += "TASKID =" + taskArray[taskArray.length-1] + ")";
 
@@ -365,7 +377,7 @@ public boolean insert(Task todo) {
 			pStmt.setInt(1, userid);
 
 			// SQL文を実行する
-			if (pStmt.executeUpdate() == 1) {
+			if (pStmt.executeUpdate() > 0) {
 				result = true;
 			}
 		}
@@ -385,6 +397,7 @@ public boolean insert(Task todo) {
 				}
 				catch (SQLException e) {
 					e.printStackTrace();
+					result= false;
 				}
 			}
 		}
@@ -413,7 +426,7 @@ public boolean insert(Task todo) {
 
 
 			//SQLの実行結果の処理
-			if(pStmt.executeUpdate() ==1 ) {
+			if(pStmt.executeUpdate() == 1 ) {
 				flag =  true;
 			}
 		} catch (ClassNotFoundException e) {
@@ -470,7 +483,7 @@ public boolean insert(Task todo) {
 			String nextMonth = monthFormat(year, month+1) + "14";
 
 			// SQL文を準備する
-			String sql =  "select TASKID, TASKCONTENT, REGISTDAY from Task where USERID = ? and REGISTDAY > ? and REGISTDAY < ? ";
+			String sql =  "select TASKID, TASKCONTENT, REGISTDAY from Task where USERID = ? and REGISTDAY > ? and REGISTDAY < ? and taskflag = '未完了'";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			//　SQL文"?"の箇所に値を埋める
 			pStmt.setInt(1, userid);

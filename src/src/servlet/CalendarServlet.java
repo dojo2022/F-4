@@ -27,11 +27,11 @@ public class CalendarServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// もしもログインしていなかったらログインサーブレットにリダイレクトする
-		/*HttpSession session = request.getSession();
+		HttpSession session = request.getSession();
 				if (session.getAttribute("user") == null) {
 					response.sendRedirect("/Sol_ty/LoginServlet");
 					return;
-				}*/
+				}
 
 		// カレンダーページにフォワードする
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/calendar.jsp");
@@ -62,7 +62,9 @@ public class CalendarServlet extends HttpServlet {
 			response.sendRedirect("/Sol_ty/InCompTaskServlet");
 		}
 		else if(submit.equals("タスク登録")) {
-			session.setAttribute("registday", registday);
+			String regist = Integer.toString(registday);
+			regist = String.format("%s/%s/%s", regist.substring(0,4),regist.substring(4,6),regist.substring(6));
+			session.setAttribute("registday", regist);
 			response.sendRedirect("/Sol_ty/TaskRegistServlet");
 		}
 		else if(submit.equals("日付変更")) {

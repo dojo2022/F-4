@@ -41,14 +41,17 @@ public class InCompTaskServlet extends HttpServlet {
 		int registday = todays;
 
 		if(session.getAttribute("registday") != null) {
-			registday = (int)session.getAttribute("registday");
+			registday = Integer.parseInt(session.getAttribute("registday").toString().replaceAll("/", ""));
 			session.removeAttribute("registday");
 		}
 		else registday = todays;
 
-		List<List<Task>> taskList = TDao.select(user , registday, todays);
+		List<List<Task>> taskList = TDao.select(user ,registday , todays);
 
 		request.setAttribute("taskList", taskList);
+		String regist = Integer.toString(registday);
+		regist = String.format("%s年%s月%s日", regist.substring(0,4),regist.substring(4,6),regist.substring(6));
+		request.setAttribute("today", regist);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/taskIncomp.jsp");
 		dispatcher.forward(request, response);
@@ -72,7 +75,7 @@ public class InCompTaskServlet extends HttpServlet {
 
 		TaskDAO TDao = new TaskDAO();
 		LoginUser user = (LoginUser)session.getAttribute("user");
-		int todays = Integer.parseInt(LocalDate.now().toString().replaceAll("-", ""));
+		int todays = Integer.parseInt(LocalDate.now().toString().replaceAll("-", "/"));
 		List<List<Task>> taskList = TDao.select(user , registday, todays);
 
 		request.setAttribute("taskList", taskList);

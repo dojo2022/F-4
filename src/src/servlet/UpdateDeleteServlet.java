@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -51,8 +52,11 @@ public class UpdateDeleteServlet extends HttpServlet {
 		// 更新または削除を行う
 		TaskDAO TDao = new TaskDAO();
 		if (sub.equals("完了")) {
-			if (TDao.flagUpdate(user.getUserid(),taskflag,taskid)) {	// 更新成功
+			String compday = LocalDate.now().toString().replaceAll("-", "");
+			if (TDao.flagUpdate(user,compday,taskflag,taskid)) {	// 更新成功
 				request.setAttribute("result", "更新しました");
+				user.setTaskcount(user.getTaskcount() + taskid.length);
+				session.setAttribute("user", user);
 			}
 			else {												// 更新失敗
 				request.setAttribute("result", "更新に失敗しました");
