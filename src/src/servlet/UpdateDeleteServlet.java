@@ -55,7 +55,7 @@ public class UpdateDeleteServlet extends HttpServlet {
 		if (sub.equals("完了")) {
 			String compday = LocalDate.now().toString().replaceAll("-", "");
 			if (TDao.flagUpdate(user,compday,taskflag,taskid)) {	// 更新成功
-				request.setAttribute("result", "更新しました");
+				result ="更新しました";
 				user.setTaskcount(user.getTaskcount() + taskid.length);
 				session.setAttribute("user", user);
 			}
@@ -65,7 +65,7 @@ public class UpdateDeleteServlet extends HttpServlet {
 		}
 		else if (sub.equals("未完了")) {
 			if (TDao.flagUpdate(user,"", taskflag, taskid)) {	// 更新成功
-				result = "更新しました";
+				result = "未完了に戻しました";
 				user.setTaskcount(user.getTaskcount() - taskid.length);
 				session.setAttribute("user", user);
 			}
@@ -75,7 +75,7 @@ public class UpdateDeleteServlet extends HttpServlet {
 		}
 		else if(sub.equals("削除")) {
 			if (TDao.delete(user.getUserid(),taskid)) {	// 更新成功
-				result =  "更新しました";
+				result =  "削除しました";
 			}
 			else {												// 更新失敗
 				result = "更新に失敗しました";
