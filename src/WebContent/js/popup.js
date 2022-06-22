@@ -1,5 +1,6 @@
  //<script src="sweetalert2.all.min.js"></script>
  //let result = request.getAttribute("result");
+ //let achieve = session.getAttribute("taskcount")
  //JSPに記述
 
  'use strict';
@@ -8,19 +9,32 @@
 
 
  function submitButton() {
-	 if (result == true) {
+	 if (result.indexOf('失敗しました') !== -1) {
 	 	//成功時のメッセージ
 	 	Swal.fire(
 		  '成功しました。',
-		  '変更が反映されました。',
+		  result,
 		  'success'
 		);
-	 } else if (result == false) {
+	 } else {
 	 	//失敗時のメッセージ
 	 	Swal.fire({
 		  	icon: 'error',
 		  	title: '失敗しました。',
-		  	text: 'もう一度お試しください。',
+		  	text: result,
 	 	});
  	 };
+ };
+
+ function achievePop() {
+ if(achieve == 1 || achieve == 5 || achive == 10)
+ 	Swal.fire({
+  title: '実績を解除しました',
+  showClass: {
+    popup: 'animate__animated animate__fadeInDown'
+  },
+  hideClass: {
+    popup: 'animate__animated animate__fadeOutUp'
+  }
+  })
  };
