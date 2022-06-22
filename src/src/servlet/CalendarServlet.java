@@ -30,7 +30,6 @@ public class CalendarServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 				if (session.getAttribute("user") == null) {
 					response.sendRedirect("/Sol_ty/LoginServlet");
-					return;
 				}
 
 		// カレンダーページにフォワードする

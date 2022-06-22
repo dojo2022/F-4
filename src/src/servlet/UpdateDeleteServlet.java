@@ -47,6 +47,7 @@ public class UpdateDeleteServlet extends HttpServlet {
 		}
 
 		String sub = request.getParameter("COMP");
+		String result = "";
 
 
 		// 更新または削除を行う
@@ -59,24 +60,36 @@ public class UpdateDeleteServlet extends HttpServlet {
 				session.setAttribute("user", user);
 			}
 			else {												// 更新失敗
-				request.setAttribute("result", "更新に失敗しました");
+				result = "更新に失敗しました";
+			}
+		}
+		else if (sub.equals("未完了")) {
+			if (TDao.flagUpdate(user,"", taskflag, taskid)) {	// 更新成功
+				result = "更新しました";
+				user.setTaskcount(user.getTaskcount() - taskid.length);
+				session.setAttribute("user", user);
+			}
+			else {												// 更新失敗
+				result = "更新に失敗しました";
 			}
 		}
 		else if(sub.equals("削除")) {
 			if (TDao.delete(user.getUserid(),taskid)) {	// 更新成功
-				request.setAttribute("result", "更新しました");
+				result =  "更新しました";
 			}
 			else {												// 更新失敗
-				request.setAttribute("result", "更新に失敗しました");
+				result = "更新に失敗しました";
 			}
 		}
-		else {	if (TDao.textUpdate(user.getUserid(), taskcontent,taskid[0])) {	// 更新成功
-				request.setAttribute("result", "更新しました");
+		else {
+			if (TDao.textUpdate(user.getUserid(), taskcontent,taskid[0])) {	// 更新成功
+				result = "更新しました";
 			}
 			else {												// 更新失敗
-				request.setAttribute("result", "更新に失敗しました");
+				result = "更新に失敗しました";
 			}
 		}
+		session.setAttribute("result", result);
 		 //結果ページにフォワードする
 		response.sendRedirect("/Sol_ty/InCompTaskServlet");
 

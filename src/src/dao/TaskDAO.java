@@ -262,11 +262,12 @@ public boolean insert(Task todo) {
 				pStmt.setString(1, "完了");
 			}
 			pStmt.setString(2, compday);
+
 			if(taskflag.equals("未完了") && taskArray.length > 0) {
 				pStmt2.setInt(1, user.getTaskcount() + taskArray.length);
 			}
 			else {
-				pStmt.setInt(1, user.getTaskcount());
+				pStmt2.setInt(1, user.getTaskcount() - taskArray.length);
 			}
 			pStmt.setInt(3, user.getUserid());
 			pStmt2.setInt(2, user.getUserid());
