@@ -31,7 +31,6 @@ public class AchievementServlet extends HttpServlet {
 				HttpSession session = request.getSession();
 				if (session.getAttribute("user") == null) {
 					response.sendRedirect("/Sol_ty/LoginServlet");
-					return;
 				}
 				LoginUser user = (LoginUser)session.getAttribute("user");
 				// 検索処理を行う

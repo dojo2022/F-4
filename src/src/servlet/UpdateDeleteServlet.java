@@ -33,9 +33,7 @@ public class UpdateDeleteServlet extends HttpServlet {
 
 		if (user == null) {
 			response.sendRedirect("/Sol_ty/LoginServlet");
-			return;
 		}
-		//3つ使う
 		// リクエストパラメータを取得する
 		request.setCharacterEncoding("UTF-8");
 		String[] taskid = request.getParameter("TASKID").split(",");

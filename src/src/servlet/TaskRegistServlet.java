@@ -50,9 +50,9 @@ public class TaskRegistServlet extends HttpServlet {
 		// もしもログインしていなかったらログインサーブレットにリダイレクトする
 				HttpSession session = request.getSession();
 				LoginUser user = (LoginUser)session.getAttribute("user");
-				if (user == null) {
+				if(user == null) {
+					// ログインページにフォワードする
 					response.sendRedirect("/Sol_ty/LoginServlet");
-					return;
 				}
 
 				// リクエストパラメータを取得する

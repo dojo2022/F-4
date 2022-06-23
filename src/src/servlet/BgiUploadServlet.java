@@ -1,7 +1,9 @@
 package servlet;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -12,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import org.json.JSONObject;
+
 import dao.VoiceBgiDAO;
 import model.LoginUser;
 import model.Upload;
@@ -19,18 +23,9 @@ import model.Upload;
  * Servlet implementation class BgiUploadServlet
  */
 @WebServlet("/BgiUploadServlet")
-@MultipartConfig
+@MultipartConfig (location = "C:\\dojo6\\src\\WebContent\\uploadBgi")
 public class BgiUploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public BgiUploadServlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -38,50 +33,49 @@ public class BgiUploadServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
+
+		LoginUser user = (LoginUser)session.getAttribute("user");
 		if (session.getAttribute("user") == null) {
 			response.sendRedirect("/Sol_ty/LoginServlet");
-			return;
 		}
-		//3つ使う
-		LoginUser user = (LoginUser)session.getAttribute("user");
 
-		request.setCharacterEncoding("utf-8");
+		request.setCharacterEncoding("UTF-8");
 		//name属性がpictのファイルをPartオブジェクトとして取得
 		Part part=request.getPart("BGICONTENT");
 		//ファイル名を取得
 		String filename=part.getSubmittedFileName();//ie対応が不要な場合
 		//String filename=Paths.get(part.getSubmittedFileName()).getFileName().toString();
-		//アップロードするフォルダ
-		String path=getServletContext().getRealPath("/Sol_ty");
+
 		//実際にファイルが保存されるパス確認
-		part.write(path+File.separator+filename);
-		//System.out.println(path);
-		//書き込み
-		/*
-		part.write(path+File.separator+filename);
-		request.setAttribute("BGICONTENT", path+File.separator+filename);
-		request.setAttribute("BGITITLE", filename);
-		*/
-		// リクエストパラメータを取得する
-		/*
-		request.setCharacterEncoding("UTF-8");
-		String bgicontent = request.getParameter("BGICONTENT");
-		String bgititle = request.getParameter("BGITITLE");
-		*/
+		part.write("C:\\dojo6\\src\\WebContent\\uploadBgi\\"+ filename);
+
 		int userid = user.getUserid();
-		String bgicontent = path+File.separator+filename;
+		String bgicontent = "uploadBgi/"+filename;
 		// 更新または削除を行う
 
 		VoiceBgiDAO VDao = new VoiceBgiDAO();
+		JSONObject json = new JSONObject();
 
-		if (VDao.upload(new Upload(userid, bgicontent,filename))) {	// アップロード成功
-			request.setAttribute("result", "アップロードに成功しました");
+		int bgiselect = VDao.upload(new Upload(userid, bgicontent,filename));
+		if (bgiselect > 0) {	// アップロード成功
+			Map<String, String> option = new HashMap<String, String>();
+			option.put("bgiselect", Integer.toString(bgiselect));
+			option.put("filename", filename);
+
+			json.put("option", option);
+
+
+			session.setAttribute("result", "アップロードに成功しました");
+			response.setContentType("application/json");
+			response.setHeader("Cache-Control", "nocache");
+			response.setCharacterEncoding("utf-8");
+			PrintWriter out = response.getWriter();
+			out.print(json);
+
 		}
 		else {												// アップロード失敗
-			request.setAttribute("result", "アップロードに失敗しました");
+			session.setAttribute("result", "アップロードに失敗しました");
 		}
 	}
 
 }
-
-

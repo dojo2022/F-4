@@ -30,15 +30,15 @@ public class CompTaskServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// もしもログインしていなかったらログインサーブレットにリダイレクトする
 		HttpSession session = request.getSession();
-		if (session.getAttribute("user") == null) {
+		LoginUser user = (LoginUser)session.getAttribute("user");
+		if(user == null) {
+			// ログインページにフォワードする
 			response.sendRedirect("/Sol_ty/LoginServlet");
-			return;
 		}
 
 		// リクエストパラメータを取得する
 		// search.jspと変数名を統一、大文字小文字も
 		// 検索処理を行う
-		LoginUser user = (LoginUser)session.getAttribute("user");
 		TaskDAO tDao = new TaskDAO();
 		List<Task> compList = tDao.compSelect(user);
 
@@ -56,11 +56,10 @@ public class CompTaskServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-
-		if(session.getAttribute("user") == null) {
+		LoginUser user = (LoginUser)session.getAttribute("user");
+		if(user == null) {
 			// ログインページにフォワードする
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
-			dispatcher.forward(request, response);
+			response.sendRedirect("/Sol_ty/LoginServlet");
 		}
 
 		request.setCharacterEncoding("UTF-8");
@@ -68,7 +67,6 @@ public class CompTaskServlet extends HttpServlet {
 
 
 		TaskDAO TDao = new TaskDAO();
-		LoginUser user = (LoginUser)session.getAttribute("user");
 		int todays = Integer.parseInt(LocalDate.now().toString().replaceAll("-", "/"));
 		List<List<Task>> taskList = TDao.select(user , registday, todays);
 

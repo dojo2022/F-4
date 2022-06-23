@@ -43,7 +43,7 @@ public class SettingServlet extends HttpServlet {
 				VoiceBgiDAO vbDAO = new VoiceBgiDAO();
 				List<Bgi> bgiList = vbDAO.BgiSelect(user.getUserid());
 
-				request.setAttribute("bgiList", bgiList);
+				session.setAttribute("bgiList", bgiList);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/setting.jsp");
 			dispatcher.forward(request, response);
 	}
@@ -63,7 +63,7 @@ public class SettingServlet extends HttpServlet {
 
 				// リクエストパラメータを取得する
 				request.setCharacterEncoding("UTF-8");
-				int userid = Integer.parseInt(request.getParameter("USERID"));
+				int userid = user.getUserid();
 				int voiceswitch = Integer.parseInt(request.getParameter("VOICESWITCH"));
 				int voiceselect = Integer.parseInt(request.getParameter("VOICESELECT"));
 				int bgiselect = Integer.parseInt(request.getParameter("BGISELECT"));
@@ -76,9 +76,14 @@ public class SettingServlet extends HttpServlet {
 				Setting setting = new Setting(userid, voiceswitch, voiceselect, bgiselect);
 				if (sDao.update(setting)) {
 					//設定反映成功
-					user = iDao.update(user, setting);
+					iDao.update(user);
 					session.setAttribute("user", user);
 					request.setAttribute("result", "設定が反映されました");
+
+					VoiceBgiDAO vbDAO = new VoiceBgiDAO();
+					List<Bgi> bgiList = vbDAO.BgiSelect(user.getUserid());
+
+					session.setAttribute("bgiList", bgiList);
 				}
 
 				else {

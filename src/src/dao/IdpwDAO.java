@@ -9,7 +9,6 @@ import java.sql.SQLException;
 
 import model.Idpw;
 import model.LoginUser;
-import model.Setting;
 
 public class IdpwDAO {
 	// ログインできるならtrueを返す
@@ -71,8 +70,9 @@ public class IdpwDAO {
 			// 結果を返す
 			return user;
 		}
-		public LoginUser update(LoginUser user, Setting setting) {
+		public boolean update(LoginUser user) {
 			Connection conn = null;
+			boolean result = false;
 
 			try {
 				// JDBCドライバを読み込む
@@ -82,11 +82,11 @@ public class IdpwDAO {
 				conn = DriverManager.getConnection("jdbc:h2:file:C:/dojo_db/Sol-ty", "sa", "");
 
 				// SELECT文を準備する
-				String sql = "select count(*), idpw.VOICESWITCH, idpw.VOICESELECT, idpw.BGISELECT, BGICONTENT FROM IDPW LEFT OUTER JOIN VOICE ON IDPW.VOICESELECT = VOICE.VOICESELECT LEFT OUTER JOIN BGI ON IDPW.BGISELECT = BGI.BGISELECT where USERID = ?";
+				String sql = "select count(*), idpw.VOICESWITCH, idpw.VOICESELECT, idpw.BGISELECT, BGICONTENT FROM IDPW LEFT OUTER JOIN VOICE ON IDPW.VOICESELECT = VOICE.VOICESELECT LEFT OUTER JOIN BGI ON IDPW.BGISELECT = BGI.BGISELECT where idpw.USERID = ?";
 				PreparedStatement pStmt = conn.prepareStatement(sql);
 
 
-				pStmt.setInt(1,setting.getUserid());
+				pStmt.setInt(1,user.getUserid());
 
 
 				// SELECT文を実行し、結果表を取得する
@@ -99,13 +99,16 @@ public class IdpwDAO {
 					user.setVoiceselect(rs.getInt("VOICESELECT"));
 					user.setBgiselect(rs.getInt("BGISELECT"));
 					user.setBgicontent(rs.getString("BGICONTENT"));
+					result = true;
 				}
 			}
 			catch (SQLException e) {
 				e.printStackTrace();
+				result = false;
 			}
 			catch (ClassNotFoundException e) {
 				e.printStackTrace();
+				result = false;
 			}
 			finally {
 				// データベースを切断
@@ -115,11 +118,12 @@ public class IdpwDAO {
 					}
 					catch (SQLException e) {
 						e.printStackTrace();
+						result = false;
 					}
 				}
 			}
 
-			return user;
+			return result;
 		}
 		public boolean insert(Idpw idpw) {
 			Connection conn = null;
@@ -163,7 +167,7 @@ public class IdpwDAO {
 				else return false;
 				if (secans != null && !secans.equals("")) pStmt.setString(4, secans);
 				else return false;
-				pStmt.setInt(5, 1);
+				pStmt.setInt(5, 0);
 				pStmt.setInt(6, 1);
 				pStmt.setInt(7, 1);
 

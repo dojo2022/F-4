@@ -41,6 +41,14 @@ public class CalendarServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		HttpSession session = request.getSession();
+		LoginUser user = (LoginUser)session.getAttribute("user");
+		if(user == null) {
+			// ログインページにフォワードする
+			response.sendRedirect("/Sol_ty/LoginServlet");
+		}
+
 		// リクエストパラメータを取得する
 		request.setCharacterEncoding("UTF-8");
 
@@ -51,9 +59,6 @@ public class CalendarServlet extends HttpServlet {
 		if(request.getParameter("REGISTDAY") != null) {
 			registday = Integer.parseInt(request.getParameter("REGISTDAY"));
 		}
-
-		HttpSession session = request.getSession();
-		LoginUser user = (LoginUser)session.getAttribute("user");
 
 		if (submit.equals("タスク確認")) {
 

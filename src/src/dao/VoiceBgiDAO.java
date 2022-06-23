@@ -61,9 +61,9 @@ public class VoiceBgiDAO {
 		return bgiList;
 	}
 
-	public boolean upload(Upload upload) {
+	public int upload(Upload upload) {
 		Connection conn = null;
-		boolean uploadResult = false;
+		int key = 0;
 
 		try {
 			// JDBCドライバを読み込む
@@ -73,31 +73,35 @@ public class VoiceBgiDAO {
 			conn = DriverManager.getConnection("jdbc:h2:file:C:/dojo_db/Sol-ty", "sa", "");
 
 			// SELECT文を準備する
-			String sql = "insert into idpw (USERID, BGIUPLOAD, BGITITLE) values (?, ?, ?)";
-			PreparedStatement pStmt = conn.prepareStatement(sql);
+			String sql = "insert into bgi (USERID, BGICONTENT, BGITITLE) values (?, ?, ?)";
+			PreparedStatement pStmt = conn.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS);
 			int userid = upload.getUserid();
 			String bgicontent = upload.getBgicontent();
 		    String bgititle  = upload.getBgititle();
 
 			if (userid != -1) pStmt.setInt(1, userid);
-			else return false;
+			else key = 0;
 			if (bgicontent != null && !bgicontent.equals("")) pStmt.setString(2, bgicontent);
-			else return false;
+			else key = 0;
 			if (bgititle != null && !bgititle.equals("")) pStmt.setString(3, bgititle);
-			else return false;
+			else key = 0;
 
-			//
-			if (pStmt.executeUpdate() == 1) {
-				return true;
-			}
+			pStmt.executeUpdate();
+
+			ResultSet rs = pStmt.getGeneratedKeys();
+
+			if(rs.next()){
+	             key = rs.getInt(1);
+	         }
+
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
-			uploadResult = false;
+			key = 0;
 		}
 		catch (ClassNotFoundException e) {
 			e.printStackTrace();
-			uploadResult = false;
+			key = 0;
 		}
 		finally {
 			// データベースを切断
@@ -107,12 +111,12 @@ public class VoiceBgiDAO {
 				}
 				catch (SQLException e) {
 					e.printStackTrace();
-					uploadResult = false;
+					key = 0;
 				}
 			}
 		}
 
 		// 結果を返す
-		return uploadResult;
+		return key;
 	}
 }
