@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 
 import dao.TaskDAO;
+import model.LoginUser;
 
 /**
  * Servlet implementation class CalendarServlet
@@ -51,9 +52,8 @@ public class CalendarServlet extends HttpServlet {
 			registday = Integer.parseInt(request.getParameter("REGISTDAY"));
 		}
 
-
 		HttpSession session = request.getSession();
-		//LoginUser user = (LoginUser)session.getAttribute("user");
+		LoginUser user = (LoginUser)session.getAttribute("user");
 
 		if (submit.equals("タスク確認")) {
 
@@ -70,7 +70,7 @@ public class CalendarServlet extends HttpServlet {
 			int taskid = Integer.parseInt(request.getParameter("TASKID"));
 			TaskDAO TDao = new TaskDAO();
 
-			if(TDao.updateDate(1, taskid, registday))
+			if(TDao.updateDate(user.getUserid(), taskid, registday))
 				request.setAttribute("result", true);
 			else
 				request.setAttribute("result", false);
@@ -82,7 +82,7 @@ public class CalendarServlet extends HttpServlet {
 			TaskDAO TDao = new TaskDAO();
 			JSONObject json = new JSONObject();
 
-			json = TDao.monthTask(1, year, month);
+			json = TDao.monthTask(user.getUserid(), year, month);
 
 			response.setContentType("application/json");
 			response.setHeader("Cache-Control", "nocache");
