@@ -41,7 +41,7 @@ public class InCompTaskServlet extends HttpServlet {
 		int registday = todays;
 
 		if(session.getAttribute("registday") != null) {
-			registday = Integer.parseInt(session.getAttribute("registday").toString().replaceAll("/", "/"));
+			registday = Integer.parseInt(session.getAttribute("registday").toString().replaceAll("/", ""));
 			session.removeAttribute("registday");
 		}
 		else registday = todays;
