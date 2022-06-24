@@ -50,6 +50,7 @@ public class UpdateDeleteServlet extends HttpServlet {
 
 		// 更新または削除を行う
 		TaskDAO TDao = new TaskDAO();
+
 		if (sub.equals("完了")) {
 			String compday = LocalDate.now().toString().replaceAll("-", "");
 			if (TDao.flagUpdate(user,compday,taskflag,taskid)) {	// 更新成功
@@ -57,9 +58,7 @@ public class UpdateDeleteServlet extends HttpServlet {
 				user.setTaskcount(user.getTaskcount() + taskid.length);
 				session.setAttribute("user", user);
 			}
-			else {												// 更新失敗
-				result = "更新に失敗しました";
-			}
+			else result = "更新に失敗しました";
 		}
 		else if (sub.equals("未完了")) {
 			if (TDao.flagUpdate(user,"", taskflag, taskid)) {	// 更新成功
@@ -67,25 +66,19 @@ public class UpdateDeleteServlet extends HttpServlet {
 				user.setTaskcount(user.getTaskcount() - taskid.length);
 				session.setAttribute("user", user);
 			}
-			else {												// 更新失敗
-				result = "更新に失敗しました";
-			}
+			else result = "更新に失敗しました";
 		}
 		else if(sub.equals("削除")) {
 			if (TDao.delete(user.getUserid(),taskid)) {	// 更新成功
 				result =  "削除しました";
 			}
-			else {												// 更新失敗
-				result = "更新に失敗しました";
-			}
+			else result = "更新に失敗しました";
 		}
-		else {
+		else if(sub.equals("編集")){
 			if (TDao.textUpdate(user.getUserid(), taskcontent,taskid[0])) {	// 更新成功
 				result = "更新しました";
 			}
-			else {												// 更新失敗
-				result = "更新に失敗しました";
-			}
+			else result = "更新に失敗しました";
 		}
 		session.setAttribute("result", result);
 		 //結果ページにフォワードする

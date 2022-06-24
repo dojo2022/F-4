@@ -34,8 +34,6 @@ public class TaskRegistServlet extends HttpServlet {
 			return;
 		}
 		if(session.getAttribute("registday") == null) {
-
-
 			session.setAttribute("registday",  LocalDate.now().toString().replaceAll("-", "/"));
 		}
 		// 登録ページにフォワードする
@@ -61,7 +59,6 @@ public class TaskRegistServlet extends HttpServlet {
 				int registday = Integer.parseInt(request.getParameter("REGISTDAY"));
 				String deadline = request.getParameter("DEADLINE");
 				String taskcontent = request.getParameter("TASKCONTENT");
-
 
 				// 登録処理を行う
 				TaskDAO tDao = new TaskDAO();

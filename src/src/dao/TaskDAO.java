@@ -161,6 +161,10 @@ public boolean insert(Task todo) {
 	Connection conn = null;
 	boolean result = false;
 
+	if(todo.getTaskcontent() .equals("")) {
+		return false;
+	}
+
 	try {
 		// JDBCドライバを読み込む
 		Class.forName("org.h2.Driver");
@@ -176,13 +180,6 @@ public boolean insert(Task todo) {
 		pStmt.setInt(1, todo.getUserid());
 
 		pStmt.setInt(2, todo.getRegistday());
-
-		/*if (todo.getRegistday() != null && !todo.getRegistday().equals("")) {
-			pStmt.setString(2, todo.getRegistday());
-		}
-		else {
-			pStmt.setString(2,"");
-		}*/
 
 		if (todo.getDeadline() != null && !todo.getDeadline().equals("")) {
 			pStmt.setString(3, todo.getDeadline());
@@ -232,6 +229,10 @@ public boolean insert(Task todo) {
 	public boolean flagUpdate(LoginUser user,String compday, String taskflag, String[] taskArray) {
 		Connection conn = null;
 		boolean result = false;
+
+		if(taskArray.length < 1) {
+			return false;
+		}
 
 		try {
 			// JDBCドライバを読み込む
@@ -314,7 +315,7 @@ public boolean insert(Task todo) {
 			conn = DriverManager.getConnection("jdbc:h2:file:C:/dojo_db/Sol-ty", "sa", "");
 
 			// SQL文を準備する
-			String sql =  "update Task set TASKCONTENT=? where userid = ? taskid = ?";
+			String sql =  "update Task set TASKCONTENT=? where userid = ? and taskid = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
@@ -356,6 +357,10 @@ public boolean insert(Task todo) {
 	public boolean delete(int userid, String[] taskArray) {
 		Connection conn = null;
 		boolean result = false;
+
+		if(taskArray.length < 1) {
+			return false;
+		}
 
 		try {
 			// JDBCドライバを読み込む
