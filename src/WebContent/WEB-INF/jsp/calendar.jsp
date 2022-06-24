@@ -21,7 +21,7 @@
 		<label for="sidemenu" class="back"></label> <a href="#"
 			class="close-btn">&times;</a>
 		<ul class="hamburgermenu">
-			<li class="top">username</li>
+			<li class="top"><img src="logo-sample/Sol-Ty-logo2.png" alt="solty"></li>
 			<li><a href="/Sol_ty/InCompTaskServlet">タスク表示</a></li>
 			<li><a href="/Sol_ty/TaskRegistServlet">タスク登録</a></li>
 			<li><a href="/Sol_ty/CalenderServlet">カレンダー</a></li>
@@ -33,8 +33,10 @@
 	<div class="navtext">
 		<h2>カレンダー</h2>
 	</div>
+	<div id="logoutLogo">
 	<a href="/Sol_ty/LogoutServlet"><img src="image/logout.png"
 		alt="ログアウト"></a>
+	</div>
 </header>
 <!-- ヘッダーここまで -->
 
@@ -61,6 +63,17 @@
 		</label>
 	</div>
 </body>
+<script>
+/*if(achieve >= 10) {
+	addChildcreate(child);
+}
+function addChildcreate(child) {
+var child = document.createElement("li");
+child.innerHTML = "<a href='/Sol_ty/jsp/minigame.html'>??????</a>"
+child = parent.appendChild(child);
+console.log(child);
+}*/
+</script>
 <script>
     function pop() {
       document.getElementById("popup").style = "display: none;";
@@ -176,7 +189,7 @@ body { //
 
 #wrapper {
 	padding: 100px 10px 0;
-	background: white;
+	background-color: ghostwhite;
 }
 
 #calendar {
@@ -185,6 +198,11 @@ body { //
 	border-collapse: collapse;
 }
 
+.fc .fc-toolbar-title {
+    font-size: 1.75em;
+    margin: 0;
+    margin-left: -40px;
+}
 .fc-daygrid-day-frame {
 	margin: 0;
 }
@@ -199,15 +217,16 @@ body { //
 }
 
 #popup {
-	width: 80%;
+ 	border-radius: 1.0em;
+	width: 60%;
 	z-index: 999;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
 	position: absolute;
 	top: 55%;
-	left: 10%;
-	height: 150px;
+	left: 20%;
+	height: 250px;
 	text-align: center;
 	font-size: 25px;
 	background-color: #eee;
@@ -227,11 +246,12 @@ body { //
 #popupButton div input {
 	border: none;
 	background-color: rgb(86, 86, 212);
-	height: 40px;
-	width: 120px;
+	height: 70px;
+	width: 140px;
 	border-radius: 10px;
 	color: white;
 	font-weight: bold;
+	font-size: 22px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.33);
 }
 

@@ -1,199 +1,690 @@
-  @charset "UTF-8";
+@charset "UTF-8";
 
-  /*?��S?��Ẵy?��[?��W?��ɓK?��p*/
-  html {
-      font-family: sans-serif;
-      background-color: gainsboro;
-  }
-  html* {
-    box-sizing: border-box;
-  }
+/*??��?��S??��?��Ẵy??��?��[??��?��W??��?��ɓK??��?��p*/
+html {
+    font-family: sans-serif;
+    background-color: gainsboro;
+}
+html* {
+  box-sizing: border-box;
+}
+.container {
+position: relative;
+min-height: 100vh;/*�@�����̍ŏ��l*/
+}
 
+@media (max-width: 390px){
+  .hamburgermenu a {
+  font-size: 30px  !important;
+}
+a.hamburger-menu {
+  margin-top: 13px  !important;
+}
+.hamburger-menu div {
+  width: 40px !important;
+  height: 2px  !important;
+  margin: 10px  !important;
+  }
   .header{
-    display: flex;
-    justify-content: space-between;
-    background-color: darkgray;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
-    position: fixed;
-    width: 100%;
-    z-index: 1000;
-  }
-  /*ハンバ�?�ガー*/
-  .hamburger-menu div {
-    width: 70px;
-    height: 5px;
-    background-color: black;
-    margin: 18px;
-    transition: .3s;
-
-  }
-  .hamburger-menu:hover div {
-    opacity:0.6;
-    /* 透�?�度を指�? */
-  }
-  .hamburger-menu + .sidenavs:target {
-    overflow-x: visible;
-    width: 100%;
-    display:block;
-  }
-  .sidenavs:target {
-    overflow-x: hidden;
-    width: 0;
-  }
-  /* ハンバ�?�ガーメニュー表示�? */
-  .sidenavs {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: darkgray;
-    overflow-x: hidden;
-    /* 横スクロールを無効にする */
-    padding-top: 60px;
-    transition: 0.3s;
-  }
-  /* ハンバ�?�ガーメニュー表示時�?�リンク */
-  .sidenavs a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-    font-weight:bold;
-  }
-  /* マウスオーバ�?�後�?�リンク */
-  .sidenavs a:hover {
-    color: black;
-  }
-  /* クローズボタン */
-  .sidenavs .close-btn {
-    position: absolute;
-    top: 0;
-    font-size: 50px;
-  }
-  body{
-    margin: 0px;
-  }
-
-  .hamburgermenu {
-      list-style: none;
-      text-align: center;
-      padding-left: 0;
-      font-size:70px;
-      ;
-  }
-  .hamburgermenu a{
-    font-size: 50px;
-  }
-  li.top{
-    margin-bottom: 30px;
-    font-size: 50px;
+  height: 70px  !important;
   }
   h2{
-    font-size: 25px;
+  font-size: 20px  !important;
   }
+  #logoutLogo img{
+  height: 50px !important;
+  }
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  background-color: ghostwhite;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+  border-bottom:1px;
+  position: fixed;
+  top:0;
+  width: 100%;
+  z-index: 1000;
+}
+/*ハンバ�??��ガー*/
+.hamburger-menu div {
+  width: 70px;
+  height: 5px;
+  background-color: black;
+  margin: 18px;
+  transition: .3s;
+
+}
+.hamburger-menu:hover div {
+  opacity:0.6;
+}
+.hamburger-menu + .sidenavs:target {
+  overflow-x: visible;
+  width: 100%;
+  display:block;
+}
+.sidenavs:target {
+  overflow-x: hidden;
+  width: 0;
+}
+.sidenavs {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: ghostwhite;
+  overflow-x: hidden;
+  /* 横スクロールを無効にする */
+  padding-top: 60px;
+  transition: 0.3s;
+}
+.sidenavs a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  position:realtive;
+  transition: 0.3s;
+}
+/* マウスオーバ�??��後�??��リンク */
+.sidenavs a:hover {
+  color: black;
+}
+/* クローズボタン */
+.sidenavs .close-btn {
+  position: absolute;
+  top: 0;
+  font-size: 50px;
+}
+#logoutLogo img{
+height: 70px;
+margin-top:7px
+}
+body{
+  margin: 0px;
+}
+
+.hamburgermenu {
+    list-style: none;
+    text-align: center;
+    padding-left: 0;
+    font-size:70px;
+    ;
+}
+.hamburgermenu a{
+  font-size: 30px;
+  color: #505050;
+  padding: 0.5em;
+  display: inline-block;
+  line-height: 1.3;
+  background: #afeeee;
+  vertical-align: middle;
+  border-radius: 30px 0px 0px 30px;
+  margin-bottom: 35px;
+  width: 350px;
+  text-align: left;
+  margin-left: 190px;
+  margin-right: 200px;
+}
+
+.hamburgermenu a::before {
+content: "";
+display:inline-block;
+border-radius: 30px;
+height: 30px;
+width: 30px;
+background: ghostwhite;
+margin-right: 15px;
+margin-bottom: -7px;
+}
+
+li.top{
+  margin-bottom: 50px;
+  margin-top: -30px;
+}
+li.top img{
+height:200px;
+}
+h2{
+  font-size: 25px;
+}
 
 /*achievement*/
 .achievementList{
-  font-size: 40px;
-  border: solid black;
-  text-align: center;
-    width: 700px;
+font-size: 40px;
+border: solid black;
+text-align: center;
+  width: 700px;
 
-    margin-left: auto;
-    margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
+
 #achievementListAll{
-  padding-top:200px;
+padding-top:200px;
 }
 
 #achievementTop{
-  display: flex;
-  justify-content: space-evenly;
+display: flex;
+justify-content: space-evenly;
 }
 
 /*カレンダー*/
 
-#yearDate {
-  border-radius: 4px;
-  transition: all 0.2s;
-  text-align: center;
-  padding-top: 200px;
-  margin-right: 40px;
-  margin-left: 40px;
-  height:200px
-}
-/*.vc-weeks[data-v-74ad501d] {
-  display: grid;
-  grid-template-columns: repeat(7,1fr);
-  position: relative;
-  -webkit-overflow-scrolling: touch;
-  padding: 5px;
-  width: 900px;
-  min-height: 900px;
-
-}*/
-/*span.vc-day-content.vc-focusable {
-  font-size: 40px;
-}*/
-element.style {
-  margin: 0px;
-  position: absolute;
-  inset: 0px auto auto 0px;
-  transform: translate3d(300px, 38px, 0px);
-  width: 300px;
-  height: 300px;
-}
-div.vc-title{
-  font-size: 3em;
-}
-.vc-weekday[data-v-74ad501d] {
-  text-align: center;
-  color: var(--gray-500);
-  /* font-size: var(--text-sm); */
-  font-weight: var(--font-bold);
-  line-height: 14px;
-  padding-top: 4px;
-  padding-bottom: 8px;
-  cursor: default;
-  -webkit-user-select: none;
-  user-select: none;
-  font-size: 40px;
-}
 /*taskincomp*/
 div#currentDateIncomp {
-  padding-top: 100px;
+	text-align: center;
+	font-size: 40px;
+	 background: linear-gradient(transparent 60%, #afeeee 60%);
+	 margin:35px 150px 0;
 }
+h2#pastDateIncomp{
+	text-align: center;
+	font-size:40px;
+	 background: linear-gradient(transparent 60%, #afeeee 60%);
+	margin: 35px 220px 0;
+}
+div#incompToday {
+    text-align: center;
+    border-bottom: solid 0.5px;
+}
+.incompYesterday {
+    text-align: center;
+    border-bottom: solid 0.5px;
+}
+div#switchMode {
+    font-size: 35px;
+    margin-top: 50px;
+}
+input#switchModeDone{
+    height: 60px;
+    width: 150px;
+    font-size: 30px;
+    margin: 30px 260px 0;
+}
+input#switchModeDelete{
+    height: 60px;
+    width: 150px;
+    font-size: 30px;
+    margin: 30px 260px 0;
+}
+div#doneOrDelete {
+    margin-left: 70px;
+}
+.incompTask{
+margin:60px 50px 30px;
+background: white;
+padding-top: 50px;
+padding-bottom: 40px;
+position: relative;
+border-radius: 4px;
+}
+.incompTask:before, .incompTask:after
+{
+ z-index: -1;
+  position: absolute;
+  content: "";
+  bottom: 25px;
+  left: 10px;
+  width: 50%;
+  top: 80%;
+  max-width:300px;
+  -webkit-box-shadow: 0 35px 20px #777;
+  -moz-box-shadow: 0 35px 20px #777;
+  box-shadow: 0 35px 20px #777;
+  -webkit-transform: rotate(-8deg);
+  -moz-transform: rotate(-8deg);
+  -o-transform: rotate(-8deg);
+  -ms-transform: rotate(-8deg);
+  transform: rotate(-8deg);
+}
+.incompTask:after
+{
+ -webkit-transform: rotate(8deg);
+  -moz-transform: rotate(8deg);
+  -o-transform: rotate(8deg);
+  -ms-transform: rotate(8deg);
+  transform: rotate(8deg);
+  right: 10px;
+  left: auto;
+}
+
+.incompClip{
+/*border: solid brown;*/
+margin: 130px 100px;
+border-radius: 40px;
+/*background:url(https://peonyqueen.files.wordpress.com/2015/10/cork02.jpg);*/
+position: absolute;
+}
+
+input.taskIncomp {
+    height: 70px;
+    font-size: 40px;
+    border: none;
+    background: white;
+}
+
+input.PreTaskIncomp {
+    height: 50px;
+    font-size: 40px;
+    border: none;
+    background: white;
+}
+.masking-tape{
+  position: absolute;
+  z-index: 1;
+  top: 30px;
+  left: 31%;
+  width: 200px;
+  height: 60px;
+  background-image: linear-gradient(-45deg, rgba(255,165,0,.4) 25%, transparent 25%, transparent 50%, rgba(255,165,0,.4) 50%, rgba(255,165,0,.4) 75%, transparent 75%, transparent 100%);
+  background-size: 40px 40px;
+  border-left:7px dotted rgba(0,0,0,.1);
+  border-right:7px dotted rgba(0,0,0,.1);
+  box-shadow:0 0 5px rgba(0,0,0,.2);
+  padding: 0.25em 2em;
+  color: #65513f;
+  transform: rotate(-4deg);
+}
+
+button#taskEdit {
+    height: 45px;
+    width: 75px;
+    font-size: 30px;
+    margin-left: -60px;
+}
+
+
 /*taskcomp*/
 #taskCompList{
-  padding-top: 130px;
+  margin-top: 130px;
+  padding: 100px 100px 80px 50px;
   text-align: center;
+  margin-left: 80px;
+  margin-right: 80px;
 }
 .taskComp{
   text-align: left;
-}
-.taskComp{
-  border: solid black;
-  width: 600px;
+  border-bottom: solid 0.5px black;
+  border-left: solid 20px #afeeee;
+  width: 700px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 20px;
+  height: 160px;
+  background-color: white;
+  display: flex;
+  position: relative;
 }
-#backIncomp{
-  margin-top: 1em;
+.taskComp:after
+{
+  z-index: -1;
+  position: absolute;
+  content: "";
+  bottom: 15px;
+  right: 10px;
+  left: auto;
+  width: 50%;
+  top: 80%;
+  max-width:300px;
+  background: #777;
+  -webkit-box-shadow: 0 15px 10px #777;
+  -moz-box-shadow: 0 15px 10px #777;
+  box-shadow: 0 15px 10px #777;
+  -webkit-transform: rotate(3deg);
+  -moz-transform: rotate(3deg);
+  -o-transform: rotate(3deg);
+  -ms-transform: rotate(3deg);
+  transform: rotate(3deg);
 }
+.taskComp div{
+	font-size: 30px;
+	margin-top: 100px;
+}
+#cmpTaskContent{
+	font-size:60px;
+	margin-top: 10px;
+	flex-direction: column;
+
+}
+#backIncomp {
+  border: 2px solid #000;
+  border-radius: 0;
+  background: #fff;
+  -webkit-box-shadow: 4px 4px 0 #000;
+  box-shadow: 4px 4px 0 #000;
+  height: 80px;
+  width: 200px;
+  margin-top: 30px;
+  font-size: 30px;
+  border-radius: 20px;
+}
+
+#backIncomp:hover {
+  -webkit-box-shadow: -4px -4px 0 #000;
+  box-shadow: -4px -4px 0 #000;
+}
+
+input.taskcompCheck {
+    transform: scale(6);
+    position: absolute;
+    margin-left: 600px;
+    margin-top: 50px;
+}
+input.taskcompCheck ::before{
+	border: solid 0.5px black;
+}
+
 /*setting*/
-#registForm{
-  padding-top:100px;
+form#language {
+    margin-top: 150px;
 }
 
 /*login*/
 span#buttonEye {
-  z-index: 2;
+z-index: 2;
+position: absolute;
+margin-top: 17px;
+margin-left: -30px;
+}
+#loginForm{
+text-align: center;
+margin-bottom: 40px;
+}
+.titleLogo{
+text-align: center;
+margin-bottom: 30px;
+}
+#signUp{
+margin-left: 336px;
+font-size: 25px;
+position: absolute;
+z-index: 999;
+}
+hr#hrLeft {
+margin-top: 15px;
+width: 250px;
+}
+#hrRight{
+margin-top: -13px;
+text-align: right;
+margin-right: 0;
+width: 250px;
+margin-bottom: 40px;
+}
+
+#loginOr{
+margin-top: -13px;
+text-align: center;
+}
+.loginForm {
+margin-bottom: 15px;
+}
+img{
+height: 300px;
+margin-top:-50px;
+}
+.loginForm .textInput {
+height: 50px;
+font-size: 25px;
+width: 300px;
+border-radius: 6em;
+border: solid #818181;
+}
+input#loginButton {
+font-size: 25px;
+}
+
+@media (max-width: 390px){
+.container {
+  position: relative;
+  min-height: 100vh;
+  height: 1538px;
+  width: 780px;
+}
+img {
+  height: 450px;
+}
+.loginForm .textInput {
+  height: 80px;
+  font-size: 40px;
+  width: 400px;
+}
+input#loginButton {
+  font-size: 40px;
+}
+#loginOr{
+  font-size: 30px;
+}
+hr#hrLeft{
+  margin-top: 100px;
+}
+#hrRight{
+  margin-top: -33px;
+  margin-bottom: 75px;
+}
+#signUp{
+  margin-left: 314px;
+  font-size: 40px;
+}
+#loginForm{
+  margin-top: 80px;
+}
+span#buttonEye{
+  margin-top: 45px;
+  margin-left: -55px;
+}
+p#output {
+  font-size: 25px;
+}
+canvas{
+  height: 325px;
+}
+}
+
+/*calender.html*/
+.btn-mouseover:hover + .mouseover__box{
+display: block;
+}
+.mouseover__box:hover{
+  display: block;
+}
+.mouseover__box{
+  display: none;
   position: absolute;
-  margin-top: 2px;
-  margin-left: -30px;
+  top:0;
+  left:0;
+  width: 200px;
+  padding: 15px;
+  font-size: 13px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+
+
+canvas{
+  position: absolute;
+  bottom: 0;
+left:0;
+  width: 100%;
+}
+
+
+
+
+html {
+background-color: ghostwhite;
+}
+
+.planePath {
+stroke: #D9DADA;
+stroke-width: .1%;
+stroke-width: .5%;
+stroke-dasharray: 1% 2%;
+stroke-linecap: round;
+fill: none;
+}
+
+.fil1 {
+fill: #D9DADA;
+}
+
+.fil2 {
+fill: #C5C6C6;
+}
+
+.fil4 {
+fill: #9D9E9E;
+}
+
+.fil3 {
+fill: #AEAFB0;
+}
+
+/*userregist*/
+.titleLogoUserRegist {
+text-align: center;
+margin-top: 60px;
+margin-top: 50px;
+margin-bottom: -20px;
+}
+.titleLogoUserRegist img{
+height: 250px;
+margin-top:-50px;
+}
+#userRegistTitle{
+text-align: center;
+font-size: 40px;
+margin-top: -40px;
+}
+
+#signUpText{
+position: absolute;
+margin-left: 150px;
+font-size: 25px;
+border: solid gray;
+margin-right: 150px;
+border-radius: 0.5em;
+padding: 20px 60px 30px 70px;
+background: white;
+margin-top: -15px;
+z-index: 999;
+border-left: solid 10px gray;
+}
+#signUpText p{
+text-align: center;
+}
+.newRegistForm input[type="text"] {
+height: 45px;
+width: 310px;
+font-size: 25px;
+border-bottom: solid 3px;
+border-top: none;
+border-left: none;
+border-right: none;
+}
+input#secretQuestion{
+height: 45px;
+width: 310px;
+font-size: 25px;
+border-bottom: solid 3px;
+border-top: none;
+border-left: none;
+border-right: none;
+}
+#secretQuestion{
+margin-top: 25px;
+}
+select {
+height: 40px;
+border-bottom: solid;
+border-top: none;
+border-left: none;
+border-right: none;
+width: 312px;
+font-size: 25px;
+}
+input#regist {
+margin-left: 100px;
+border-radius: 0.5em;
+border: solid #818181;
+height: 50px;
+width: 120px;
+font-size: 25px;
+}
+hr#signUpHrright {
+width: 260px;
+text-align: right;
+margin-right: 0;
+margin-top: -63px;
+margin-bottom: 80px;
+}
+hr#signUpHrLeft {
+width: 260px;
+margin-left: 0;
+margin-top: 70px;
+}
+
+@media (max-width: 390px){
+.titleLogoUserRegist {
+margin-top: 150px;
+}
+hr#signUpHrLeft {
+margin-top: 100px;
+}
+hr#signUpHrright{
+  margin-bottom: 120px;
+  margin-top: -72px;
+}
+#userRegistTitle{
+font-size: 45px !important;
+}
+.titleLogoUserRegist img {
+  height: 400px;
+}
+input[type="text"] {
+  height: 80px;
+  width: 500px;
+  font-size: 40px;
+}
+select{
+width: 400px;
+font-size: 40px;
+}
+#signUpText{
+margin-left:63px;
+}
+input#regist{
+    height: 70px;
+  width: 150px;
+  font-size: 40px;
+  margin-left: 165px;
+  margin-top:20px;
+   }
+   #signUpText p{
+	font-size: 40px;
+    }
+}
+
+/*taskregist*/
+div#weekDay {
+    font-size: larger;
+    padding-left: 30px;
+    margin-left: 170spx;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#registForm {
+    margin-top: 130px;
+    text-align: center;
+    font-size: 30px;
+    border: solid 0.5px;
+    margin-left: 90px;
+    margin-right: 90px;
+    padding-bottom: 30px;
+    background: white;
 }

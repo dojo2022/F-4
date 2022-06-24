@@ -3,13 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
 <html>
+<script>
+window.onload = () => {
+ sound();
+</script>
 <head>
 <meta charset="UTF-8">
 <title>実績 | Sol-ty</title>
 <link rel="stylesheet" href="/Sol_ty/css/style.css">
-<link rel='stylesheet'
-	href='https://unpkg.com/v-calendar/lib/v-calendar.min.css'>
-<script src='https://unpkg.com/v-calendar'></script>
 </head>
 <!--ヘッダーここから-->
 <header class="header">
@@ -22,7 +23,7 @@
 		<label for="sidemenu" class="back"></label> <a href="#"
 			class="close-btn">&times;</a>
 		<ul class="hamburgermenu">
-			<li class="top">username</li>
+			<li class="top"><img src="logo-sample/Sol-Ty-logo2.png" alt="solty"></li>
 			<li><a href="/Sol_ty/InCompTaskServlet">タスク表示</a></li>
 			<li><a href="/Sol_ty/TaskRegistServlet">タスク登録</a></li>
 			<li><a href="/Sol_ty/CalendarServlet">カレンダー</a></li>
@@ -34,7 +35,7 @@
 	<div class="navtext">
 		<h2>実績</h2>
 	</div>
-	<div>
+	<div id="logoutLogo">
 		<a href="/Sol_ty/LogoutServlet"><img src="image/logout.png"
 			alt="ログアウト"></a>
 	</div>
@@ -66,5 +67,21 @@
 			</div>
 		</c:forEach>
 	</div>
-	<!--実績一覧ここまで-->
+	<script>
+'use strict';
+window.addEventListener('DOMContentLoaded', function() {
+    // 実行したい処理を書く
+    const taskCount = '${user.taskcount}';
+	 const voiceSelect = '${user.voiceselect}';
+	 //console.log(voiceSelect);
+ 	if(taskCount >= 0) {
+ 		const voicePath = ["VoiceAchieveDisplayKotaro.wav","VoiceAchieveDisplayRyusei.wav",
+ 			  "VoiceAchieveDisplayMetan.wav","VoiceAchieveDisplayTsumugi.wav"];
+ 	    const music = new Audio("voice/" + voicePath[voiceSelect-1]);
+ 	    //const music = new Audio("voice/" + voicePath[1]);
+ 	    music.play();
+ 	    music.loop = false;
+ 	}
+})
+</script>
 </body>

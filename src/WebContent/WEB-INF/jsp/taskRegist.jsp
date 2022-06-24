@@ -9,9 +9,8 @@
 <meta http-equiv='x-ua-compatible' content='ie=edge'>
 <title>タスク登録 | Sol-ty</title>
 <link rel="stylesheet" href="/Sol_ty/css/style.css">
-<!-- IMPORTANT: No CSS link needed as of v1 - It's all inlined -->
-<!-- Pre v1.0.0 versions need the minified css -->
-<!-- <link rel='stylesheet' href='https://unpkg.com/v-calendar/lib/v-calendar.min.css'> -->
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+	<script src='https://unpkg.com/v-calendar'></script>
 </head>
 <!--ヘッダーここから-->
 <header class="header">
@@ -24,7 +23,7 @@
 		<label for="sidemenu" class="back"></label> <a href="#"
 			class="close-btn">&times;</a>
 		<ul class="hamburgermenu">
-			<li class="top">username</li>
+			<li class="top"><img src="logo-sample/Sol-Ty-logo2.png" alt="solty"></li>
 			<li><a href="/Sol_ty/InCompTaskServlet">タスク表示</a></li>
 			<li><a href="/Sol_ty/TaskRegistServlet">タスク登録</a></li>
 			<li><a href="/Sol_ty/CalendarServlet">カレンダー</a></li>
@@ -36,45 +35,33 @@
 	<div class="navtext">
 		<h2>タスク登録</h2>
 	</div>
-	<div>
-	<a href="/Sol_ty/LogoutServlet"><img src="/image/logout.png"
-		alt="ログアウト"></a>
+	<div id="logoutLogo">
+	<a href="/Sol_ty/LogoutServlet"><img src="image/logout.png" alt="ログアウト"></a>
 	</div>
 </header>
 
 <body>
-	<form id="registForm">
-
+	<form id="registForm" method="post" action="/Sol_ty/TaskRegistServlet">
+<input type="hidden" id="regist" name="REGISTDAY">
 		<div id='app'>
 			<!--<v-calendar></v-calendar>-->
 			<v-date-picker v-model='selectedDate' :popover="popover"
 				v-model="date" @dayclick="onDayClick">
 			<template v-slot="{ inputValue, inputEvents }">
 				<div id="weekDay" style="display: flex;">
-					<div id="currentDate"></div>
-					<div>{{inputValue}}</div>
-					<div v-on="inputEvents" style="cursor: pointer;">▼</div>
+					<div v-on="inputEvents" id="currentDate" style="display: flex; cursor: pointer;">${registday}</div>
+					<!--div style="cursor: pointer;">▼</div-->
 				</div>
 			</template>
 			</v-date-picker>
 		</div>
-		?
 		<div>
-			時間指定 <input type="checkbox" id="timeCheckOnOff" class="timeCheck"
-				onclick="timeOnOff();">
+			時間指定 <input type="checkbox" id="timeCheckOnOff" class="timeCheck" onclick="timeOnOff();">
 		</div>
-		<input type="time" name="deadline" id="timeInput">
-		<input type="text" name="taskcontent" placeholder="タスク入力">
+		<input type="time" name="DEADLINE" id="timeInput"><br>
+		<input type="text" name="TASKCONTENT" placeholder="タスク入力">
 		<input type="submit" value="登録">
 	</form>
-
-	<!-- 1. Link Vue Javascript -->
-	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-	?
-	<!-- 2. Link VCalendar Javascript (Plugin automatically installed) -->
-	<script src='https://unpkg.com/v-calendar'></script>
-	?
-	<!--3. Create the Vue instance-->
 	<script>
         new Vue({
             el: '#app',
@@ -82,23 +69,24 @@
             data: {
                 selectedDate: null,
                 date: new Date(),
-                inputValue: new Date(),
                 popover: { visibility: 'click' }
             },
             methods: {
                 onDayClick(day) {
-                    alert(day.ariaLabel.substring(0, day.ariaLabel.indexOf("日")+1));
-                    console.log(`${day.year}/${day.month}/${day.day}`);
-                    document.getElementById('currentDate').style.display ='none';
+
+                	document.getElementById('currentDate').innerHTML = day.year+"/"+day.month.toString().padStart(2, "0")+"/"+day.day.toString().padStart(2, "0");
+                	document.getElementById('regist').value = day.year+day.month.toString().padStart(2, "0")+day.day.toString().padStart(2, "0");
                 }
             }
             })
 
-            date = new Date();
+            /*date = new Date();
             year = date.getFullYear();
             month = date.getMonth() + 1;
-            day = date.getDate();
-            document.getElementById("currentDate").innerHTML = year + "年" + month + "月" + day + "日";
+            day = date.getDate();*/
+            document.getElementById('regist').value = '${registday}'.replaceAll("/", "");
+            console.log(document.getElementById('regist').value);
+            //document.getElementById("currentDate").innerHTML = year + "年" + month + "月" + day + "日";
 
 
    document.getElementById('timeInput').style.display = 'none'
@@ -117,3 +105,4 @@
   </script>
 </body>
 </html>
+
