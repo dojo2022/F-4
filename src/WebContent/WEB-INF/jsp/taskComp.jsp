@@ -34,7 +34,7 @@ window.onload = () => {
 			<li class="top"><img src="logo-sample/Sol-Ty-logo2.png" alt="solty"></li>
 			<li><a href="/Sol_ty/InCompTaskServlet">タスク表示</a></li>
 			<li><a href="/Sol_ty/TaskRegistServlet">タスク登録</a></li>
-			<li><a href="/Sol_ty/CalenderServlet">カレンダー</a></li>
+			<li><a href="/Sol_ty/CalendarServlet">カレンダー</a></li>
 			<li><a href="/Sol_ty/AchievementServlet">実績</a></li>
 			<li><a href="/Sol_ty/CompTaskServlet">完了タスク</a></li>
 			<li><a href="/Sol_ty/SettingServlet">設定</a></li>
@@ -88,4 +88,10 @@ function getTaskid() {
 }
 </script>
 </body>
+<footer>
+VOICEVOX:白上虎太郎
+VOICEVOX:四国めたん
+VOICEVOX:春日部つむぎ
+VOICEVOX:青山龍星
+</footer>
 </html>
