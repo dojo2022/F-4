@@ -37,7 +37,7 @@ public class AchievementDAO {
 						while (rs.next()) {
 							if (user.getTaskcount() >= rs.getInt("ACHIEVEID")) {
 								Achievement achieve = new Achievement(
-								rs.getInt("ACHIEVEID"),
+								(rs.getInt("ACHIEVEID") / 5) + 1,
 								rs.getString("ACHIEVETITLE"),
 								rs.getString("CONDITION"),
 								rs.getString("ACHIEVECONTENT")

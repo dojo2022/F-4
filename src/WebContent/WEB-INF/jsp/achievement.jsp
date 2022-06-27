@@ -50,7 +50,7 @@ window.onload = () => {
 			<c:forEach var="e" items="${achieveList}">
 				<div class="achieve">
 					<div class="soltyImage">
-						<img src="logo-sample/Sol-Ty-logo2.png">
+						<img src="image/achievement${e.achieveid}.png">
 					</div>
 					<div class="achievementList">
 						<div id="achievementTop">

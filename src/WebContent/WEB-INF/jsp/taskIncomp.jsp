@@ -1,26 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <c:out value="${result}"/>
 <c:if test="${ !empty result}">
 
-<script>
+	<script>
 const flag ='${result}';
 const voiceSelect = '${user.voiceselect}';
 const voiceSwitch = '${user.voiceswitch}';
-//if (voiceSwitch == 0) {
 	window.onload = () => {
- 	sound();
- 	popup();
+	 	 popup();
+ 	     if(voiceSwitch === '0'){
+ 	    	 sound();
+ 	     }
 	}
-//} else if (voiceSwitch == 1)
-
-//}
 </script>
 
-<c:remove var="result" scope="session"/>
+	<c:remove var="result" scope="session" />
 </c:if>
 
 <!doctype html>
@@ -41,7 +39,8 @@ const voiceSwitch = '${user.voiceswitch}';
 		<label for="sidemenu" class="back"></label> <a href="#"
 			class="close-btn">&times;</a>
 		<ul class="hamburgermenu">
-			<li class="top"><img src="logo-sample/Sol-Ty-logo2.png" alt="solty"></li>
+			<li class="top"><img src="logo-sample/Sol-Ty-logo2.png"
+				alt="solty"></li>
 			<li><a href="/Sol_ty/InCompTaskServlet">タスク表示</a></li>
 			<li><a href="/Sol_ty/TaskRegistServlet">タスク登録</a></li>
 			<li><a href="/Sol_ty/CalendarServlet">カレンダー</a></li>
@@ -58,89 +57,86 @@ const voiceSwitch = '${user.voiceswitch}';
 	</div>
 </header>
 <body>
-<div class="incompClip">
-<span class="masking-tape"></span>
-<div class="incompTask">
-	<h2>
-		<div id="currentDateIncomp">${today}</div>
-	</h2>
-	<form method="POST" id="taskForm" name="f1">
-	<input type="hidden" id="taskid" name="TASKID">
-	<input type="hidden" name="TASKFLAG" value="未完了">
-		<c:forEach var="e" items="${taskList[0]}">
-			<div id="incompToday">
-				<input type="checkbox" name="taskflag" value="${e.taskid}" class="taskIncomp">
-				<input type="text" value="${e.taskcontent}" class="taskIncomp">
-				<span>${e.deadline}</span>
-				<button id="taskEdit" onclick="">edit</button>
-				<br>
-			</div>
-		</c:forEach>
+	<div class="incompClip">
+		<span class="masking-tape"></span>
+		<div class="incompTask">
+			<h2>
+				<div id="currentDateIncomp">${today}</div>
+			</h2>
+			<form method="POST" id="taskForm" name="f1">
+				<input type="hidden" id="taskid" name="TASKID"> <input
+					type="hidden" name="TASKFLAG" value="未完了">
+				<c:forEach var="e" items="${taskList[0]}">
+					<div id="incompToday">
+						<input type="checkbox" name="taskflag" value="${e.taskid}"
+							class="taskIncomp"> <input type="text"
+							value="${e.taskcontent}" class="taskIncomp" id="task${e.taskid}">
+						<span>${e.deadline}</span>
+						<button type="button" id="taskEdit"
+							onclick="textEdit(${e.taskid})">edit</button>
+						<br>
+					</div>
+				</c:forEach>
 
 
-		<h2 id="pastDateIncomp">前日まで</h2>
-		<c:forEach var="e" items="${taskList[1]}">
-			<div class="incompYesterday">
-				<input type="checkbox" name="taskflag" value="${e.taskid}" class="taskIncomp">
-				<input type="text" value="${e.taskcontent}" class="PreTaskIncomp">
-				<span>${e.deadline}</span>
-				<button id="taskEdit">edit</button>
-				<br>
-			</div>
-		</c:forEach>
-		<div id=mode>
-			<div id="switchMode">
-				モード切替<br>
-				<div id="doneOrDelete">
-				<input type="radio" name="radio" value="done"
-					id="radioDone" onclick="changeButton();" checked>完了
-				<input type="radio" name="radio" value="delete" id="radioDelete"
-					onclick="changeButton();">削除
+				<h2 id="pastDateIncomp">前日まで</h2>
+				<c:forEach var="e" items="${taskList[1]}">
+					<div class="incompYesterday">
+						<input type="checkbox" name="taskflag" value="${e.taskid}"
+							class="taskIncomp"> <input type="text"
+							value="${e.taskcontent}" class="PreTaskIncomp"
+							id="task${e.taskid}"> <span>${e.deadline}</span>
+						<button type="button" id="taskEdit"
+							onclick="textEdit(${e.taskid})">edit</button>
+						<br>
+					</div>
+				</c:forEach>
+				<div id=mode>
+					<div id="switchMode">
+						モード切替<br>
+						<div id="doneOrDelete">
+							<input type="radio" name="radio" value="done" id="radioDone"
+								onclick="changeButton();" checked>完了 <input type="radio"
+								name="radio" value="delete" id="radioDelete"
+								onclick="changeButton();">削除
+						</div>
+					</div>
+					<input type="hidden" value="完了" name="COMP" id="send"> <input
+						type="submit" value="完了" class="doneDelete" id="switchModeDone">
+					<!--  onClick="sound()" -->
+					<input type="submit" value="削除" name="DELETE" class="doneDelete"
+						id="switchModeDelete">
 				</div>
-			</div>
-			<input type="hidden" value="完了" name="COMP" id="send">
-			<input type="submit" value="完了" class="doneDelete" id="switchModeDone"> <!--  onClick="sound()" -->
-			<input type="submit" value="削除" name="DELETE" class="doneDelete"  id="switchModeDelete">
+			</form>
 		</div>
-	</form>
-</div>
+	</div>
 
-	<!--メインここまで-->
+		<!--メインここまで-->
 
 
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="/Sol_ty/js/popup.js"></script>
-<script>
+		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+		<script src="/Sol_ty/js/popup.js"></script>
+		<script>
 'use strict';
 //完了ボタンを押した際に音声を流す
 function sound() {
+	let voicePath = [];
 	if(flag.indexOf("失敗") == -1 && flag.indexOf("更新しました") != -1) {
-		const voiceSelect = '${user.voiceselect}'
-		const voicePath = ["VoiceCompTaskKotaro.wav","VoiceCompTaskRyusei.wav",
+		voicePath = ["VoiceCompTaskKotaro.wav","VoiceCompTaskRyusei.wav",
 			  "VoiceCompTaskMetan.wav","VoiceCompTaskTsumugi.wav"];
-	    const music = new Audio("voice/" + voicePath[voiceSelect-1]);
-	    //const music = new Audio("voice/" + voicePath[1]);"VoiceCompTaskKotaro.wav"
-	    music.play();
-	    music.loop = false;
 	}
 	else if(flag.indexOf("失敗") == -1 && flag.indexOf("削除しました") != -1) {
-		const voiceSelect = '${user.voiceselect}'
-		const voicePath = ["VoiceTaskFDeleteKotaro.wav","VoiceTaskDeleteRyusei.wav",
+		voicePath = ["VoiceTaskFDeleteKotaro.wav","VoiceTaskDeleteRyusei.wav",
 			  "VoiceTaskDeleteMetan.wav","VoiceTaskDeleteTsumugi.wav"];
-	    const music = new Audio("voice/" + voicePath[voiceSelect-1]);
-	    //const music = new Audio("voice/" + voicePath[1]);"VoiceCompTaskKotaro.wav"
-	    music.play();
-	    music.loop = false;
+
 	}
 	else if(flag.indexOf("未完了") != -1) {
-		const voiceSelect = '${user.voiceselect}'
-		const voicePath = ["VoiceIncompTaskKotaro.wav","VoiceIncompTaskRyusei.wav",
+		voicePath = ["VoiceIncompTaskKotaro.wav","VoiceIncompTaskRyusei.wav",
 			  "VoiceIncompTaskMetan.wav","VoiceIncompTaskTsumugi.wav"];
-	    const music = new Audio("voice/" + voicePath[voiceSelect-1]);
-	    //const music = new Audio("voice/" + voicePath[1]);
-	    music.play();
-	    music.loop = false;
 	}
+    const music = new Audio("voice/" + voicePath[voiceSelect-1]);
+    music.play();
+    music.loop = false;
   }
 
   document.getElementById('switchModeDone').style.display ='inline';
@@ -157,18 +153,6 @@ function sound() {
     document.getElementById('switchModeDelete').style.display = 'inline'
   }
 }
-          /*function deleteRow() {
-        	  const checkedList = document.querySelectorAll(".table [name='DeleteName[]']:checked");
-        	  if (checkedList.length === 0) {
-        	    alert("選択してください");
-        	    return;
-        	  }
-        	  if(!confirm("削除しますか？")) {
-        	    return;
-        	  }
-        	  checkedList.forEach(check => check.closest("tr").remove());
-        	}
-        	*/
         	//疑似クラスchecked
         	// 興味・関心のある分野
         	const switchModeDone = document.getElementById("switchModeDone");
@@ -204,34 +188,17 @@ function getTaskid() {
  	document.forms.f1.submit();
 		});
 
-        	/*switchModeDelete.addEventListener('submit', event => {
-        		event.preventDefault();
+ async function textEdit(taskid) {
+	 const taskcontent = document.getElementById("task"+taskid).value;
+	    const params = { 'TASKID' : taskid, 'TASKCONTENT' : taskcontent, 'COMP': '編集' };// 渡したいパラメータをJSON形式で書く
+		const query_params = new URLSearchParams(params);
+		const option =  { method: 'POST', cache: 'no-cache', body: query_params }
 
-        	})
-        	/*
-
-        	(function (window, $) {
-  'use strict';
-
-  $.fn.useSound = function (_event, _id) {
-    var se = $(_id);
-    this.on(_event, function(){
-      se[0].currentTime = 0;
-      se[0].play();
-    });
-    return this;
-  };
-
-})(this, this.jQuery);
-
-$('.btn a').useSound('mousedown touchstart', '#sound');
-*/
+	  	const response = await fetch('/Sol_ty/UpdateDeleteServlet', option);
+		return;
+ }
   </script>
 </body>
-<footer>
-VOICEVOX:白上虎太郎
-VOICEVOX:四国めたん
-VOICEVOX:春日部つむぎ
-VOICEVOX:青山龍星
-</footer>
+<footer> VOICEVOX:白上虎太郎 VOICEVOX:四国めたん VOICEVOX:春日部つむぎ
+	VOICEVOX:青山龍星 </footer>
 </html>
