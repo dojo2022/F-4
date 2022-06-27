@@ -149,7 +149,11 @@ height:200px;
 h2{
   font-size: 25px;
 }
-
+footer {
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+}
 /*achievement*/
 .achievementList{
 font-size: 40px;
@@ -173,6 +177,13 @@ justify-content: space-evenly;
 /*カレンダー*/
 
 /*taskincomp*/
+span.deadlineTime {
+    z-index: 2;
+    position: absolute;
+    margin-left: -170px;
+    font-size: 30px;
+}
+
 div#currentDateIncomp {
 	text-align: center;
 	font-size: 40px;
@@ -211,6 +222,7 @@ input#switchModeDelete{
 }
 div#doneOrDelete {
     margin-left: 70px;
+    margin-top: 10px;
 }
 .incompTask{
 margin:60px 50px 30px;
@@ -254,19 +266,33 @@ border-radius: 4px;
 /*border: solid brown;*/
 margin: 130px 100px;
 border-radius: 40px;
+
 /*background:url(https://peonyqueen.files.wordpress.com/2015/10/cork02.jpg);*/
 position: absolute;
 }
-
+input#taskIncompCheck {
+    height: 10px;
+    margin-right: 35px;
+    transform: scale(3.5);
+}
+input#radioDone {
+    transform: scale(3);
+    margin-right: 30px;
+}
+input#radioDelete{
+    transform: scale(3);
+    margin-right: 30px;
+}
 input.taskIncomp {
-    height: 70px;
+    height: 90px;
     font-size: 40px;
     border: none;
     background: white;
+    outline: none;
 }
 
 input.PreTaskIncomp {
-    height: 50px;
+    height: 90px;
     font-size: 40px;
     border: none;
     background: white;
@@ -297,6 +323,13 @@ button#taskEdit {
 
 
 /*taskcomp*/
+.dateLine{
+	  font-size: 10px;
+	  text-align: right;
+	  padding-top:10px;
+	  padding-right: 0.5em;
+	  }
+
 #taskCompList{
   margin-top: 130px;
   padding: 100px 100px 80px 50px;
@@ -309,13 +342,9 @@ button#taskEdit {
   border-bottom: solid 0.5px black;
   border-left: solid 20px #afeeee;
   width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
-  height: 160px;
   background-color: white;
-  display: flex;
   position: relative;
+  margin-bottom: 50px;
 }
 .taskComp:after
 {
@@ -340,13 +369,17 @@ button#taskEdit {
 }
 .taskComp div{
 	font-size: 30px;
-	margin-top: 100px;
 }
 #cmpTaskContent{
-	font-size:60px;
-	margin-top: 10px;
-	flex-direction: column;
-
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2; /* 2行表示 */
+      -webkit-box-orient: vertical;
+      width: 520px;
+      height:130px;
+      font-size: 50px;
+      padding-left: 0.5em;
 }
 #backIncomp {
   border: 2px solid #000;
@@ -359,6 +392,9 @@ button#taskEdit {
   margin-top: 30px;
   font-size: 30px;
   border-radius: 20px;
+  position: fixed;
+  bottom: 45px;
+  margin-left: -300px;
 }
 
 #backIncomp:hover {
@@ -670,21 +706,180 @@ input#regist{
 }
 
 /*taskregist*/
+
+p#changeDateClick {
+    font-size: small;
+}
+
 div#weekDay {
     font-size: larger;
     padding-left: 30px;
-    margin-left: 170spx;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 50px;
+    padding-bottom: 19px;
+      font-weight   : bold;
+}
+p#taskRegistForm {
+    padding-top: 90px;
+}
+p#taskRegistForm{
+	position: relative;
+  padding: 0rem 4rem 0.7rem;
+}
+p#taskRegistForm:after {
+  position: absolute;
+  bottom: 0;
+  left: 15%;
+  width: 70%;
+  height: 10px;
+  content: '';
+  background-image: -webkit-repeating-linear-gradient(135deg, #000, #000 1px, transparent 2px, transparent 5px);
+  background-image: repeating-linear-gradient(-45deg, #000, #000 1px, transparent 2px, transparent 5px);
+  background-size: 7px 7px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 #registForm {
-    margin-top: 130px;
+    margin-top: 180px;
     text-align: center;
     font-size: 30px;
-    border: solid 0.5px;
     margin-left: 90px;
     margin-right: 90px;
     padding-bottom: 30px;
+    padding-top: 50px;
     background: white;
+    position: relative;
+    border-radius: 7px;
+}
+#registForm:before, #registForm:after
+{
+ z-index: -2;
+  position: absolute;
+  content: "";
+  bottom: 25px;
+  left: 10px;
+  width: 50%;
+  top: 80%;
+  max-width:300px;
+  -webkit-box-shadow: 0 35px 20px #777;
+  -moz-box-shadow: 0 35px 20px #777;
+  box-shadow: 0 35px 20px #777;
+  -webkit-transform: rotate(-8deg);
+  -moz-transform: rotate(-8deg);
+  -o-transform: rotate(-8deg);
+  -ms-transform: rotate(-8deg);
+  transform: rotate(-8deg);
+}
+#registForm:after
+{
+
+ -webkit-transform: rotate(8deg);
+  -moz-transform: rotate(8deg);
+  -o-transform: rotate(8deg);
+  -ms-transform: rotate(8deg);
+  transform: rotate(8deg);
+  right: 10px;
+  left: auto;
+}
+
+input#timeInput {
+    height: 40px;
+    width: 120px;
+    font-size: 29px;
+}
+div#timeSelect {
+   text-align: left;
+    margin-left: 110px;
+    margin-bottom: 40px;
+}
+.cp_iptxt {
+	position: relative;
+	width: 80%;
+	margin: 40px 3%;
+}
+.cp_iptxt input[type='text'] {
+	font: 15px/24px sans-serif;
+	box-sizing: border-box;
+	width: 100%;
+	letter-spacing: 1px;
+	padding-left: 4em;
+}
+.cp_iptxt input[type='text']:focus {
+	outline: none;
+}
+#taskInputContent {
+	padding: 4px 0;
+	border: 0;
+	border-bottom: 1px solid #1b2538;
+	background-color: transparent;
+	margin-left: 40px;
+	font-size: 40px;
+}
+#taskInputContent ~ .focus_line {
+	position: absolute;
+	bottom: 0;
+	left: 40px;
+	width: 0;
+	height: 2px;
+	transition: 0.4s;
+	background-color: #ffa500;
+}
+#taskInputContent:focus ~ .focus_line,
+.cp_iptxt.ef ~ .focus_line {
+	width: 100%;
+	transition: 0.4s;
+}
+#taskInputContent ~ label {
+	position: absolute;
+	z-index: -1;
+	top: 4px;
+	left: 0;
+	width: 100%;
+	transition: 0.3s;
+	letter-spacing: 0.5px;
+	color: #aaaaaa;
+}
+#taskInputContent:focus ~ label, .cp_iptxt#taskInputContent ~ label {
+	font-size: 12px;
+	top: -16px;
+	transition: 0.3s;
+	color: #ffa500;
+}
+input#timeCheckOnOff {
+    transform: scale(2);
+    margin-right: 15px;
+}
+.masking-tapeRegist{
+  position: absolute;
+  z-index: 1;
+  top: 160px;
+  left: 31%;
+  width: 200px;
+  height: 40px;
+  background: #ece093;
+  background-size: 40px 40px;
+  border-left:7px dotted rgba(0,0,0,.1);
+  border-right:7px dotted rgba(0,0,0,.1);
+  box-shadow:0 0 5px rgba(0,0,0,.2);
+  padding: 0.25em 2em;
+  transform: rotate(-4deg);
+  opacity: 0.8;
+}
+#taskRegistBtn {
+  display       : inline-block;
+  border-radius : 20%;          /* 角丸       */
+  font-size     : 18pt;        /* 文字サイズ */
+  text-align    : center;      /* 文字位置   */
+  cursor        : pointer;     /* カーソル   */
+  padding       : 12px 40px;   /* 余白       */
+  background    : gray;     /* 背景色     */
+  color         : #ffffff;     /* 文字色     */
+  line-height   : 1em;         /* 1行の高さ  */
+  transition    : .3s;         /* なめらか変化 */
+  border        : 2px solid gray;    /* 枠の指定 */
+  margin-bottom: 50px;
+}
+#taskRegistBtn:hover {
+  color         : gray;     /* 背景色     */
+  background    : #ffffff;     /* 文字色     */
 }

@@ -64,8 +64,10 @@ if (voiceSwitch == 0) {
 					<div id="cmpTaskContent">${e.taskcontent}</div>
 
 					<div>${e.deadline}</div>
-					<div>締切：${ fn:substring(e.registday,0,4)}/${fn:substring(e.registday,4,6)}/${fn:substring(e.registday,6,8)}</div>
-					<div>達成：${ fn:substring(e.compday,0,4)}/${fn:substring(e.compday,4,6)}/${fn:substring(e.compday,6,8)}</div>
+					<div class="dateLine">
+					締切：${ fn:substring(e.registday,0,4)}/${fn:substring(e.registday,4,6)}/${fn:substring(e.registday,6,8)}
+					達成：${ fn:substring(e.compday,0,4)}/${fn:substring(e.compday,4,6)}/${fn:substring(e.compday,6,8)}
+					</div>
 				</div>
 			</c:forEach>
 

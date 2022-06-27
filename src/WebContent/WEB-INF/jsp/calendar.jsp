@@ -189,7 +189,7 @@ body { //
 
 #wrapper {
 	padding: 100px 10px 0;
-	background-color: ghostwhite;
+	background-color: white;
 }
 
 #calendar {

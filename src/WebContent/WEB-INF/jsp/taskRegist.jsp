@@ -41,7 +41,11 @@
 </header>
 
 <body>
+<span class="masking-tapeRegist"></span>
 	<form id="registForm" method="post" action="/Sol_ty/TaskRegistServlet">
+	<p id="taskRegistForm">～タスク登録フォーム～</p>
+	<p id="changeDateClick">※日付クリックで日付の変更ができます。</p>
+
 <input type="hidden" id="regist" name="REGISTDAY">
 		<div id='app'>
 			<!--<v-calendar></v-calendar>-->
@@ -55,12 +59,15 @@
 			</template>
 			</v-date-picker>
 		</div>
-		<div>
+		<div id="timeSelect">
 			時間指定 <input type="checkbox" id="timeCheckOnOff" class="timeCheck" onclick="timeOnOff();">
-		</div>
 		<input type="time" name="DEADLINE" id="timeInput"><br>
-		<input type="text" name="TASKCONTENT" placeholder="タスク入力">
-		<input type="submit" value="登録">
+		</div>
+		<div class="cp_iptxt">
+		<input type="text" name="TASKCONTENT" id="taskInputContent" placeholder="タスク内容入力">
+		<span class ="focus_line"></span>
+		</div><br>
+		<input type="submit" id="taskRegistBtn" value="登録">
 	</form>
 	<script>
         new Vue({
@@ -104,5 +111,11 @@
 
   </script>
 </body>
+	<footer>
+VOICEVOX:白上虎太郎
+VOICEVOX:四国めたん
+VOICEVOX:春日部つむぎ
+VOICEVOX:青山龍星
+</footer>
 </html>
 

@@ -135,8 +135,8 @@ window.addEventListener('DOMContentLoaded', function() {
     // 実行したい処理を書く
     const taskCount = '${user.taskcount}';
 	 const voiceSelect = '${user.voiceselect}';
-	 //console.log(voiceSelect);
- 	if(taskCount >= 0) {
+	 const voiceSwitch = '${user.voiceswitch}';
+ 	if(taskCount > 0 && voiceSwitch == '0') {
  		const voicePath = ["VoiceAchieveDisplayKotaro.wav","VoiceAchieveDisplayRyusei.wav",
  			  "VoiceAchieveDisplayMetan.wav","VoiceAchieveDisplayTsumugi.wav"];
  	    const music = new Audio("voice/" + voicePath[voiceSelect-1]);

@@ -38,7 +38,7 @@
       <input type="text" name="USERNAME" placeholder=" &nbsp;UserName" class="textInput">
       </div>
       <div class="loginForm">
-      <input type="text" name="PASSWORD" placeholder=" &nbsp;Password" class="textInput" id="textPassword">
+      <input type="password" name="PASSWORD" placeholder=" &nbsp;Password" class="textInput" id="textPassword">
       <span id="buttonEye" class="fa fa-eye" onclick="pushHideButton()"></span>
     </div>
       <input type="submit" name="login" class="submitButton" id="loginButton"value="ログイン">
