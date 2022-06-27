@@ -19,7 +19,7 @@
     <h2 id="userRegistTitle">新規登録</h2>
     <hr id="signUpHrright">
     </div>
-    <form method="post" id="signUpText" action="/Sol_ty/LoginServlet">
+    <form method="post" id="signUpText" action="/Sol_ty/UserRegistServlet">
         <p>-SignUp Form-</p>
     <div class="newRegistForm">
     <input type="text" value="" name="USERNAME" placeholder="*ユーザーネーム入力" class="newRegistQuestion"></p>

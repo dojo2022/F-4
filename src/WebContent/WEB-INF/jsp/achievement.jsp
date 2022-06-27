@@ -6,6 +6,7 @@
 <script>
 window.onload = () => {
  sound();
+}
 </script>
 <head>
 <meta charset="UTF-8">
@@ -23,7 +24,8 @@ window.onload = () => {
 		<label for="sidemenu" class="back"></label> <a href="#"
 			class="close-btn">&times;</a>
 		<ul class="hamburgermenu">
-			<li class="top"><img src="logo-sample/Sol-Ty-logo2.png" alt="solty"></li>
+			<li class="top"><img src="logo-sample/Sol-Ty-logo2.png"
+				alt="solty"></li>
 			<li><a href="/Sol_ty/InCompTaskServlet">タスク表示</a></li>
 			<li><a href="/Sol_ty/TaskRegistServlet">タスク登録</a></li>
 			<li><a href="/Sol_ty/CalendarServlet">カレンダー</a></li>
@@ -40,33 +42,93 @@ window.onload = () => {
 			alt="ログアウト"></a>
 	</div>
 </header>
-	<!--ヘッダーここまで-->
+<!--ヘッダーここまで-->
 <body>
 	<!--実績一覧-->
-	<div id="achievementListAll">
-		<c:forEach var="e" items="${achieveList}">
-			<div class="achievementList">
-				<div id="achievementTop">
-					<div>実績</div>
-					<div>
-						<c:out value="${e.achieveid}"></c:out>
+	<div id="wrapper">
+		<div id="achievementListAll">
+			<c:forEach var="e" items="${achieveList}">
+				<div class="achieve">
+					<div class="soltyImage">
+						<img src="logo-sample/Sol-Ty-logo2.png">
 					</div>
-					<div>title</div>
-					<c:out value="${e.title}"></c:out>
+					<div class="achievementList">
+						<div id="achievementTop">
+							<span class="acTitle">実績 <c:out value=" ${e.achieveid}"></c:out>
+							</span>
+							<span class="acContent"><c:out value="${e.title}"></c:out></span>
+						</div>
+						<div id="achievementbottom">
+							<div class="bottomText">
+								<span class="acTitle">取得条件</span> <span class="acContent">
+									<c:out value="${e.condition}"></c:out>
+								</span>
+							</div>
+							<div class="bottomText">
+								<span class="acTitle">実績内容</span> <span class="acContent">
+									<c:out value="${e.achievecontent}"></c:out>
+								</span>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div id="achievementbottom">
-					<div>取得条件</div>
-					<div>
-						<c:out value="${e.condition}"></c:out>
-					</div>
-					<div>実績内容</div>
-					<div>
-						<c:out value="${e.achievecontent}"></c:out>
-					</div>
-				</div>
-			</div>
-		</c:forEach>
+			</c:forEach>
+		</div>
 	</div>
+	<style>
+#wrapper {
+	padding-top: 150px;
+	display: flex;
+	justify-content: center;
+}
+
+#achievementListAll {
+	    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 85%;
+    background: transparent;
+}
+
+#achievementTop {
+	border-bottom: solid 0.5px;
+}
+
+#achievementbottom div {
+	border-bottom: solid 0.5px;
+}
+
+.achievementList {
+	margin: 30px 0;
+	width: 100%;
+	border: none;
+}
+.achieve {
+    border: 2px solid;
+    border-radius: 25px;
+    margin: 10px;
+    background-color: white;
+    }
+.soltyImage {
+	display: flex;
+	justify-content: center;
+}
+
+.soltyImage img {
+	width: 30%;
+	height: auto;
+	margin: 0;
+}
+.bottomText {
+    display: flex;
+    justify-content: space-evenly;
+}
+.acContent {
+	width: 70%;
+	font-size: 35px;
+}
+</style>
 	<script>
 'use strict';
 window.addEventListener('DOMContentLoaded', function() {

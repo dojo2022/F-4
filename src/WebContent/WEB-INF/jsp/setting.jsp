@@ -3,7 +3,7 @@
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	<c:if test="${user.taskcount >= 10}">
 	   <script>
-	   window.onload = () => {document.getElementById("bgiUpload").style="opacity: 1; pointer-events: unset;"}
+	   window.onload = () => {document.getElementById("bgiUpload").style="height: auto; opacity: 1; pointer-events: unset;"}
 	   </script>
 	</c:if>
 <!DOCTYPE html>
@@ -16,6 +16,7 @@
 <link rel="stylesheet" type="text/css" href="/Sol_ty/css/style.css">
 </head>
 
+<body>
 <!--ヘッダーここから-->
 <header class="header">
 	<a href="#sidemenu" class="hamburger-menu">
@@ -43,21 +44,23 @@
 		<a href="/Sol_ty/LogoutServlet"><img src="image/logout.png"alt="ログアウト"></a>
 	</div>
 </header>
-<body>
-	<form id="language">
+<div id="wrapper">
+   <div id="settingWrap">
+   <!--span class="masking-tape"></span-->
+	<form id="language" method="post" action="/Sol_ty/SettingServlet">
 		<div class="language2">
-			<div>音声設定</div>
+			<div class="settingTitle">音声設定</div>
 
-			<div>
+			<div id="vcRadio">
 				<input type="hidden" id="switchVal" name="VOICESWITCH" value="${user.voiceswitch}">
-				<input type="radio" class="voiceSwitch" name="vswitch" value="0"/>
+				<input type="radio" class="voiceSwitch" name="vswitch" value="0" style="transform: scale(2.0);" />
 				ON
-				<input type="radio" class="voiceSwitch" name="vswitch" value="1"/>
+				<input type="radio" class="voiceSwitch" name="vswitch" value="1" style="transform: scale(2.0);" />
 				OFF
 			</div>
 		</div>
 		<div class="language2">
-			<div>Voice</div>
+			<div class="settingTitle">Voice</div>
 			<div>
 				<select id="voice" name="VOICESELECT">
 					<option value="1">男1</option>
@@ -69,9 +72,9 @@
 		</div>
 
 		<div class="language2">
-			<div>壁紙</div>
+			<div class="settingTitle">壁紙</div>
 			<div>
-				<select name="BGISELECT">
+				<select id="bgi" name="BGISELECT">
 				<c:forEach var="e" items="${bgiList}">
 					<option value="${e.bgiselect}">${e.bgititle}</option>
 				</c:forEach>
@@ -82,17 +85,160 @@
 	</form>
 
 
-	<div id="bgiUpload" style="opacity: 0; pointer-events: none;">
-
-			<div>
-				画像アップロード <input type="file" id="bgicontent" name="BGICONTENT">
+	<div id="bgiUpload" style="height: 100px; opacity: 0; pointer-events: none;">
+			<div id="upload">
+				<div class="settingTitle settingUpload">画像アップロード</div>
+				<label id="bgicontent" for="file_upload">
+				ファイルを選択
+				  <input type="file" id="file_upload" name="BGICONTENT" />
+				</label>
 			</div>
+			<canvas id="preview" style="max-width:200px; position: unset;"></canvas>
 		</div>
-		<canvas id="preview" style="max-width:200px;"></canvas>
+
+
+	</div>
+	</div>
+<footer>
+VOICEVOX:白上虎太郎
+VOICEVOX:四国めたん
+VOICEVOX:春日部つむぎ
+VOICEVOX:青山龍星
+</footer>
 </body>
+<style>
+form#language {
+margin: 0;
+    width: 100%;
+    padding-top: 50px;
+    text-align: center;
+}
+.language2 div {
+    width: 45%;
+}
+#wrapper {
+    display: flex;
+    justify-content: center;
+    padding-top: 150px;
+}
+#settingWrap {
+width: 60%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-size: cover;
+  background-clip: content-box;
+  background-color: white;
+  box-sizing: border-box;
+  position: relative;
+  /*margin: auto;
+  top: 30px;
+    padding: 50px 50px 40px;
+    border-radius: 4px;*/
+}
+#settingWrap:after {
+  content: "";
+  display: block;
+  position: absolute;
+  border: 70px solid transparent;
+  border-bottom: 70px solid #efefef;
+  bottom: -80px;
+  right: -85px;
+  box-shadow: 0px 7px 6px -9px black;
+  transform: rotate(135deg);
+}
 
-<script>
-
+#settingWrap:before {
+  content: "";
+  display: block;
+  position: absolute;
+  border: 70px solid transparent;
+  border-top: 70px solid #efefef;
+  top: -80px;
+  left: -85px;
+  box-shadow: 0px -7px 6px -9px black;
+  transform: rotate(135deg);
+}
+div#vcRadio {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 30px;
+}
+label > input {
+display:none;
+}
+#bgicontent {
+color: #ffffff;
+background-color: #006DD9;
+margin-top: 40px;
+padding: 10px;
+border: double 4px #AAAAAA;
+}
+/*#settingWrap {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 30px;
+    border: 2px solid;
+    border-radius: 15px;
+    margin-bottom: 50px;
+}*/
+input#bgiSubmit {
+    width: 140px;
+    height: 52px;
+    padding: 0;
+    font-size: 20px;
+        color: #ffffff;
+    background-color: #006DD9;
+    margin: 40px 0 0;
+        border: double 4px #AAAAAA;
+}
+#bgiupload {
+	width: 100%;
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#upload {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+}
+.settingTitle {
+    font-size: 40px;
+    padding-top: 20px;
+}
+.settingUpload {
+    width: 100%;
+    border-bottom: solid 0.5px;
+    text-align: center;
+}
+.language2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding-top: 30px;
+    border-bottom: solid 0.5px;
+}
+select {
+width: 95%;
+    height: 60px;
+    font-size: 30px;
+}
+select option {
+    font-size: 15px;
+}
+footer {
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+}
+</style>
 <script>
 window.addEventListener('DOMContentLoaded', function(){
 	const voiceSelect = '${user.voiceselect}';

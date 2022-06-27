@@ -5,13 +5,21 @@
 
 <c:out value="${result}"/>
 <c:if test="${ !empty result}">
+
 <script>
 const flag ='${result}';
 const voiceSelect = '${user.voiceselect}';
-window.onload = () => {
- sound();
-}
+const voiceSwitch = '${user.voiceswitch}';
+//if (voiceSwitch == 0) {
+	window.onload = () => {
+ 	sound();
+ 	popup();
+	}
+//} else if (voiceSwitch == 1)
+
+//}
 </script>
+
 <c:remove var="result" scope="session"/>
 </c:if>
 
@@ -99,10 +107,13 @@ window.onload = () => {
 
 	<!--メインここまで-->
 
-	<script>
-  'use strict';
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/Sol_ty/js/popup.js"></script>
+<script>
+'use strict';
 //完了ボタンを押した際に音声を流す
-  function sound() {
+function sound() {
 	if(flag.indexOf("失敗") == -1 && flag.indexOf("更新しました") != -1) {
 		const voiceSelect = '${user.voiceselect}'
 		const voicePath = ["VoiceCompTaskKotaro.wav","VoiceCompTaskRyusei.wav",
@@ -217,4 +228,10 @@ $('.btn a').useSound('mousedown touchstart', '#sound');
 */
   </script>
 </body>
+<footer>
+VOICEVOX:白上虎太郎
+VOICEVOX:四国めたん
+VOICEVOX:春日部つむぎ
+VOICEVOX:青山龍星
+</footer>
 </html>

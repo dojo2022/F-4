@@ -6,8 +6,14 @@
 <script>
 const flag ='${result}';
 const voiceSelect = '${user.voiceselect}';
-window.onload = () => {
- sound();
+const voiceSwitch = '${user.voiceswitch}';
+if (voiceSwitch == 0) {
+	//window.onload = () => {
+ 		sound();
+	//}
+} else if (voiceSwitch == 1) {
+	const flag ='${result}';
+	popup();
 }
 </script>
 <c:remove var="result" scope="request"/>
@@ -68,6 +74,7 @@ window.onload = () => {
 		<button type="submit" name="COMP" value="未完了" id="backIncomp" onclick="getTaskid()">未完了に戻す</button>
 		</div>
 	</form>
+
 	<script>
 const inputFlag = document.querySelectorAll("input[name=taskflag]");
 function getTaskid() {
@@ -87,6 +94,8 @@ function getTaskid() {
 	}
 }
 </script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/Sol_ty/js/popup.js"></script>
 </body>
 <footer>
 VOICEVOX:白上虎太郎
