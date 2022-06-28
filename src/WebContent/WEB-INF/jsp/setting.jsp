@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html>
+<html id="backImg">
 <head>
 <meta charset='utf-8'>
 <meta name='viewport'
@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="/Sol_ty/css/style.css">
 </head>
 
-<body>
+<body style="background: transparent;">
 <header class="header">
 	<a href="#sidemenu" class="hamburger-menu">
 		<div></div>
@@ -81,7 +81,7 @@
 	</form>
 
 
-	<div id="bgiUpload">
+	<div id="bgiUpload" class="uphidden">
 			<div id="upload">
 				<div class="settingTitle settingUpload">画像アップロード</div>
 				<label id="bgicontent" for="file_upload">
@@ -93,8 +93,6 @@
 			<canvas id="preview" style="max-width:200px; position: unset;"></canvas>
 			</div>
 		</div>
-
-
 	</div>
 	</div>
 <footer>
@@ -105,6 +103,9 @@ VOICEVOX:青山龍星
 </footer>
 </body>
 <style>
+body {
+background: transparent;
+}
 form#language {
 margin: 0;
     width: 100%;
@@ -236,11 +237,14 @@ footer {
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/Sol_ty/js/popup.js"></script>
 <script>
+const background = '${user.bgicontent}';
+document.getElementById("backImg").style = "background-image: url("+ background +")";
+
+const taskCount = '${user.taskcount}';
+if(taskCount >= 10) {
+ document.getElementById("bgiUpload").classList.remove("uphidden");
+}
 window.addEventListener('DOMContentLoaded', function(){
-	const taskCount = '${user.taskcount}';
-	if(taskCount < 10) {
-	document.getElementById("bgiUpload").classList.add("uphidden");
-	}
 	const voiceSelect = '${user.voiceselect}';
 	const voice = document.getElementById("voice");
 	voice.options[voiceSelect-1].selected = true;
@@ -331,10 +335,17 @@ window.addEventListener('DOMContentLoaded', function(){
 	    	  option.text = json.option.filename;
 	    	  option.value = json.option.bgiselect;
 	    	  bgi.appendChild(option);
-  				Swal.fire('成功しました。','画像をアップロードしました','success');
+  			  Swal.fire('成功しました。','画像をアップロードしました','success');
 	      });
 	    //});
 	  });
 	});
 </script>
+<c:if test="${ !empty result}">
+<script>
+const flag ='${result}';
+popup();
+</script>
+<c:remove var="result" scope="session" />
+</c:if>
 </html>

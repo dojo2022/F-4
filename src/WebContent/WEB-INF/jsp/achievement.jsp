@@ -2,12 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
-<html>
+<html id="backImg">
 <head>
 <meta charset="UTF-8">
 <title>実績 | Sol-ty</title>
 <link rel="stylesheet" href="/Sol_ty/css/style.css">
 </head>
+
+<body style="background: transparent;">
 <!--ヘッダーここから-->
 <header class="header">
 	<a href="#sidemenu" class="hamburger-menu">
@@ -38,7 +40,6 @@
 	</div>
 </header>
 <!--ヘッダーここまで-->
-<body id="backImg">
 	<!--実績一覧-->
 	<div id="wrapper">
 		<div id="achievementListAll">

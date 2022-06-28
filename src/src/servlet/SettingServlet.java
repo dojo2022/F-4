@@ -78,22 +78,19 @@ public class SettingServlet extends HttpServlet {
 					//設定反映成功
 					iDao.update(user);
 					session.setAttribute("user", user);
-					request.setAttribute("result", "設定が反映されました");
+
+					session.setAttribute("result", "設定が反映されました");
 
 					VoiceBgiDAO vbDAO = new VoiceBgiDAO();
 					List<Bgi> bgiList = vbDAO.BgiSelect(user.getUserid());
 
 					session.setAttribute("bgiList", bgiList);
 				}
-
 				else {
-
-					request.setAttribute("result", "反映に失敗しました"); //設定反映失敗
-
+					session.setAttribute("result", "反映に失敗しました"); //設定反映失敗
 				}
 
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/setting.jsp");
-				dispatcher.forward(request, response);
+				response.sendRedirect("/Sol_ty/SettingServlet");
 	}
 
 }

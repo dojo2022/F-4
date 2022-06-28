@@ -3,12 +3,14 @@
 
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
-<html>
+<html id="backImg">
 <head>
 <meta charset="UTF-8">
 <title>未完了タスク | Sol-ty</title>
 <link rel="stylesheet" href="/Sol_ty/css/style.css">
 </head>
+
+<body style="background: transparent;">
 <!--ヘッダーここから-->
 <header class="header">
 	<a href="#sidemenu" class="hamburger-menu">
@@ -17,8 +19,7 @@
 		<div></div>
 	</a>
 	<div id="sidemenu" class="sidenavs">
-		<label for="sidemenu" class="back"></label> <a href="#"
-			class="close-btn">&times;</a>
+		<label for="sidemenu" class="back"></label> <a href="#" class="close-btn">&times;</a>
 		<ul class="hamburgermenu">
 			<li class="top"><img src="logo-sample/Sol-Ty-logo2.png" alt="solty"></li>
 			<li><a href="/Sol_ty/InCompTaskServlet">タスク表示</a></li>
@@ -36,7 +37,6 @@
 	<a href="/Sol_ty/LogoutServlet"><img src="image/logout.png" alt="ログアウト"></a>
 	</div>
 </header>
-<body id="backImg">
 <span class="masking-tape"></span>
 <div class="incompTask">
 	<h2>
@@ -172,8 +172,6 @@ function getTaskid() {
  	document.forms.f1.submit();
 		});
   </script>
-
-  <c:out value="${result}"/>
 <c:if test="${ !empty result}">
 <script>
 const flag ='${result}';

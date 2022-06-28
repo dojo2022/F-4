@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html id="backImg">
 <head>
 <meta charset='utf-8'>
 <meta name='viewport'
@@ -15,7 +15,7 @@
 <!--ヘッダーここから-->
 
 
-<body id="backImg">
+<body style="background: transparent;">
 <header class="header">
 	<a href="#sidemenu" class="hamburger-menu">
 		<div></div>

@@ -3,13 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!doctype html>
-<html>
+<html id="backImg">
 <head>
 <meta charset="UTF-8">
 <title>完了タスク | Sol-ty</title>
 <link rel="stylesheet" href="css/style.css">
 
 </head>
+
+<body style="background: transparent;">
 <!--ヘッダーここから-->
 <header class="header">
 	<a href="#sidemenu" class="hamburger-menu">
@@ -37,7 +39,6 @@
 	<a href="LogoutServlet"><img src="image/logout.png" alt="ログアウト"></a>
 	</div>
 </header>
-<body id="backImg">
 	<form id="taskCompList" method="POST" name="f1">
 		<div id="taskCompleted">
 		<input type="hidden" name="TASKFLAG" value="完了">
