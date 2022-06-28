@@ -55,8 +55,7 @@ const voiceSwitch = '${user.voiceswitch}';
 	<a href="/Sol_ty/LogoutServlet"><img src="image/logout.png" alt="ログアウト"></a>
 	</div>
 </header>
-<body>
-<div class="incompClip">
+<body id="bodyIncomp">
 <span class="masking-tape"></span>
 <div class="incompTask">
 	<h2>
@@ -80,9 +79,9 @@ const voiceSwitch = '${user.voiceswitch}';
 		<c:forEach var="e" items="${taskList[1]}">
 			<div class="incompYesterday">
 				<input type="checkbox" name="taskflag" value="${e.taskid}" class="taskIncomp" id="taskIncompCheck">
-				<input type="text" value="${e.taskcontent}" class="PreTaskIncomp" id="task${e.taskid}>
+				<input type="text" value="${e.taskcontent}" class="PreTaskIncomp" id="task${e.taskid}">
 				<span class="deadlineTime">${e.deadline}</span>
-				<button type="button" id="taskEdit" onclick="textEdit(${e.taskid}">edit</button>
+				<button type="button" id="taskEdit" onclick="textEdit(${e.taskid})">edit</button>
 				<br>
 			</div>
 		</c:forEach>
@@ -172,6 +171,13 @@ function sound() {
         			const option =  { method: 'POST', cache: 'no-cache', body: query_params }
 
         		  	const response = await fetch('/Sol_ty/UpdateDeleteServlet', option);
+        			if(response.ok) {
+        				Swal.fire(
+        						  '成功しました。',
+        						  'タスクを編集しました',
+        						  'success'
+        						);
+        			}
         			return;
         	 }
 
@@ -225,11 +231,11 @@ function getTaskid() {
 $('.btn a').useSound('mousedown touchstart', '#sound');
 */
   </script>
-</body>
 <footer>
 VOICEVOX:白上虎太郎
 VOICEVOX:四国めたん
 VOICEVOX:春日部つむぎ
 VOICEVOX:青山龍星
 </footer>
+</body>
 </html>
