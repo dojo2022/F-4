@@ -10,7 +10,7 @@
 
 
 
-	window.onload = function popup() {
+	function popup() {
 		 if (flag.indexOf('失敗しました') == -1) {
 			 	//成功時のメッセージ
 			 	Swal.fire(
@@ -18,7 +18,8 @@
 				  flag,
 				  'success'
 				);
-			 } else {
+		}
+		else {
 			 	//失敗時のメッセージ
 			 		Swal.fire({
 				  	icon: 'error',
@@ -26,11 +27,11 @@
 				  	text: flag,
 			 	});
 		 }
-	}
+		 }
 
 
  function achievePop() {
- if(achieve == 1 || achieve == 5 || achive == 10)
+ if(achieve == 1 || achieve == 5 || achieve == 10) {
  	Swal.fire({
   title: '実績を解除しました',
   showClass: {
@@ -40,4 +41,5 @@
     popup: 'animate__animated animate__fadeOutUp'
   }
   })
- };
+  }
+  }

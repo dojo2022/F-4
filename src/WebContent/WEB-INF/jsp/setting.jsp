@@ -1,33 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-	<c:if test="${user.taskcount >= 10}">
-	   <script>
-	   window.onload = () => {document.getElementById("bgiUpload").style="height: auto; opacity: 1; pointer-events: unset;"}
-	   </script>
-	</c:if>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<!--script src="sweetalert2.all.min.js"></script>
-<script src="/Sol_ty/js/popup.js"> -->
-<title>設定画面</title>
-<link rel="stylesheet" type="text/css" href="/Sol_ty/css/style.css">
+<meta charset='utf-8'>
+<meta name='viewport'
+	content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+<meta http-equiv='x-ua-compatible' content='ie=edge'>
+<title>設定画面 | Sol-ty</title>
+<link rel="stylesheet" href="/Sol_ty/css/style.css">
 </head>
 
 <body>
-<!--ヘッダーここから-->
 <header class="header">
 	<a href="#sidemenu" class="hamburger-menu">
-		<div class="ham-top"></div>
+		<div></div>
 		<div></div>
 		<div></div>
 	</a>
 	<div id="sidemenu" class="sidenavs">
 		<label for="sidemenu" class="back"></label> <a href="#"
 			class="close-btn">&times;</a>
-		<ul class="hamburgerMenu">
+		<ul class="hamburgermenu">
 			<li class="top"><img src="logo-sample/Sol-Ty-logo2.png" alt="solty"></li>
 			<li><a href="/Sol_ty/InCompTaskServlet">タスク表示</a></li>
 			<li><a href="/Sol_ty/TaskRegistServlet">タスク登録</a></li>
@@ -38,12 +33,13 @@
 		</ul>
 	</div>
 	<div class="navtext">
-		<h2>未完了タスク</h2>
+		<h2>設定</h2>
 	</div>
 	<div id="logoutLogo">
-		<a href="/Sol_ty/LogoutServlet"><img src="image/logout.png"alt="ログアウト"></a>
+	<a href="/Sol_ty/LogoutServlet"><img src="image/logout.png" alt="ログアウト"></a>
 	</div>
 </header>
+<!--ヘッダーここから-->
 <div id="wrapper">
    <div id="settingWrap">
    <!--span class="masking-tape"></span-->
@@ -85,7 +81,7 @@
 	</form>
 
 
-	<div id="bgiUpload" style="height: 100px; opacity: 0; pointer-events: none;">
+	<div id="bgiUpload">
 			<div id="upload">
 				<div class="settingTitle settingUpload">画像アップロード</div>
 				<label id="bgicontent" for="file_upload">
@@ -93,7 +89,9 @@
 				  <input type="file" id="file_upload" name="BGICONTENT" />
 				</label>
 			</div>
+			<div id="uploader">
 			<canvas id="preview" style="max-width:200px; position: unset;"></canvas>
+			</div>
 		</div>
 
 
@@ -130,10 +128,6 @@ width: 60%;
   background-color: white;
   box-sizing: border-box;
   position: relative;
-  /*margin: auto;
-  top: 30px;
-    padding: 50px 50px 40px;
-    border-radius: 4px;*/
 }
 #settingWrap:after {
   content: "";
@@ -174,18 +168,6 @@ margin-top: 40px;
 padding: 10px;
 border: double 4px #AAAAAA;
 }
-/*#settingWrap {
-    width: 70%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 30px;
-    border: 2px solid;
-    border-radius: 15px;
-    margin-bottom: 50px;
-}*/
 input#bgiSubmit {
     width: 140px;
     height: 52px;
@@ -201,6 +183,12 @@ input#bgiSubmit {
 	display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
+}
+.uphidden {
+  height: 100px;
+  opacity: 0;
+  pointer-events: none;
 }
 #upload {
     width: 100%;
@@ -209,8 +197,14 @@ input#bgiSubmit {
     align-items: center;
     padding: 20px 0;
 }
+#uploader {
+display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
 .settingTitle {
-    font-size: 40px;
+    font-size: 35px;
     padding-top: 20px;
 }
 .settingUpload {
@@ -239,8 +233,14 @@ footer {
     padding-top: 50px;
 }
 </style>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/Sol_ty/js/popup.js"></script>
 <script>
 window.addEventListener('DOMContentLoaded', function(){
+	const taskCount = '${user.taskcount}';
+	if(taskCount < 10) {
+	document.getElementById("bgiUpload").classList.add("uphidden");
+	}
 	const voiceSelect = '${user.voiceselect}';
 	const voice = document.getElementById("voice");
 	voice.options[voiceSelect-1].selected = true;
@@ -331,11 +331,9 @@ window.addEventListener('DOMContentLoaded', function(){
 	    	  option.text = json.option.filename;
 	    	  option.value = json.option.bgiselect;
 	    	  bgi.appendChild(option);
+  				Swal.fire('成功しました。','画像をアップロードしました','success');
 	      });
-
 	    //});
-
-
 	  });
 	});
 </script>

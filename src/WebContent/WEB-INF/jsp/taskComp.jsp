@@ -2,22 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<c:if test="${ !empty result}">
-<script>
-const flag ='${result}';
-const voiceSelect = '${user.voiceselect}';
-const voiceSwitch = '${user.voiceswitch}';
-if (voiceSwitch == 0) {
-	//window.onload = () => {
- 		sound();
-	//}
-} else if (voiceSwitch == 1) {
-	const flag ='${result}';
-	popup();
-}
-</script>
-<c:remove var="result" scope="request"/>
-</c:if>
 <!doctype html>
 <html>
 <head>
@@ -53,7 +37,7 @@ if (voiceSwitch == 0) {
 	<a href="LogoutServlet"><img src="image/logout.png" alt="ログアウト"></a>
 	</div>
 </header>
-<body>
+<body id="backImg">
 	<form id="taskCompList" method="POST" name="f1">
 		<div id="taskCompleted">
 		<input type="hidden" name="TASKFLAG" value="完了">
@@ -78,6 +62,8 @@ if (voiceSwitch == 0) {
 	</form>
 
 	<script>
+	const background = '${user.bgicontent}';
+	document.getElementById("backImg").style = "background-image: url("+ background +")";
 const inputFlag = document.querySelectorAll("input[name=taskflag]");
 function getTaskid() {
 	let taskid = "";

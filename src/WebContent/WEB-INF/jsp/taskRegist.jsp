@@ -13,6 +13,9 @@
 	<script src='https://unpkg.com/v-calendar'></script>
 </head>
 <!--ヘッダーここから-->
+
+
+<body id="backImg">
 <header class="header">
 	<a href="#sidemenu" class="hamburger-menu">
 		<div></div>
@@ -39,8 +42,6 @@
 	<a href="/Sol_ty/LogoutServlet"><img src="image/logout.png" alt="ログアウト"></a>
 	</div>
 </header>
-
-<body>
 <span class="masking-tapeRegist"></span>
 	<form id="registForm" method="post" action="/Sol_ty/TaskRegistServlet">
 	<p id="taskRegistForm">～タスク登録フォーム～</p>
@@ -70,6 +71,8 @@
 		<input type="submit" id="taskRegistBtn" value="登録">
 	</form>
 	<script>
+	const background = '${user.bgicontent}';
+	document.getElementById("backImg").style = "background-image: url("+ background +")";
         new Vue({
             el: '#app',
             inputValue: new Date(),

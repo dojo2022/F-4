@@ -2,25 +2,6 @@
 	pageEncoding="UTF-8"%>
 
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-<c:out value="${result}"/>
-<c:if test="${ !empty result}">
-
-<script>
-const flag ='${result}';
-const voiceSelect = '${user.voiceselect}';
-const voiceSwitch = '${user.voiceswitch}';
-	window.onload = () => {
- 	if(voiceSwitch === '0') {
- 		sound();
- 	}
- 	popup();
-	}
-</script>
-
-<c:remove var="result" scope="session"/>
-</c:if>
-
 <!doctype html>
 <html>
 <head>
@@ -55,7 +36,7 @@ const voiceSwitch = '${user.voiceswitch}';
 	<a href="/Sol_ty/LogoutServlet"><img src="image/logout.png" alt="ログアウト"></a>
 	</div>
 </header>
-<body id="bodyIncomp">
+<body id="backImg">
 <span class="masking-tape"></span>
 <div class="incompTask">
 	<h2>
@@ -101,15 +82,14 @@ const voiceSwitch = '${user.voiceswitch}';
 		</div>
 	</form>
 </div>
-
 	<!--メインここまで-->
-
-
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/Sol_ty/js/popup.js"></script>
 <script>
 
 'use strict';
+const background = '${user.bgicontent}';
+document.getElementById("backImg").style = "background-image: url("+ background +")";
 //完了ボタンを押した際に音声を流す
 function sound() {
 	let voicePath = [];
@@ -144,18 +124,6 @@ function sound() {
     document.getElementById('switchModeDelete').style.display = 'inline'
   }
 }
-          /*function deleteRow() {
-        	  const checkedList = document.querySelectorAll(".table [name='DeleteName[]']:checked");
-        	  if (checkedList.length === 0) {
-        	    alert("選択してください");
-        	    return;
-        	  }
-        	  if(!confirm("削除しますか？")) {
-        	    return;
-        	  }
-        	  checkedList.forEach(check => check.closest("tr").remove());
-        	}
-        	*/
         	//疑似クラスchecked
         	// 興味・関心のある分野
         	const switchModeDone = document.getElementById("switchModeDone");
@@ -171,13 +139,9 @@ function sound() {
         			const option =  { method: 'POST', cache: 'no-cache', body: query_params }
 
         		  	const response = await fetch('/Sol_ty/UpdateDeleteServlet', option);
-        			if(response.ok) {
-        				Swal.fire(
-        						  '成功しました。',
-        						  'タスクを編集しました',
-        						  'success'
-        						);
-        			}
+        			if(response.ok)
+        				Swal.fire('成功しました。','タスクを編集しました','success');
+        			else Swal.fire({icon: 'error',title: '失敗しました。',text: 'タスクを編集できませんでした'});
         			return;
         	 }
 
@@ -207,30 +171,22 @@ function getTaskid() {
  	document.forms.f1.action = "/Sol_ty/UpdateDeleteServlet";
  	document.forms.f1.submit();
 		});
-
-        	/*switchModeDelete.addEventListener('submit', event => {
-        		event.preventDefault();
-
-        	})
-        	/*
-
-        	(function (window, $) {
-  'use strict';
-
-  $.fn.useSound = function (_event, _id) {
-    var se = $(_id);
-    this.on(_event, function(){
-      se[0].currentTime = 0;
-      se[0].play();
-    });
-    return this;
-  };
-
-})(this, this.jQuery);
-
-$('.btn a').useSound('mousedown touchstart', '#sound');
-*/
   </script>
+
+  <c:out value="${result}"/>
+<c:if test="${ !empty result}">
+<script>
+const flag ='${result}';
+const voiceSelect = '${user.voiceselect}';
+const voiceSwitch = '${user.voiceswitch}';
+ 	if(voiceSwitch === '0') {
+ 		sound();
+ 	}
+ 	else popup();
+</script>
+<c:remove var="result" scope="session"/>
+</c:if>
+
 <footer>
 VOICEVOX:白上虎太郎
 VOICEVOX:四国めたん

@@ -3,11 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
 <html>
-<script>
-window.onload = () => {
- sound();
-}
-</script>
 <head>
 <meta charset="UTF-8">
 <title>実績 | Sol-ty</title>
@@ -43,7 +38,7 @@ window.onload = () => {
 	</div>
 </header>
 <!--ヘッダーここまで-->
-<body>
+<body id="backImg">
 	<!--実績一覧-->
 	<div id="wrapper">
 		<div id="achievementListAll">
@@ -131,12 +126,14 @@ window.onload = () => {
 </style>
 	<script>
 'use strict';
+const background = '${user.bgicontent}';
+document.getElementById("backImg").style = "background-image: url("+ background +")";
 window.addEventListener('DOMContentLoaded', function() {
     // 実行したい処理を書く
     const taskCount = '${user.taskcount}';
 	 const voiceSelect = '${user.voiceselect}';
 	 const voiceSwitch = '${user.voiceswitch}';
- 	if(taskCount > 0 && voiceSwitch == '0') {
+ 	if(taskCount > 0 && voiceSwitch === '0') {
  		const voicePath = ["VoiceAchieveDisplayKotaro.wav","VoiceAchieveDisplayRyusei.wav",
  			  "VoiceAchieveDisplayMetan.wav","VoiceAchieveDisplayTsumugi.wav"];
  	    const music = new Audio("voice/" + voicePath[voiceSelect-1]);

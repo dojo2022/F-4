@@ -10,6 +10,8 @@
 <link rel='stylesheet' href='css/main.min.css' />
 <script src='js/main.min.js'></script>
 </head>
+
+<body id="backImg">
 <!--ヘッダーここから-->
 <header class="header">
 	<a href="#sidemenu" class="hamburger-menu">
@@ -39,8 +41,6 @@
 	</div>
 </header>
 <!-- ヘッダーここまで -->
-
-<body>
 	<div id="wrapper">
 		<div id='calendar'></div>
 		<label id="popLabel" for="">
@@ -63,17 +63,6 @@
 		</label>
 	</div>
 </body>
-<script>
-/*if(achieve >= 10) {
-	addChildcreate(child);
-}
-function addChildcreate(child) {
-var child = document.createElement("li");
-child.innerHTML = "<a href='/Sol_ty/jsp/minigame.html'>??????</a>"
-child = parent.appendChild(child);
-console.log(child);
-}*/
-</script>
 <script>
     function pop() {
       document.getElementById("popup").style = "display: none;";
