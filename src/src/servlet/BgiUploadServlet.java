@@ -65,16 +65,12 @@ public class BgiUploadServlet extends HttpServlet {
 			json.put("option", option);
 
 
-			session.setAttribute("result", "アップロードに成功しました");
 			response.setContentType("application/json");
 			response.setHeader("Cache-Control", "nocache");
 			response.setCharacterEncoding("utf-8");
 			PrintWriter out = response.getWriter();
 			out.print(json);
 
-		}
-		else {												// アップロード失敗
-			session.setAttribute("result", "アップロードに失敗しました");
 		}
 	}
 
