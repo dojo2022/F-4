@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+		<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html id="backImg">
 <head>
@@ -70,6 +71,8 @@
 		</div><br>
 		<input type="submit" id="taskRegistBtn" value="登録">
 	</form>
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/Sol_ty/js/popup.js"></script>
 	<script>
 	const background = '${user.bgicontent}';
 	document.getElementById("backImg").style = "background-image: url("+ background +")";
@@ -113,6 +116,13 @@
 }
 
   </script>
+  <c:if test="${ !empty result}">
+<script>
+const flag ='${result}';
+popup();
+</script>
+<c:remove var="result" scope="session"/>
+</c:if>
 </body>
 	<footer>
 VOICEVOX:白上虎太郎

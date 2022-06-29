@@ -50,8 +50,7 @@
 				<input type="checkbox" name="taskflag" value="${e.taskid}" class="taskIncomp" id="taskIncompCheck">
 				<input type="text" value="${e.taskcontent}" class="taskIncomp" id="task${e.taskid}">
 				<span class="deadlineTime">${e.deadline}</span>
-				<button type="button" id="taskEdit" onclick="textEdit(${e.taskid})">edit</button>
-				<br>
+				<button type="button" id="taskEdit" onclick="textEdit(${e.taskid})">編集</button>
 			</div>
 		</c:forEach>
 
@@ -62,8 +61,7 @@
 				<input type="checkbox" name="taskflag" value="${e.taskid}" class="taskIncomp" id="taskIncompCheck">
 				<input type="text" value="${e.taskcontent}" class="PreTaskIncomp" id="task${e.taskid}">
 				<span class="deadlineTime">${e.deadline}</span>
-				<button type="button" id="taskEdit" onclick="textEdit(${e.taskid})">edit</button>
-				<br>
+				<button type="button" id="taskEdit" onclick="textEdit(${e.taskid})">編集</button>
 			</div>
 		</c:forEach>
 		<div id=mode>
@@ -77,8 +75,10 @@
 				</div>
 			</div>
 			<input type="hidden" value="完了" name="COMP" id="send">
+			<div id="change">
 			<input type="submit" value="完了" class="doneDelete" id="switchModeDone"> <!--  onClick="sound()" -->
 			<input type="submit" value="削除" name="DELETE" class="doneDelete"  id="switchModeDelete">
+			</div>
 		</div>
 	</form>
 </div>
@@ -191,5 +191,60 @@ VOICEVOX:四国めたん
 VOICEVOX:春日部つむぎ
 VOICEVOX:青山龍星
 </footer>
+<style>
+input.taskIncomp, input.PreTaskIncomp {
+    height: 90px;
+    font-size: 35px;
+    max-width: 455px;
+    border: none;
+    background: transparent;
+    outline: none;
+    margin: 0;
+    padding: 0 0 0 20px;
+}
+.incompTask {
+    margin: 190px 105px 30px;
+}
+button#taskEdit {
+    font-size: 30px;
+    border: 1px solid;
+    width: 80px;
+    height: 50px;
+    border-radius: 15px;
+    margin: 0;
+}
+
+input#taskIncompCheck {
+    height: 10px;
+    margin: 0;
+    transform: scale(3.5);
+}
+div#incompToday, .incompYesterday {
+    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px 20px 0;
+    border-bottom: solid 0.5px;
+}
+span.deadlineTime {
+    z-index: 1;
+    position: unset;
+    margin: 0;
+    width: 87px;
+    padding-right: 10px;
+}
+div#switchMode {
+    padding: 0 20px;
+}
+input#switchModeDone {
+    margin: 30px 0;
+}
+div#change {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+</style>
 </body>
 </html>

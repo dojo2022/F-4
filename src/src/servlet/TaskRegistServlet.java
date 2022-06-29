@@ -31,7 +31,6 @@ public class TaskRegistServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		if (session.getAttribute("user") == null) {
 			response.sendRedirect("/Sol_ty/LoginServlet");
-			return;
 		}
 		if(session.getAttribute("registday") == null) {
 			session.setAttribute("registday",  LocalDate.now().toString().replaceAll("-", "/"));
@@ -65,18 +64,17 @@ public class TaskRegistServlet extends HttpServlet {
 
 				//登録成功
 				if (tDao.insert(new Task(0, userid, registday, "", "", deadline, taskcontent))) {
-				request.setAttribute("result", "タスクが登録されました" );
+				session.setAttribute("result", "タスクが登録されました" );
 				String regist = Integer.toString(registday);
 				regist = String.format("%s/%s/%s", regist.substring(0,4),regist.substring(4,6),regist.substring(6));
 				session.setAttribute("registday", regist);
 				// 登録失敗
 				}else {
-				request.setAttribute("result", "登録に失敗しました");
+				session.setAttribute("result", "登録に失敗しました");
 				}
 
 				// 結果ページにフォワードする
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/taskRegist.jsp");
-				dispatcher.forward(request, response);
+				response.sendRedirect("/Sol_ty/TaskRegistServlet");
 
 	}
 
